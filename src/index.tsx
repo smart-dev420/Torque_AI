@@ -4,13 +4,17 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { FirebaseContext } from './components/Firebase';
+import config from './components/Firebase/firebase';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <FirebaseContext.Provider value={config}>
+      <App />
+    </FirebaseContext.Provider>
   </React.StrictMode>
 );
 
