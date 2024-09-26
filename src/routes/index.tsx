@@ -1,4 +1,4 @@
-import { createHashRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet} from "react-router-dom";
 import { NotFound } from "../components/NotFound";
 import {Step1} from '../pages/login/step1';
 import {Step2} from '../pages/login/step2';
@@ -6,7 +6,8 @@ import {Step3} from '../pages/login/step3';
 import {Step4} from '../pages/login/step4';
 import {Step5} from '../pages/login/step5';
 import {Step6} from '../pages/login/step6';
-export const router = createHashRouter([
+import { PageLayout } from "../pages/PageLayout";
+export const router = createBrowserRouter([
     {
       path: "/login",
       element: (
@@ -52,12 +53,14 @@ export const router = createHashRouter([
     {
       path: "/",
       element: (
-        <Step1/>
+        <PageLayout>
+          <Outlet />
+        </PageLayout>
       ),
       errorElement: <NotFound />,
       children: [
         {
-          path: "",
+          path: "dashboard",
           element: <></>,
           errorElement: <NotFound />,
         },

@@ -1,15 +1,7 @@
-import Logo from '../../assets/imgs/login/logo.png';
-import stee from '../../assets/imgs/login/stee.png';
-import hni from '../../assets/imgs/login/hni.png';
-import ashely from '../../assets/imgs/login/ashely.png';
-import herman from '../../assets/imgs/login/herman.png';
-import la from '../../assets/imgs/login/la.png';
-import williams from '../../assets/imgs/login/williams.png';
-import haworth from '../../assets/imgs/login/haworth.png';
-import ikea from '../../assets/imgs/login/ikea.png';
-import kimball from '../../assets/imgs/login/kimball.png';
+import { imageAssets } from '../../utils/constant';
 
 import { useRouter } from '../../routes/hooks/index';
+import { ProgressBar } from './progressbar';
 
 export const Step5: React.FC = () => {
 
@@ -21,10 +13,10 @@ export const Step5: React.FC = () => {
         router.push('/login/step4');
     }
     return  (
-        <div className='bg-[#000] w-full h-dvh'>
+        <div className='bg-[#000] w-full min-h-screen'>
             <div className="max-w-[600px] w-full flex-col mx-[auto]">
                 <div className='pt-[64px] '>
-                    <img src={Logo} alt='Torque AI' className='mx-[auto] max-w-[210px] max-h-[50px]' />
+                    <img src={imageAssets.logo} alt='Torque AI' className='mx-[auto] max-w-[210px] max-h-[50px]' />
                 </div>
                 <div className='mt-[64px] rounded-[8px] bg-[#141414] max-h-[670px] h-full flex-col text-center	px-[40px]'>
                     <div className='pt-[40px]'>
@@ -35,21 +27,21 @@ export const Step5: React.FC = () => {
                     </div>
 
                     <div className='flex flex-row gap-[8px] mt-[32px]'>
-                        <button className='img-btn '><img src={stee} alt=''/></button>
-                        <button className='img-btn '><img src={hni} alt=''/></button>
-                        <button className='img-btn '><img src={ashely} alt=''/></button>
+                        <button className='img-btn '><img src={imageAssets.steelcase} alt=''/></button>
+                        <button className='img-btn '><img src={imageAssets.hni} alt=''/></button>
+                        <button className='img-btn '><img src={imageAssets.ashely} alt=''/></button>
                     </div>
 
                     <div className='flex flex-row gap-[8px] mt-[8px]'>
-                        <button className='img-btn '><img src={herman} alt=''/></button>
-                        <button className='img-btn '><img src={la} alt=''/></button>
-                        <button className='img-btn '><img src={williams} alt=''/></button>
+                        <button className='img-btn '><img src={imageAssets.herman} alt=''/></button>
+                        <button className='img-btn '><img src={imageAssets.la} alt=''/></button>
+                        <button className='img-btn '><img src={imageAssets.williams} alt=''/></button>
                     </div>
 
                     <div className='flex flex-row gap-[8px] mt-[8px]'>
-                        <button className='img-btn '><img src={haworth} alt=''/></button>
-                        <button className='img-btn '><img src={ikea} alt=''/></button>
-                        <button className='img-btn '><img src={kimball} alt=''/></button>
+                        <button className='img-btn '><img src={imageAssets.haworth} alt=''/></button>
+                        <button className='img-btn '><img src={imageAssets.ikea} alt=''/></button>
+                        <button className='img-btn '><img src={imageAssets.kimball} alt=''/></button>
                     </div>
 
                     <div className='pt-[52px] pb-[40px] flex flex-row justify-between'>
@@ -58,14 +50,7 @@ export const Step5: React.FC = () => {
                     </div>
                 </div>
 
-                <div className='pt-[54px] w-full h-[8px] flex flex-row gap-[8px]'>
-                    <div className='bg-[#141414]  h-[8px] w-full rounded-l-lg'></div>
-                    <div className='bg-[#141414]  h-[8px] w-full'></div>
-                    <div className='bg-[#141414]  h-[8px] w-full'></div>
-                    <div className='bg-[#141414]  h-[8px] w-full' ></div>
-                    <div className='bg-[#6775F0]  h-[8px] w-full'></div>
-                    <div className='bg-[#141414]  h-[8px] w-full rounded-r-lg'></div>
-                </div>
+                <ProgressBar step={4} />
             </div>
         </div>
     )

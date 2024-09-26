@@ -115,7 +115,7 @@ code {
   appearance: none; /* For most browsers */
   -webkit-appearance: none; /* For Safari */
   -moz-appearance: none; /* For Firefox */
-  background: url('../src/assets/imgs/login/ic_arrow_down.png') no-repeat right 10px center;
+  background: url('../src/assets/icons/ic_arrow_down.png') no-repeat right 10px center;
   background-size: 24px 24px;
   padding-right: 30px; /* Space for the custom arrow */
   position: relative;

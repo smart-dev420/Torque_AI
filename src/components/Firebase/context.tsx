@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 import { FirebaseApp } from 'firebase/app';
 
 // Create a context with a default value of null or a FirebaseApp instance

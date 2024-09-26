@@ -1,20 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
-import { FirebaseContext } from './components/Firebase';
-import config from './components/Firebase/firebase';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
+import { FirebaseContext } from "./components/Firebase";
+import config from "./components/Firebase/firebase";
+import { ThemeProvider } from "./components/Theme/context";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <FirebaseContext.Provider value={config}>
-      <App />
-    </FirebaseContext.Provider>
+    <ThemeProvider>
+      <FirebaseContext.Provider value={config}>
+        <App />
+      </FirebaseContext.Provider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

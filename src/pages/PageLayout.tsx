@@ -1,14 +1,17 @@
 import { ReactNode } from "react";
+import { SideBar } from "./layout/sidebar";
+import { Navbar } from "./layout/navbar";
 
 export const PageLayout: React.FC<{
   children: ReactNode;
-  backgroundColor?: string;
-}> = ({ children, backgroundColor = "bg-transparent" }) => (
-  <div
-    className={`flex flex-col justify-center items-center max-w-[1920px] ${backgroundColor}`}
-  >
-    <div className={`w-full ${backgroundColor}`}>
-      {children}
+}> = ({ children }) => {
+  return (
+    <div className={`flex flex-row max-w-[1920px] h-[100vh]`}>
+        <SideBar />
+        <div className="flex flex-col w-full m-[32px]" >
+            <Navbar />
+        {children}
+        </div>
     </div>
-  </div>
-);
+  );
+};

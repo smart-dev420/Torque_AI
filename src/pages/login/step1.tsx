@@ -1,15 +1,16 @@
-import Logo from '../../assets/imgs/login/logo.png';
+import { imageAssets } from '../../utils/constant';
 import { useRouter } from '../../routes/hooks/index';
+import { ProgressBar } from './progressbar';
 export const Step1: React.FC = () => {
     const router = useRouter();
     const handlNext = () => {
         router.push('/login/step2');
     }
     return (
-        <div className='bg-[#000] w-full h-dvh'>
+        <div className='bg-[#000] w-full min-h-screen'>
             <div className="max-w-[600px] w-full flex-col mx-[auto]">
                 <div className='pt-[64px] '>
-                    <img src={Logo} alt='Torque AI' className='mx-[auto] max-w-[210px] max-h-[50px]' />
+                    <img src={imageAssets.logo} alt='Torque AI' className='mx-[auto] max-w-[210px] max-h-[50px]' />
                 </div>
                 <div className='mt-[64px] rounded-[8px] bg-[#141414] max-h-[640px] h-full flex-col text-center	px-[40px]'>
                     <div className='pt-[40px]'>
@@ -19,7 +20,7 @@ export const Step1: React.FC = () => {
                         Welcome to Torque AI! Let's set up your account to unlock powerful marketing insights.
                     </div>
                     <div className='pt-[32px] w-full max-h-[382px] h-full'>
-
+                        
                     </div>
                     <div className='pt-[8px] font-b3-400 font-grey1'>
                         Watch Explainer Video
@@ -29,14 +30,7 @@ export const Step1: React.FC = () => {
                     </div>
                 </div>
 
-                <div className='pt-[64px] w-full h-[8px] flex flex-row gap-[8px]'>
-                    <div className='bg-[#6775F0]  h-[8px] w-full rounded-l-lg'></div>
-                    <div className='bg-[#141414]  h-[8px] w-full'></div>
-                    <div className='bg-[#141414]  h-[8px] w-full'></div>
-                    <div className='bg-[#141414]  h-[8px] w-full' ></div>
-                    <div className='bg-[#141414]  h-[8px] w-full' ></div>
-                    <div className='bg-[#141414]  h-[8px] w-full rounded-r-lg'></div>
-                </div>
+                <ProgressBar step={0} />
             </div>
         </div>
     )
