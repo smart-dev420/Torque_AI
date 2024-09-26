@@ -30,25 +30,40 @@ code {
   font-size: 30px;
   font-weight: 700;
   line-height: 40.32px;
-  text-align: center;
 }
 
+.font-h5-700{
+  font-family: "SUSE", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20.16px;
+
+
+}
 .font-b1-400 {
   font-family: "Quicksand", sans-serif;
   font-size: 24px;
   font-weight: 400;
   line-height: 30px;
-  text-align: center;
 }
-
+.font-b2-400 {
+  font-family: "Quicksand", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+}
 .font-b3-400{
   font-family: "Quicksand", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
-  text-align: center;
 }
-
+.font-b4-500{
+  font-family: "Quicksand", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+}
 .btn-white{
   background-color: #D9DCFB;
   border-radius: 14px;
@@ -58,4 +73,61 @@ code {
   font-weight: 700;
   line-height: 12px;
   text-align: center;
+}
+
+.btn-blue{
+  background-color: #8D97F4;
+  border-radius: 14px;
+  color:#0D102F;
+  font-family: "SUSE", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+  text-align: center;
+}
+.btn-grey{
+  background-color: #292929;
+  border-radius: 16px;
+  color:#fff;
+  height: 32px;
+  display: flex;
+  column-gap: 16px;
+}
+.btn-grey1{
+  background-color: #292929;
+  border-radius: 16px;
+  color:#fff;
+  height: 32px;
+  width: fit-content;
+  padding : 8px 16px;
+  display: flex;
+  column-gap: 8px;
+}
+.input-text{
+  max-height: 40px;
+  height: 100%;
+  background-color: #292929;
+  border-radius: 20px;
+  padding: 8px 16px;
+}
+.input-select
+{
+  appearance: none; /* For most browsers */
+  -webkit-appearance: none; /* For Safari */
+  -moz-appearance: none; /* For Firefox */
+  background: url('../src/assets/imgs/login/ic_arrow_down.png') no-repeat right 10px center;
+  background-size: 24px 24px;
+  padding-right: 30px; /* Space for the custom arrow */
+  position: relative;
+  border: 1px solid #292929;
+  background-color: #292929;
+  color: #D9DCFB;
+}
+.img-btn{
+  background: none;
+  border: none;
+  opacity: 1;
+}
+.img-btn:hover{
+  opacity: 0.7;
 }

@@ -34,6 +34,7 @@ export const Step1: React.FC = () => {
                     <div className='bg-[#141414]  h-[8px] w-full'></div>
                     <div className='bg-[#141414]  h-[8px] w-full'></div>
                     <div className='bg-[#141414]  h-[8px] w-full' ></div>
+                    <div className='bg-[#141414]  h-[8px] w-full' ></div>
                     <div className='bg-[#141414]  h-[8px] w-full rounded-r-lg'></div>
                 </div>
             </div>
