@@ -25,9 +25,6 @@ export const imageAssets = {
   williams: `${LOGIN_IMAGES}/williams.png`,
   profile: `${ASSET_IMAGES}/profile.png`,
   symbol: `${ASSET_IMAGES}/symbol.png`,
-  creatives: `${ASSET_IMAGES}/creatives.svg`,
-  reports: `${ASSET_IMAGES}/reports.svg`,
-  strategies: `${ASSET_IMAGES}/strategies.svg`,
 };
 
 export const iconAssets = {

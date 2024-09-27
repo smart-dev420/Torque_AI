@@ -20,7 +20,7 @@ export const Step1: React.FC = () => {
                         Welcome to Torque AI! Let's set up your account to unlock powerful marketing insights.
                     </div>
                     <div className='pt-[32px] w-full max-h-[382px] h-full'>
-                        
+                        <img src={imageAssets.content} alt='Video' />
                     </div>
                     <div className='pt-[8px] font-b3-400 font-grey1'>
                         Watch Explainer Video
