@@ -1,5 +1,5 @@
 import { imageAssets } from '../../utils/constant';
-import { useRouter } from '../../routes/hooks/index';
+import { useRouter } from '../../routes/hooks';
 import { ProgressBar } from './progressbar';
 export const Step1: React.FC = () => {
     const router = useRouter();

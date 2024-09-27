@@ -6,7 +6,7 @@ import { ProgressBar } from './progressbar';
 export const Step6: React.FC = () => {
     const router = useRouter();
     const handleNext = () => {
-        router.push('/login/step6');
+        router.push('/dashboard');
     }
     const handleBack = () => {
         router.push('/login/step5');

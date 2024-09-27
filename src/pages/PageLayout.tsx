@@ -6,12 +6,12 @@ export const PageLayout: React.FC<{
   children: ReactNode;
 }> = ({ children }) => {
   return (
-    <div className={`flex flex-row max-w-[1920px] h-[100vh]`}>
-        <SideBar />
-        <div className="flex flex-col w-full m-[32px]" >
-            <Navbar />
+    <div className={`flex flex-row h-[100vh]`}>
+      <SideBar />
+      <div className="flex flex-col w-full m-[32px]">
+        <Navbar />
         {children}
-        </div>
+      </div>
     </div>
   );
 };

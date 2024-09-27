@@ -1,17 +1,25 @@
 export const lightTheme = {
-  foreground: "#000000",
-  background: "#EBEBEB",
-  buttonBackground: "#0D102F",
-  color: "#000000",
+  name: 'light',
+  foreground: "#EBEBEB",
+  background: "#FFFFFF",
+  buttonBackground: "#EBEBEB",
+  activeButtonBackground: "#0D102F",
+  inputBackground: "#D6D6D6",
+  color: "#0D102F",
+  activeColor: "#D9DCFB",
   primary: "#0092e3",
-  font: "Nunito",
+  shadowColor: "rgba(0, 0, 0, 0.9)",
 };
 
 export const darkTheme = {
+  name:'dark',
   foreground: "#141414",
   background: "#000000",
-  buttonBackground: "#D9DCFB",
-  color: "#ffffff",
+  buttonBackground: "#141414",
+  activeButtonBackground: "#D9DCFB",
+  inputBackground: "#292929",
+  color: "#D9DCFB",
+  activeColor: "#0D102F",
   primary: "#0017e3",
-  font: "Nunito",
+  shadowColor: "rgba(255, 255, 255, 0.9)",
 };
