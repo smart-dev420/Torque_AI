@@ -137,6 +137,18 @@ code {
   font-size: 12px;
   line-height: 12px;
 }
+.letter-f16-400{
+  font-family: "SUSE", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 12px;
+}
+.letter-f18-400{
+  font-family: "SUSE", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 12px;
+}
 .letter-f20-400{
   font-family: "Effra", sans-serif;
   font-weight: 400;

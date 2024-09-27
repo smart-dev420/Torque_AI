@@ -15,6 +15,7 @@ import LiveHelpOutlinedIcon from "@mui/icons-material/LiveHelpOutlined";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useRouter } from "../../routes/hooks/index";
+import Tooltip from "@mui/material/Tooltip";
 interface IconButtonData {
   icon: ReactElement;
   text: string;
@@ -76,22 +77,52 @@ export const SideBar = () => {
   const handleGoPage = (url: string) => {
     router.push(`/${url}`);
   };
+  const [isSidebar, setIsSidebar] = useState<boolean>(() => {
+    const storedValue = localStorage.getItem("isSidebar");
+    console.log("res - " + storedValue);
+    if (storedValue === null) return true;
+    return storedValue === "true";
+  });
+  console.log(`${isSidebar}`);
   return (
     <div
-      className={`w-[316px] m-[32px] rounded-[16px]`}
+      className={`${
+        isSidebar ? "w-[316px]" : "w-[120px]"
+      } m-[32px] rounded-[16px]`}
       style={{ backgroundColor: themeContext?.theme.foreground }}
     >
       <div className="flex flex-col m-[25px] gap-y-[60px]">
-        <div className="flex flex-row justify-between">
-          <img src={imageAssets.logo} alt="Symbol" width={105} height={24} />
-          <img
-            src={iconAssets.ic_close}
-            alt="Close"
-            className="cursor-pointer"
-          />
+        <div className="flex flex-row justify-start items-center gap-x-[16px]">
+          <img src={imageAssets.symbol} alt="Symbol" width={25} height={24} />
+
+          <div className="flex flex-row justify-between letter-f18-400 w-full">
+            <div
+              className="letter-f18-400"
+              style={{ display: isSidebar ? "block" : "none" }}
+            >
+              Torque &nbsp;
+              <label style={{ color: "#4152EC" }}>AI</label>
+            </div>
+
+            <img
+              src={iconAssets.ic_close}
+              alt="Close"
+              className="cursor-pointer"
+              onClick={() => {
+                setIsSidebar((prevState) => {
+                  const newState = !prevState;
+                  localStorage.setItem(
+                    "isSidebar",
+                    newState ? "true" : "false"
+                  );
+                  return newState;
+                });
+              }}
+            />
+          </div>
         </div>
 
-        <div className="flex flex-col gap-y-[12px] w-[200px]">
+        <div className="flex flex-col gap-y-[12px]">
           {buttonList.map((item, index) => (
             <IconButton
               key={index}
@@ -100,52 +131,108 @@ export const SideBar = () => {
               icon={item.icon}
               text={item.text}
               onClick={() => handleGoPage(item.url)}
+              isSidebar={isSidebar}
             />
           ))}
         </div>
 
-        <div
-          className="flex flex-col justify-center items-center min-h-[132px] rounded-[8px] w-full p-[24px] gap-y-[10px]"
-          style={{
-            backgroundColor: themeContext?.theme.activeButtonBackground,
+        <Tooltip
+          title={isSidebar ? "" : "Go Pro"}
+          placement="right"
+          arrow
+          PopperProps={{
+            sx: {
+              "& .MuiTooltip-tooltip": {
+                color: themeContext?.theme.activeColor,
+                backgroundColor: themeContext?.theme.activeButtonBackground,
+                fontSize: "16px",
+                paddingX: "20px",
+                paddingY: "5px",
+              },
+              "& .MuiTooltip-arrow": {
+                color: themeContext?.theme.activeButtonBackground,
+              },
+            },
           }}
         >
-          <UnlockIcon isActive={true} />
-          <label
-            className="letter-f12-700"
-            style={{ color: themeContext?.theme.activeColor }}
-          >
-            Unlock Full Access
-          </label>
-          <button
-            className="w-full py-[8px] rounded-[20px] letter-f12-700"
+          <div
+            className="flex flex-col justify-center items-center rounded-[8px] w-full p-[24px] gap-y-[10px]"
             style={{
-              border: "1px solid black",
-              color: themeContext?.theme.activeColor,
+              backgroundColor: themeContext?.theme.activeButtonBackground,
             }}
           >
-            Go Pro
-          </button>
-        </div>
+            <div
+              className="cursor-pointer"
+              onClick={() => {
+                if (!isSidebar) {
+                    console.log('  Go Pro  ');
+                }
+              }}
+            >
+              <UnlockIcon isActive={true} />
+            </div>
+            <label
+              className="letter-f12-700"
+              style={{
+                color: themeContext?.theme.activeColor,
+                display: isSidebar ? "block" : "none",
+              }}
+            >
+              Unlock Full Access
+            </label>
+            <button
+              className="w-full py-[8px] rounded-[20px] letter-f12-700"
+              style={{
+                border: "1px solid black",
+                color: themeContext?.theme.activeColor,
+                display: isSidebar ? "block" : "none",
+              }}
+            >
+              Go Pro
+            </button>
+          </div>
+        </Tooltip>
 
-        <div
-          className="flex flex-row items-center justify-center gap-x-[5px] px-[16px] py-[8px] cursor-pointer rounded-[8px] letter-f12-700"
-          style={{
-            backgroundColor: themeContext?.theme.activeButtonBackground,
-            color: themeContext?.theme.activeColor,
+        <Tooltip
+          title={isSidebar ? "" : "End Session"}
+          placement="right"
+          arrow
+          PopperProps={{
+            sx: {
+              "& .MuiTooltip-tooltip": {
+                color: themeContext?.theme.activeColor,
+                backgroundColor: themeContext?.theme.activeButtonBackground,
+                fontSize: "16px",
+                paddingX: "20px",
+                paddingY: "5px",
+              },
+              "& .MuiTooltip-arrow": {
+                color: themeContext?.theme.activeButtonBackground,
+              },
+            },
           }}
-          onClick={() => handleGoPage("login")}
         >
-          <LogoutOutlinedIcon sx={{ width: "20px", color: "#6775F0" }} />
-          <label
-            className="cursor-pointer"
+          <div
+            className="flex flex-row items-center justify-center gap-x-[5px] px-[16px] py-[8px] cursor-pointer rounded-[8px] letter-f12-700"
             style={{
+              backgroundColor: themeContext?.theme.activeButtonBackground,
               color: themeContext?.theme.activeColor,
             }}
+            onClick={() => handleGoPage("login")}
           >
-            End Session
-          </label>
-        </div>
+            <LogoutOutlinedIcon sx={{ width: "20px", color: "#6775F0" }} />
+
+            <label
+              className="cursor-pointer"
+              style={{
+                color: themeContext?.theme.activeColor,
+                display: isSidebar ? "block" : "none",
+              }}
+            >
+              End Session
+            </label>
+          </div>
+        </Tooltip>
       </div>
     </div>
   );
@@ -157,6 +244,7 @@ interface IconButtonProps {
   icon: ReactElement;
   text: string;
   onClick: MouseEventHandler<HTMLDivElement>;
+  isSidebar: boolean;
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -165,6 +253,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   icon,
   text,
   onClick,
+  isSidebar,
 }) => {
   const themeContext = useContext(ThemeContext);
   const [isHovered, setIsHovered] = useState(false);
@@ -179,38 +268,61 @@ export const IconButton: React.FC<IconButtonProps> = ({
     enhancedIcon = <ReportsIcon isActive={isActive} isHovered={isHovered} />;
   }
   return (
-    <div
-      className="flex flex-row gap-x-[16px] px-[16px] py-[8px] cursor-pointer rounded-[8px] letter-f20-400"
-      style={{
-        backgroundColor: isActive
-          ? themeContext?.theme.activeButtonBackground
-          : isHovered
-          ? themeContext?.theme.hoverBackground
-          : themeContext?.theme.buttonBackground,
-        color: isActive
-          ? themeContext?.theme.activeColor
-          : isHovered
-          ? themeContext?.theme.hoverColor
-          : themeContext?.theme.color,
+    <Tooltip
+      title={isSidebar ? "" : text}
+      placement="right"
+      arrow
+      PopperProps={{
+        sx: {
+          "& .MuiTooltip-tooltip": {
+            color: themeContext?.theme.activeColor,
+            backgroundColor: themeContext?.theme.activeButtonBackground,
+            fontSize: "16px",
+            paddingX: "20px",
+            paddingY: "5px",
+          },
+          "& .MuiTooltip-arrow": {
+            color: themeContext?.theme.activeButtonBackground,
+          },
+        },
       }}
-      onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      {enhancedIcon}
-      <label
-        className="cursor-pointer"
+      <div
+        className={`${
+          isSidebar ? "" : "justify-center"
+        } flex flex-row items-center gap-x-[16px] px-[16px] py-[8px] cursor-pointer rounded-[8px] letter-f20-400`}
         style={{
+          backgroundColor: isActive
+            ? themeContext?.theme.activeButtonBackground
+            : isHovered
+            ? themeContext?.theme.hoverBackground
+            : themeContext?.theme.buttonBackground,
           color: isActive
             ? themeContext?.theme.activeColor
             : isHovered
             ? themeContext?.theme.hoverColor
             : themeContext?.theme.color,
         }}
+        onClick={onClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        {text}
-      </label>
-    </div>
+        {enhancedIcon}
+        <label
+          className="cursor-pointer"
+          style={{
+            color: isActive
+              ? themeContext?.theme.activeColor
+              : isHovered
+              ? themeContext?.theme.hoverColor
+              : themeContext?.theme.color,
+            display: isSidebar ? "block" : "none",
+          }}
+        >
+          {text}
+        </label>
+      </div>
+    </Tooltip>
   );
 };
 
@@ -236,9 +348,9 @@ export const StrategiesIcon: React.FC<{
             ? themeContext?.theme.hoverColor
             : themeContext?.theme.color
         }
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12 12V21"
@@ -249,9 +361,9 @@ export const StrategiesIcon: React.FC<{
             ? themeContext?.theme.hoverColor
             : themeContext?.theme.color
         }
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M11 2.57735C11.6188 2.22008 12.3812 2.22008 13 2.57735L19.6603 6.42265C20.2791 6.77992 20.6603 7.44017 20.6603 8.1547V15.8453C20.6603 16.5598 20.2791 17.2201 19.6603 17.5774L13 21.4226C12.3812 21.7799 11.6188 21.7799 11 21.4226L4.33975 17.5774C3.72094 17.2201 3.33975 16.5598 3.33975 15.8453V8.1547C3.33975 7.44017 3.72094 6.77992 4.33975 6.42265L11 2.57735Z"
@@ -262,9 +374,9 @@ export const StrategiesIcon: React.FC<{
             ? themeContext?.theme.hoverColor
             : themeContext?.theme.color
         }
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8.5 4.5L16 9"
@@ -275,9 +387,9 @@ export const StrategiesIcon: React.FC<{
             ? themeContext?.theme.hoverColor
             : themeContext?.theme.color
         }
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -361,9 +473,9 @@ export const ReportsIcon: React.FC<{
             ? themeContext?.theme.hoverColor
             : themeContext?.theme.color
         }
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9 12H15"
@@ -374,9 +486,9 @@ export const ReportsIcon: React.FC<{
             ? themeContext?.theme.hoverColor
             : themeContext?.theme.color
         }
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9 16H12"
@@ -387,9 +499,9 @@ export const ReportsIcon: React.FC<{
             ? themeContext?.theme.hoverColor
             : themeContext?.theme.color
         }
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
@@ -400,9 +512,9 @@ export const ReportsIcon: React.FC<{
             ? themeContext?.theme.hoverColor
             : themeContext?.theme.color
         }
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -423,9 +535,9 @@ export const UnlockIcon: React.FC<{ isActive: boolean }> = ({ isActive }) => {
         stroke={
           isActive ? themeContext?.theme.activeColor : themeContext?.theme.color
         }
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
