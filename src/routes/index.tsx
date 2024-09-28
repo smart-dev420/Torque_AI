@@ -7,6 +7,7 @@ import { Step4 } from "../pages/login/step4";
 import { Step5 } from "../pages/login/step5";
 import { Step6 } from "../pages/login/step6";
 import { PageLayout } from "../pages/PageLayout";
+import { Dashboard } from "../pages/dashboard";
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -49,7 +50,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "dashboard",
-        element: <></>,
+        element: <Dashboard />,
         errorElement: <NotFound />,
       },
       {

@@ -9,6 +9,7 @@ export const lightTheme = {
   activeColor: "#D9DCFB",
   hoverBackground: "#FFFFFF",
   hoverColor: "#4152EC",
+  titleColor: "#343434",
   primary: "#0092e3",
   shadowColor: "rgba(0, 0, 0, 0.9)",
 };
@@ -24,6 +25,7 @@ export const darkTheme = {
   activeColor: "#0D102F",
   hoverBackground: "#292929",
   hoverColor: "#4152EC",
+  titleColor: "#CDCDCD",
   primary: "#0017e3",
   shadowColor: "rgba(255, 255, 255, 0.9)",
 };
