@@ -12,11 +12,14 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { ChartData, LineChartComponent } from "../../components/LineChartComponent";
 
-const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-const xData = [5400, 1698, 1800, 308, 4800, 3800, 4300];
-const xLabels = ["Mon", "Tue", "Wed", "Thrs", "Fri", "Sat", "Sun"];
+const testData: ChartData = {
+  firstData: [4000, 3000, 2000, 2780, 1890, 2390, 3490],
+  secondData: [2400, 1398, 9800, 3908, 4800, 3800, 4300],
+  thirdData: [5400, 1698, 1800, 308, 4800, 3800, 4300],
+  xLabel: ["Mon", "Tue", "Wed", "Thrs", "Fri", "Sat", "Sun"],
+}
 
 export const Dashboard = () => {
   const themeContext = useContext(ThemeContext);
@@ -104,58 +107,7 @@ export const Dashboard = () => {
                 performance="80"
               />
             </div>
-            <LineChart
-              height={300}
-              series={[
-                {
-                  data: pData,
-                  color: "#41ECCD",
-                },
-                {
-                  data: uData,
-                  color: "#ECBC41",
-                },
-                {
-                  data: xData,
-                  color: "#41B9EC",
-                },
-              ]}
-              xAxis={[
-                {
-                  scaleType: "point",
-                  data: xLabels,
-                  labelFontSize: 14,
-                  labelStyle: { fill: "red" },
-                },
-              ]}
-              yAxis={[
-                {
-                  id: "leftAxisId",
-                  labelFontSize: 14,
-                },
-                {
-                  id: "rightAxisId",
-                  labelFontSize: 14,
-                },
-              ]}
-              sx={{
-                color: themeContext?.theme.color,
-                "& .MuiChartsAxis-tickLabel": {
-                  fill: themeContext?.theme.color + ' !important',
-                },
-                "& .MuiChartsGrid-line": {
-                  stroke: "#27318E !important",
-                },
-                "& .MuiChartsGrid-root": {
-                  stroke: "#27318E !important",
-                },
-                "& .MuiChartsAxis-line": {
-                  stroke: "#27318E !important",
-                },
-              }}
-              rightAxis="rightAxisId"
-              grid={{ vertical: true, horizontal: true }}
-            />
+            <LineChartComponent data={testData} />
             <div className="flex justify-end title-f12-700">
               <button className="px-[15px] py-[8px] rounded-[50px]" style={{backgroundColor: themeContext?.theme.activeButtonBackground, color:themeContext?.theme.activeColor}}>View Campaign Insights</button>
             </div>
@@ -166,7 +118,7 @@ export const Dashboard = () => {
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between">
-              <label>Camaign Performance</label>
+              <label>Campaign Performance</label>
               <button
                 className="letter-f12-700 px-[12px] py-[8px] rounded-[50px]"
                 style={{
@@ -220,7 +172,7 @@ export const CamaignItem: React.FC<{
   return (
     <div
       className="flex flex-row justify-between items-center gap-x-[8px] p-[8px] rounded-[2px] w-[33%]"
-      style={{ border: `1px solid ${color}` }}
+      style={{ border: `1px solid ${color}`, whiteSpace: 'nowrap' }}
     >
       <div className="flex flex-row items-center gap-x-[2px]">
         {icon}
