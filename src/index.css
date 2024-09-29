@@ -12,6 +12,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+tr {
+  height: 42px;
+  margin-bottom: 8px;
+}
+tbody > tr {
+  border-bottom: 1px solid var(--Background-Behind, #000000)
+}
+tbody > tr:last-child{
+  border:none;
+}
+tbody > tr > td{
+  padding:8px;
+}
+thead > tr > th{
+  padding:8px;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -24,6 +40,15 @@ code {
 .font-grey1 {
   color: #D9DCFB;
 }
+.font-faded{
+  color:#666666;
+}
+.font-button-700 {
+  font-family: "SUSE", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+}
 
 .font-h2-700 {
   font-family: "SUSE", sans-serif;
@@ -32,7 +57,15 @@ code {
   line-height: 40.32px;
 }
 
-.font-h5-700{
+.font-h3-700 {
+  font-family: "SUSE", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30.24px;
+
+}
+
+.font-h5-700 {
   font-family: "SUSE", sans-serif;
   font-size: 16px;
   font-weight: 700;
@@ -40,34 +73,46 @@ code {
 
 
 }
+
 .font-b1-400 {
   font-family: "Quicksand", sans-serif;
   font-size: 24px;
   font-weight: 400;
   line-height: 30px;
 }
+
 .font-b2-400 {
   font-family: "Quicksand", sans-serif;
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;
 }
-.font-b3-400{
+
+.font-b3-400 {
   font-family: "Quicksand", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
 }
-.font-b4-500{
+
+.font-b4-500 {
   font-family: "Quicksand", sans-serif;
   font-size: 12px;
   font-weight: 500;
   line-height: 15px;
 }
-.btn-white{
+
+.font-b5-500 {
+  font-family: "Quicksand", sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 10px;
+}
+
+.btn-white {
   background-color: #D9DCFB;
   border-radius: 14px;
-  color:#0D102F;
+  color: #0D102F;
   font-family: "SUSE", sans-serif;
   font-size: 12px;
   font-weight: 700;
@@ -75,111 +120,129 @@ code {
   text-align: center;
 }
 
-.btn-blue{
+.btn-blue {
   background-color: #8D97F4;
   border-radius: 14px;
-  color:#0D102F;
+  color: #0D102F;
   font-family: "SUSE", sans-serif;
   font-size: 12px;
   font-weight: 700;
   line-height: 12px;
   text-align: center;
 }
-.btn-grey{
+
+.btn-grey {
   background-color: #292929;
   border-radius: 16px;
-  color:#fff;
+  color: #fff;
   height: 32px;
   display: flex;
   column-gap: 16px;
 }
-.btn-grey1{
+
+.btn-grey1 {
   background-color: #292929;
   border-radius: 16px;
-  color:#fff;
+  color: #fff;
   height: 32px;
   width: fit-content;
-  padding : 8px 16px;
+  padding: 8px 16px;
   display: flex;
   column-gap: 8px;
 }
-.input-text{
+
+.input-text {
   max-height: 40px;
   height: 100%;
   background-color: #292929;
   border-radius: 20px;
   padding: 8px 16px;
 }
-.input-select
-{
-  appearance: none; /* For most browsers */
-  -webkit-appearance: none; /* For Safari */
-  -moz-appearance: none; /* For Firefox */
+
+.input-select {
+  appearance: none;
+  /* For most browsers */
+  -webkit-appearance: none;
+  /* For Safari */
+  -moz-appearance: none;
+  /* For Firefox */
   background: url('./ic_arrow_down.png') no-repeat right 10px center;
   background-size: 24px 24px;
-  padding-right: 30px; /* Space for the custom arrow */
+  padding-right: 30px;
+  /* Space for the custom arrow */
   position: relative;
   border: 1px solid #292929;
   background-color: #292929;
   color: #D9DCFB;
 }
-.img-btn{
+
+.img-btn {
   background: none;
   border: none;
   opacity: 1;
 }
-.img-btn:hover{
+
+.img-btn:hover {
   opacity: 0.7;
 }
-.letter-f12-700{
+
+.letter-f12-700 {
   font-family: "SUSE", sans-serif;
   font-weight: 700;
   font-size: 12px;
   line-height: 12px;
 }
-.letter-f16-400{
+
+.letter-f16-400 {
   font-family: "SUSE", sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 12px;
 }
-.letter-f18-400{
+
+.letter-f18-400 {
   font-family: "SUSE", sans-serif;
   font-weight: 400;
   font-size: 18px;
   line-height: 12px;
 }
-.letter-f20-400{
+
+.letter-f20-400 {
   font-family: "Effra", sans-serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
 }
-.title-f40-700{
+
+.title-f40-700 {
   font-family: "SUSE", sans-serif;
   font-weight: 700;
   font-size: 40px;
   line-height: 50.4px;
 }
-.title-f24-700{
+
+.title-f24-700 {
   font-family: "SUSE", sans-serif;
   font-weight: 700;
   font-size: 20px;
   line-height: 30.24px;
 }
-.title-f20-700{
+
+.title-f20-700 {
   font-family: "SUSE", sans-serif;
   font-weight: 700;
   font-size: 20px;
   line-height: 25.2px;
 }
-.title-f12-700{
+
+.title-f12-700 {
   font-family: "SUSE", sans-serif;
   font-weight: 700;
   font-size: 12px;
   line-height: 25.2px;
 }
-.title-f8-700{
+
+.title-f8-700 {
   font-family: "SUSE", sans-serif;
   font-weight: 500;
   font-size: 10px;

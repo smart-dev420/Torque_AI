@@ -8,6 +8,8 @@ import { Step5 } from "../pages/login/step5";
 import { Step6 } from "../pages/login/step6";
 import { PageLayout } from "../pages/PageLayout";
 import { Dashboard } from "../pages/dashboard";
+import { Strategies } from '../pages/strategies';
+import {Analaytics} from '../pages/analytics';
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -60,7 +62,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "strategies",
-        element: <></>,
+        element: <Strategies/>,
         errorElement: <NotFound />,
       },
       {
@@ -70,7 +72,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "analytics",
-        element: <></>,
+        element: <Analaytics/>,
         errorElement: <NotFound />,
       },
       {

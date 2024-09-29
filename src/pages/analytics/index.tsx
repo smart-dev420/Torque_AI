@@ -1,0 +1,154 @@
+import {
+    useContext,
+} from "react";
+import { ThemeContext } from "../../components/Theme/context";
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import ComputerOutlinedIcon from '@mui/icons-material/ComputerOutlined';
+import DiscountOutlinedIcon from '@mui/icons-material/DiscountOutlined';
+import ArrowOutwardOutlinedIcon from '@mui/icons-material/ArrowOutwardOutlined';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import { InfoAlert } from "../component/infoAlert";
+import { ItemList } from "../component/itemList";
+import { ItemInfoList } from "../component/itemInfoList";
+import { PerformingTable } from "./performingTable";
+import { KeyTable } from "./keyTable";
+import { Divider } from "@mui/material";
+export const Analaytics = () => {
+    const themeContext = useContext(ThemeContext);
+    return (
+        <div>
+            {/** Title Part */}
+            <div className="flex flex-row items-center my-[32px]">
+                <label
+                    className="title-f40-700 w-[30%]"
+                    style={{ color: themeContext?.theme.titleColor }}
+                >
+                    Analytics
+                </label>
+            </div>
+            {/** Content Part */}
+
+            <div className="grid grid-cols-12 gap-[32px]">
+                <div
+                    className="col-span-7 rounded-[8px] p-[24px] flex flex-col gap-[16px]"
+                    style={{ backgroundColor: themeContext?.theme.foreground }}
+                >
+                    <div className="flex flex-row justify-between ">
+                        <label className="font-h3-700">Performance Overview <ErrorOutlineIcon style={{ fontSize: '14px' }} /></label>
+                        <button
+                            className="px-[12px] py-[8px] rounded-[50px] font-button-700"
+                            style={{
+                                backgroundColor: themeContext?.theme.activeButtonBackground,
+                                color: themeContext?.theme.activeColor,
+                            }}
+                        >
+                            30d
+                        </button>
+                    </div>
+                    <div className="grid grid-cols-6 gap-[8px]">
+                        <div className="col-span-2">
+                            <ItemInfoList icon={<SendOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Clicks" content="460,000" />
+                        </div>
+                        <div className="col-span-2">
+                            <ItemInfoList icon={<ShoppingCartOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Conversions" content="28,500" />
+                        </div>
+                        <div className="col-span-2">
+                            <ItemInfoList icon={<VisibilityOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Impressions" content="8,200,000" />
+                        </div>
+                        <div className="col-span-3">
+                            <ItemInfoList icon={<ComputerOutlinedIcon style={{ fontSize: '8px' }} />} title="Overall CTR" content="5.6%" />
+                        </div>
+                        <div className="col-span-3">
+                            <ItemInfoList icon={<DiscountOutlinedIcon style={{ fontSize: '8px' }} />} title="Average CPA" content="$13.50" />
+                        </div>
+                    </div>
+                    <PerformingTable />
+                    <InfoAlert str="Consider reallocating part of the budget from Google Ads to Facebook Ads to balance the CPA while maintaining conversion rates." />
+                    <div style={{ position: 'relative' }} className="mb-[24px]">
+                        <button className="px-[12px] py-[8px] rounded-[50px] font-button-700 w-[153px]"
+                            style={{
+                                backgroundColor: themeContext?.theme.activeButtonBackground,
+                                color: themeContext?.theme.activeColor,
+                                position: 'absolute',
+                                right: '0px'
+                            }} >
+                            View Detailed Analytics
+                        </button>
+                    </div>
+                </div>
+                <div
+                    className="col-span-5 rounded-[8px] p-[24px] flex flex-col gap-[16px]"
+                    style={{ backgroundColor: themeContext?.theme.foreground , position:'relative'}}
+                >
+                    <div className="flex flex-row justify-between ">
+                        <label className="font-h3-700">Top Keyword Opportunities <ErrorOutlineIcon style={{ fontSize: '14px' }} /></label>
+                    </div>
+                    <KeyTable />
+                    <InfoAlert str="High demand for beginner-level stock market content. Leverage low-competition keywords to capture new investors."/>
+                    <div  className="mb-[24px]">
+                        <button className="px-[12px] py-[8px] rounded-[50px] font-button-700 w-[121px]"
+                            style={{
+                                backgroundColor: themeContext?.theme.activeButtonBackground,
+                                color: themeContext?.theme.activeColor,
+                                position: 'absolute',
+                                right: '16px',
+                                bottom:'16px'
+                            }} >
+                            Explore Keywords
+                        </button>
+                    </div>
+                </div>
+
+
+                <div
+                    className="col-span-5 rounded-[8px] p-[24px] flex flex-col gap-[16px]"
+                    style={{ backgroundColor: themeContext?.theme.foreground , position: 'relative' }}
+                >
+                    <div className="flex flex-row justify-between ">
+                        <label className="font-h3-700">Rising Trends and Outliers <ErrorOutlineIcon style={{ fontSize: '14px' }} /></label>
+                    </div>
+                    
+                    <div className="mb-[24px] mt-[24px]">
+
+                    <div className="rounded-[2px] flex flex-col gap-[13px] mb-[16px]">
+                        <div className="font-button-700">Green Investments</div>
+                        <div className="flex flex-row gap-[8px]">
+                            <ArrowOutwardOutlinedIcon style={{fontSize:'16px', color:'#4152EC'}}/>  
+                            <div className="font-b5-500 text-left">Create content highlighting environmentally responsible investment options like green REITs and sustainable stocks.</div>
+                        </div>
+                        <div className="flex flex-row gap-[8px] w-full">
+                            <ItemList icon={<LeaderboardIcon style={{fontSize:"12px"}}/>} title="Growth Rate" content="+150% in the past 30 days" />
+                            <ItemList icon={<VisibilityOutlinedIcon style={{fontSize:"12px"}}/>} title="Top Channels" content="LinkedIn, YouTube" />
+                        </div>
+                        
+                        <Divider style={{height:'2px', color:'#000'}}/>
+
+                        <div className="font-button-700">Crypto Diversification</div>
+                        <div className="flex flex-row gap-[8px]">
+                            <ArrowOutwardOutlinedIcon style={{fontSize:'16px', color:'#4152EC'}}/>  
+                            <div className="font-b5-500 text-left">Promote content focusing on diversified crypto portfolios, targeting younger investors interested in spreading risk.</div>
+                        </div>
+                        <div className="flex flex-row gap-[8px] w-full">
+                            <ItemList icon={<LeaderboardIcon style={{fontSize:"12px"}}/>} title="Growth Rate" content="+120% in the past 60 days" />
+                            <ItemList icon={<VisibilityOutlinedIcon style={{fontSize:"12px"}}/>} title="Top Channels" content="Twitter, Facebook" />
+                        </div>
+                    </div>
+                        <button className="px-[12px] py-[8px] rounded-[50px] font-button-700 w-[113px]"
+                            style={{
+                                backgroundColor: themeContext?.theme.activeButtonBackground,
+                                color: themeContext?.theme.activeColor,
+                                position: 'absolute',
+                                right: '16px',
+                                bottom:'16px'
+                            }} >
+                            Benchmark Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
