@@ -1,3 +1,4 @@
+import { Variants } from "framer-motion";
 import React from "react";
 
 export const ProgressBar: React.FC<{ step: number }> = ({ step }) => {
@@ -20,3 +21,39 @@ export const ProgressBar: React.FC<{ step: number }> = ({ step }) => {
     </div>
   );
 };
+
+export const pageVariant: Variants = {
+  initial: {
+      // x: '60%',
+      opacity: 0
+  },
+  initial2: {
+      x: '100%',
+      opacity: 0
+  },
+  animate: {
+      x: '0%',
+      opacity: 1,
+      transition: {
+          type: 'tween',
+          duration: 0.6,
+          ease: 'easeInOut'
+      }
+  },
+  exit: {
+      x: '-60%',
+      opacity: 0,
+      transition: {
+          duration: 0.6,
+          ease: 'easeInOut'
+      }
+  },
+  exit2: {
+      x: '60%',
+      opacity: 0,
+      transition: {
+          duration: 0.6,
+          ease: 'easeInOut'
+      }
+  }
+}
