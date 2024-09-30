@@ -43,11 +43,21 @@ code {
 .font-faded{
   color:#666666;
 }
+
+.Button,
 .font-button-700 {
   font-family: "SUSE", sans-serif;
   font-size: 12px;
   font-weight: 700;
-  line-height: 12px;
+  line-height: 25.2px;
+}
+
+.h1, h1,
+.font-h1-700 {
+  font-family: "SUSE", sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 40.32px;
 }
 
 .font-h2-700 {
@@ -57,6 +67,7 @@ code {
   line-height: 40.32px;
 }
 
+.h3, h3,
 .font-h3-700 {
   font-family: "SUSE", sans-serif;
   font-size: 24px;
@@ -65,13 +76,20 @@ code {
 
 }
 
+h4, .h4,
+.font-h5-700 {
+  font-family: "SUSE", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 25.2px;
+}
+
+h5, .h5,
 .font-h5-700 {
   font-family: "SUSE", sans-serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 20.16px;
-
-
 }
 
 .font-b1-400 {
@@ -102,6 +120,7 @@ code {
   line-height: 15px;
 }
 
+.b5,
 .font-b5-500 {
   font-family: "Quicksand", sans-serif;
   font-size: 8px;

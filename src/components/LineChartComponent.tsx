@@ -1,6 +1,4 @@
-import React, {
-  useContext,
-} from "react";
+import React, { useContext } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { ThemeContext } from "./Theme/context";
 export interface ChartData {
@@ -64,7 +62,7 @@ export const LineChartComponent: React.FC<{
         },
       }}
       rightAxis="rightAxisId"
-      grid={{ vertical: true, horizontal: true }}
+      grid={{ vertical: false, horizontal: true }}
     />
   );
 };

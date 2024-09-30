@@ -66,7 +66,7 @@ export const Navbar = () => {
         <img src={imageAssets.profile} alt="Profile" />
         <div className="flex flex-col">
           <label>Welcome</label>
-          <label>Chris askjdewoitjjdslk</label>
+          <label>Chris</label>
         </div>
         <div
           className="rounded-[100%] p-[10px] cursor-pointer"
