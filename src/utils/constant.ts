@@ -35,6 +35,8 @@ export const imageAssets = {
   indus3: `${DASHOBOARD_IMAGES}/industry3.png`,
   indus4: `${DASHOBOARD_IMAGES}/industry4.png`,
   creative: `${DASHOBOARD_IMAGES}/creative.png`,
+  performer:`${ASSET_IMAGES}/creatives/perfomer.png`,
+  secondary:`${ASSET_IMAGES}/creatives/second.png`,
 };
 
 export const iconAssets = {

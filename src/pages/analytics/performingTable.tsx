@@ -1,6 +1,6 @@
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
-import GoogleIcon from '@mui/icons-material/Google';
+import { FBIcon, GoogleIcon } from ".";
 export const PerformingTable: React.FC<{}> = () => {
     return (
         <table className="text-left font-b4-500">
@@ -16,7 +16,7 @@ export const PerformingTable: React.FC<{}> = () => {
             </thead>
             <tbody>
                 <tr>
-                    <td><GoogleIcon style={{color:'#0A66C2'}}/> </td>
+                    <td><GoogleIcon /> </td>
                     <td>3,200,000</td>
                     <td>460,000</td>
                     <td>28,500</td>
@@ -24,7 +24,7 @@ export const PerformingTable: React.FC<{}> = () => {
                     <td>$13.50</td>
                 </tr>
                 <tr>
-                    <td><FacebookOutlinedIcon style={{color:'#0A66C2'}}/>  </td>
+                    <td><FBIcon/>  </td>
                     <td>2,500,000</td>
                     <td>140,000</td>
                     <td>9,500</td>
