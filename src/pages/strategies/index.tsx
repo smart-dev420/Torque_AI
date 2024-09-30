@@ -23,16 +23,16 @@ export const Strategies = () => {
             </div>
             {/** Content Part */}
 
-            <div className="grid grid-cols-12 gap-[32px]">
+            <div className="grid grid-cols-12 gap-[32px]" >
                 <div
-                    className="col-span-7 rounded-[8px] p-[24px] flex flex-col gap-[16px]"
+                    className="col-span-7 rounded-[8px] p-[24px] flex flex-col gap-[16px] relative"
                     style={{ backgroundColor: themeContext?.theme.foreground }}
                 >
                     <div className="flex flex-row justify-between ">
                         <label className="font-h3-700">Explore High-Performing Strategies <ErrorOutlineIcon style={{ fontSize: '14px' }} /></label>
 
                         <button
-                            className="px-[12px] py-[8px] rounded-[50px] font-button-700"
+                            className="px-[12px]  rounded-[50px] font-button-700"
                             style={{
                                 backgroundColor: themeContext?.theme.activeButtonBackground,
                                 color: themeContext?.theme.activeColor,
@@ -43,30 +43,32 @@ export const Strategies = () => {
                     </div>
                     <PerformingTable />
                     <InfoAlert str="Educational content is performing exceptionally well; consider adding webinars to your crypto outreach strategy." />
-                    <div style={{position:'relative'}} className="mb-[24px]">
-                        <button className="px-[12px] py-[8px] rounded-[50px] font-button-700 w-[122px]"
+                    <div  className="mb-[24px]">
+                        <button className="px-[12px] rounded-[50px] font-button-700 w-[122px]"
                             style={{
                                 backgroundColor: themeContext?.theme.activeButtonBackground,
                                 color: themeContext?.theme.activeColor,
                                 position:'absolute',
-                                right:'0px'
+                                right:'16px',
+                                bottom:'16px'
                             }} >
                             Explore Strategies
                         </button>
                     </div>
                 </div>
                 <div
-                    className="col-span-5 rounded-[8px] p-[24px] flex flex-col gap-[16px]"
+                    className="col-span-5 rounded-[8px] p-[24px] flex flex-col gap-[16px] relative"
                     style={{ backgroundColor: themeContext?.theme.foreground }}
                 >
-                    <div className="flex flex-row justify-between ">
+                    <div className="flex flex-row justify-between relative">
                         <label className="font-h3-700">Blueprints for Success <ErrorOutlineIcon style={{ fontSize: '14px' }} /></label>
 
                         <button
-                            className="px-[12px] py-[8px] rounded-[50px] font-button-700"
+                            className="px-[12px] rounded-[50px] font-button-700"
                             style={{
                                 backgroundColor: themeContext?.theme.activeButtonBackground,
                                 color: themeContext?.theme.activeColor,
+                                
                             }}
                         >
                             30d
@@ -86,13 +88,14 @@ export const Strategies = () => {
                         <ItemList icon={<ErrorOutlineIcon style={{fontSize:"12px"}}/>} title="Predicted Impact" content="+12% increase in portfolio diversification sign-ups." />
                         
                     </div>
-                    <div style={{position:'relative'}} className="mb-[24px]">
-                        <button className="px-[12px] py-[8px] rounded-[50px] font-button-700 w-[98px]"
+                    <div  className="mb-[24px]">
+                        <button className="px-[12px] rounded-[50px] font-button-700 w-[98px]"
                             style={{
                                 backgroundColor: themeContext?.theme.activeButtonBackground,
                                 color: themeContext?.theme.activeColor,
                                 position:'absolute',
-                                right:'0px'
+                                right:'16px',
+                                bottom:'16px'
                             }} >
                             Use Blueprint
                         </button>
@@ -101,7 +104,7 @@ export const Strategies = () => {
                 
 
                 <div
-                    className="col-span-7 rounded-[8px] p-[24px] flex flex-col gap-[16px]"
+                    className="col-span-7 rounded-[8px] p-[24px] flex flex-col gap-[16px] relative"
                     style={{ backgroundColor: themeContext?.theme.foreground }}
                 >
                     <div className="flex flex-row justify-between ">
@@ -112,13 +115,14 @@ export const Strategies = () => {
 
                         <PersonCard title="Persona 2" author="Bold Brian – The Risk-Taker" age={30} perference="Cryptocurrencies, high-risk stocks." top="Twitter, Reddit, YouTube." tradit="Thrives on excitement, values high potential returns, influenced by peer endorsements." strategies="Influencer endorsements, performance highlights, exclusive investment tips." />
                     </div>
-                    <div style={{position:'relative'}} className="mb-[24px]">
-                        <button className="px-[12px] py-[8px] rounded-[50px] font-button-700 w-[102px]"
+                    <div className="mb-[24px]">
+                        <button className="px-[12px]  rounded-[50px] font-button-700 w-[102px]"
                             style={{
                                 backgroundColor: themeContext?.theme.activeButtonBackground,
                                 color: themeContext?.theme.activeColor,
                                 position:'absolute',
-                                right:'0px'
+                                right:'16px',
+                                bottom:'16px'
                             }} >
                             View Personas
                         </button>
@@ -126,7 +130,7 @@ export const Strategies = () => {
                 </div>
 
                 <div
-                    className="col-span-5 rounded-[8px] p-[24px] flex flex-col gap-[16px]"
+                    className="col-span-5 rounded-[8px] p-[24px] flex flex-col gap-[16px] relative"
                     style={{ backgroundColor: themeContext?.theme.foreground }}
                 >
                     <div className="flex flex-row justify-between ">
@@ -158,13 +162,14 @@ export const Strategies = () => {
                         </div>   
                         <InfoAlert str="WealthGrowth’s content-driven approach outperforms typical email campaigns by focusing on detailed investment insights."/>
                     </div>
-                    <div style={{position:'relative'}} className="mb-[24px] mt-[24px]">
-                        <button className="px-[12px] py-[8px] rounded-[50px] font-button-700 w-[113px]"
+                    <div className="mb-[24px] mt-[24px]">
+                        <button className="px-[12px]  rounded-[50px] font-button-700 w-[113px]"
                             style={{
                                 backgroundColor: themeContext?.theme.activeButtonBackground,
                                 color: themeContext?.theme.activeColor,
                                 position:'absolute',
-                                right:'0px'
+                                right:'16px',
+                                bottom:'16px'
                             }} >
                             Benchmark Now
                         </button>
