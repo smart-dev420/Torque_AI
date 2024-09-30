@@ -1,6 +1,4 @@
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
-import GoogleIcon from '@mui/icons-material/Google';
+
 export const KeyTable: React.FC<{}> = () => {
     return (
         <table className="text-left font-b5-500 border-spacing-2 table-auto">
