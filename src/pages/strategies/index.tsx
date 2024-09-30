@@ -135,13 +135,13 @@ export const Strategies = () => {
                     <div className="flex flex-col gap-[8px]">
                         <div className="flex flex-row gap-[8px]">
                             <div className="font-h5-700">WealthGrowth</div>
-                            <div className="bg-[#0D102F] font-button-700 self-center p-[4px]">Content-Driven Email Nurturing for REITs</div>
+                            <div className=" font-button-700 self-center p-[4px]" style={{backgroundColor:themeContext?.theme.activeColor}}>Content-Driven Email Nurturing for REITs</div>
                         </div>
                         <div className="flex flex-row font-left justify-between">
-                            <div className="font-b5-500 font-grey1 flex flex-col gap-[8px]"><div>Open Rate</div>  <div>42%</div></div>
-                            <div className="font-b5-500 font-grey1 flex flex-col gap-[8px]"><div>Click Rate</div> <div>12%</div></div>
-                            <div className="font-b5-500 font-grey1 flex flex-col gap-[8px]"><div>Conversion Rate </div> <div>15%</div> </div>
-                            <div className="font-b5-500 font-grey1 flex flex-col gap-[8px]"><div>Spend Efficiency  </div> <div>85/100</div> </div>
+                            <div className="font-b5-500  flex flex-col gap-[8px]"><div>Open Rate</div>  <div>42%</div></div>
+                            <div className="font-b5-500  flex flex-col gap-[8px]"><div>Click Rate</div> <div>12%</div></div>
+                            <div className="font-b5-500  flex flex-col gap-[8px]"><div>Conversion Rate </div> <div>15%</div> </div>
+                            <div className="font-b5-500  flex flex-col gap-[8px]"><div>Spend Efficiency  </div> <div>85/100</div> </div>
                         </div>   
                         <InfoAlert str="WealthGrowth’s content-driven approach outperforms typical email campaigns by focusing on detailed investment insights."/>
                     </div>
@@ -149,12 +149,12 @@ export const Strategies = () => {
                     <div className="flex flex-col gap-[8px]">
                         <div className="flex flex-row gap-[8px]">
                             <div className="font-h5-700">CryptoChamp</div>
-                            <div className="bg-[#0D102F] font-button-700 self-center p-[4px]">Influencer-Led Crypto Challenges</div>
+                            <div className=" font-button-700 self-center p-[4px]" style={{backgroundColor:themeContext?.theme.activeColor}}>Influencer-Led Crypto Challenges</div>
                         </div>
                         <div className="flex flex-row font-left justify-between">
-                            <div className="font-b5-500 font-grey1 flex flex-col gap-[8px]"><div>Engagement Rate</div>  <div>8.5%</div></div>
-                            <div className="font-b5-500 font-grey1 flex flex-col gap-[8px]"><div>Conversion Rate</div> <div>5.2%</div></div>
-                            <div className="font-b5-500 font-grey1 flex flex-col gap-[8px]"><div>Spend Efficiency  </div> <div>78/100</div> </div>
+                            <div className="font-b5-500 flex flex-col gap-[8px]"><div>Engagement Rate</div>  <div>8.5%</div></div>
+                            <div className="font-b5-500 flex flex-col gap-[8px]"><div>Conversion Rate</div> <div>5.2%</div></div>
+                            <div className="font-b5-500 flex flex-col gap-[8px]"><div>Spend Efficiency  </div> <div>78/100</div> </div>
                         </div>   
                         <InfoAlert str="WealthGrowth’s content-driven approach outperforms typical email campaigns by focusing on detailed investment insights."/>
                     </div>
