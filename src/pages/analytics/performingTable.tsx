@@ -1,5 +1,4 @@
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import { FBIcon, GoogleIcon } from ".";
 export const PerformingTable: React.FC<{}> = () => {
     return (
