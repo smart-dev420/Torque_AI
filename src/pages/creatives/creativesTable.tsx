@@ -59,7 +59,7 @@ export const CreativesTable: React.FC<{}> = () => {
                                 }}
                             >
                                 <LocalFireDepartmentIcon style={{color:'#4152EC', fontSize:'14px'}}/>
-                                Best
+                                Second Best
                             </button>
                         </div>
                     </td>

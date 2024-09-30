@@ -138,7 +138,7 @@ export const Strategies = () => {
                     </div>
                     <div className="flex flex-col gap-[8px]">
                         <div className="flex flex-row gap-[8px]">
-                            <div className="font-h5-700">WealthGrowth</div>
+                            <div className="font-h5-700 self-center">WealthGrowth</div>
                             <div className=" font-button-700 self-center p-[4px]" style={{backgroundColor:themeContext?.theme.activeColor}}>Content-Driven Email Nurturing for REITs</div>
                         </div>
                         <div className="flex flex-row font-left justify-between">
@@ -153,6 +153,7 @@ export const Strategies = () => {
                     <div className="flex flex-col gap-[8px]">
                         <div className="flex flex-row gap-[8px]">
                             <div className="font-h5-700">CryptoChamp</div>
+                            <div className="font-h5-700 self-center">CryptoChamp</div>
                             <div className=" font-button-700 self-center p-[4px]" style={{backgroundColor:themeContext?.theme.activeColor}}>Influencer-Led Crypto Challenges</div>
                         </div>
                         <div className="flex flex-row font-left justify-between">
