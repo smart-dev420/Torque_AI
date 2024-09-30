@@ -108,6 +108,7 @@ export const SideBar = () => {
               src={iconAssets.ic_close}
               alt="Close"
               className="cursor-pointer"
+              style={{transform: isSidebar ? "rotate(0deg)" : "rotate(180deg)"}}
               onClick={() => {
                 setIsSidebar((prevState) => {
                   const newState = !prevState;

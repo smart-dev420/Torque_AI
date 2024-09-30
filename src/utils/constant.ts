@@ -3,6 +3,7 @@ export const ASSET_IMAGES = process.env.REACT_APP_ASSETS_PATH + "/images";
 export const ASSET_ICONS = process.env.REACT_APP_ASSETS_PATH + "/icons";
 
 const LOGIN_IMAGES = ASSET_IMAGES + "/login";
+const DASHOBOARD_IMAGES = ASSET_IMAGES + "/dashboard";
 export const imageAssets = {
   analytics: `${LOGIN_IMAGES}/analytics.png`,
   ashely: `${LOGIN_IMAGES}/ashely.png`,
@@ -25,6 +26,15 @@ export const imageAssets = {
   williams: `${LOGIN_IMAGES}/williams.png`,
   profile: `${ASSET_IMAGES}/profile.png`,
   symbol: `${ASSET_IMAGES}/symbol.png`,
+  temp1: `${DASHOBOARD_IMAGES}/temp1.png`,
+  temp2: `${DASHOBOARD_IMAGES}/temp2.png`,
+  temp3: `${DASHOBOARD_IMAGES}/temp3.png`,
+  temp4: `${DASHOBOARD_IMAGES}/temp4.png`,
+  indus1: `${DASHOBOARD_IMAGES}/industry1.png`,
+  indus2: `${DASHOBOARD_IMAGES}/industry2.png`,
+  indus3: `${DASHOBOARD_IMAGES}/industry3.png`,
+  indus4: `${DASHOBOARD_IMAGES}/industry4.png`,
+  creative: `${DASHOBOARD_IMAGES}/creative.png`,
 };
 
 export const iconAssets = {
@@ -36,6 +46,7 @@ export const iconAssets = {
   ic_radio_disabled: `${ASSET_ICONS}/ic_radio_disabled.png`,
   ic_analyze: `${ASSET_ICONS}/ic_analyze.png`,
   ic_close: `${ASSET_ICONS}/ic_close.png`,
+  ic_up_arrow: `${ASSET_ICONS}/ic_up_arrow.png`,
 };
 
 export const scrollTop = () => {

@@ -10,6 +10,7 @@ import { PageLayout } from "../pages/PageLayout";
 import { Dashboard } from "../pages/dashboard";
 import { Strategies } from '../pages/strategies';
 import {Analaytics} from '../pages/analytics';
+import { Campaigns } from "../pages/campaigns";
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -57,7 +58,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "campaigns",
-        element: <></>,
+        element: <Campaigns />,
         errorElement: <NotFound />,
       },
       {
