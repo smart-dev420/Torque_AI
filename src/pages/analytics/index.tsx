@@ -190,9 +190,7 @@ export const Analaytics = () => {
                     <div className="flex flex-row justify-between ">
                         <label className="font-h3-700">Rising Trends and Outliers <ErrorOutlineIcon style={{ fontSize: '14px' }} /></label>
                     </div>
-
                     <div className="mb-[24px]">
-
                         <div className="rounded-[2px] flex flex-col gap-[13px] mb-[16px]">
                             <div className="font-button-700">Green Investments</div>
                             <div className="flex flex-row gap-[8px]">
