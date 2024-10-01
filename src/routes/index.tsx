@@ -1,6 +1,6 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import { NotFound } from "../components/NotFound";
-import { Step1 } from "../pages/login/step1";
+import {Index} from '../pages/login/index'
 import { Step2 } from "../pages/login/step2";
 import { Step3 } from "../pages/login/step3";
 import { Step4 } from "../pages/login/step4";
@@ -15,7 +15,7 @@ import { Creatives } from "../pages/creatives";
 export const router = createBrowserRouter([
   {
     path: "/login",
-    element: <Step1 />,
+    element: <Index />,
     errorElement: <NotFound />,
   },
   {

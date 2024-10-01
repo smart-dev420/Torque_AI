@@ -152,6 +152,7 @@ export const Strategies = () => {
 
                     <div className="flex flex-col gap-[8px]">
                         <div className="flex flex-row gap-[8px]">
+                            <div className="font-h5-700">CryptoChamp</div>
                             <div className="font-h5-700 self-center">CryptoChamp</div>
                             <div className=" font-button-700 self-center p-[4px]" style={{backgroundColor:themeContext?.theme.activeColor}}>Influencer-Led Crypto Challenges</div>
                         </div>

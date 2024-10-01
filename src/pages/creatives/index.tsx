@@ -134,7 +134,7 @@ export const Creatives = () => {
                         </div>
                         <div className="flex flex-row gap-[8px] w-full">
                             <img src={imageAssets.secondary} alt="creatives" className="object-cover w-2/5 shrink-0" />
-                            <div className="flex flex-col gap-[8px]">
+                            <div className="flex flex-col gap-[8px] w-3/5">
                                 <div className="flex flex-row gap-[8px]">
                                     <ItemCreatives icon={<ShoppingCartOutlinedIcon style={{ fontSize: '8px' }} />} title="Conversions" content="850" />
                                     <ItemCreatives icon={<SendOutlinedIcon style={{ fontSize: '8px' }} />} title="Clicks" content="22,000" />
@@ -217,7 +217,7 @@ export const Creatives = () => {
                             <div className="flex flex-row gap-[8px] w-full" >
                                 <div className="flex flex-row gap-[8px] p-[16px] w-1/2" style={{ backgroundColor: themeContext?.theme.activeColor }}>
                                     <InstagramIcon className="self-center" />
-                                    <p className="font-button-700">Crypto vs. Stocks: Where to Invest Now</p>
+                                    <p className="font-button-700 self-center">Crypto vs. Stocks: Where to Invest Now</p>
                                 </div>
                                 <div className="flex flex-col gap-[8px] w-1/2">
                                     <ItemCreatives icon={<ShoppingCartOutlinedIcon style={{ fontSize: '8px' }} />} title="Predicted Conversions" content="950 sign-ups" />
