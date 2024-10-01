@@ -5,7 +5,7 @@ export const ProgressBar: React.FC<{ step: number }> = ({ step }) => {
   const totalSteps = 6;
 
   return (
-    <div className="w-full h-[8px] flex flex-row gap-[8px] pt-[60px] pb-[32px]">
+    <div className="w-full h-[8px] flex flex-row gap-[8px] pt-[30px] pb-[32px]">
       {Array.from({ length: totalSteps }).map((_, index) => {
         return (
           <div
@@ -28,7 +28,7 @@ export const pageVariant: Variants = {
       opacity: 0
   },
   initial2: {
-      x: '100%',
+      // x: '100%',
       opacity: 0
   },
   animate: {
