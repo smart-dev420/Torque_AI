@@ -3,9 +3,10 @@ import { imageAssets, iconAssets } from '../../utils/constant';
 import { pageVariant } from './progressbar';
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom"
+import { GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google';
 
 export const Step3= ({setPages} : any) => {
-
+    const [loggedGoogle, setLoggedGoogle] = useState(false)
     const [goback, setGoBack] = useState<boolean>(false);
 
     const location = useLocation();
@@ -18,6 +19,25 @@ export const Step3= ({setPages} : any) => {
         setGoBack(true)
         setPages(1)
     }
+    const manageLog = () => {
+        if (loggedGoogle) {
+            googleLogout()
+            setLoggedGoogle(false)
+        } else {
+            login()
+        }
+    }
+    const login = useGoogleLogin({
+        onSuccess: tokenResponse => {
+            console.log(tokenResponse)
+            setLoggedGoogle(true)
+        },
+        onError: errorResponse => {
+            console.log(errorResponse)
+        },
+    });
+    
+
     return (
         <div>
             <motion.section
@@ -39,7 +59,16 @@ export const Step3= ({setPages} : any) => {
 
                 <div className='mt-[37.5px] mx-auto'>
                     <div className='font-b2-400 font-grey'>Analytics</div>
-                    <button className='img-btn mt-[16px]'><img src={imageAssets.analytics} alt='' /></button>
+                    <button className='img-btn mt-[16px]' onClick={manageLog}>{loggedGoogle ? 'Logout' : <img src={imageAssets.analytics} alt='' />}</button>
+                    {/* <GoogleLogin
+                        onSuccess={credentialResponse => {
+                            console.log(credentialResponse);
+                        }}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
+                    /> */}
+                    
                 </div>
                 <div className='mt-[32px] mx-auto'>
                     <div className='font-b2-400 font-grey'>Social Media</div>

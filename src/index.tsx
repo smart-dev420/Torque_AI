@@ -7,6 +7,9 @@ import reportWebVitals from "./reportWebVitals";
 import { FirebaseContext } from "./components/Firebase";
 import config from "./components/Firebase/firebase";
 import { ThemeProvider } from "./components/Theme/context";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+  
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,7 +18,9 @@ root.render(
   <React.StrictMode>
     <ThemeProvider>
       <FirebaseContext.Provider value={config}>
-        <App />
+        <GoogleOAuthProvider clientId="843568926513-vi3j7f1magt84slbpitlthvlg6ml7a63.apps.googleusercontent.com">
+          <App />
+        </GoogleOAuthProvider>
       </FirebaseContext.Provider>
     </ThemeProvider>
   </React.StrictMode>
