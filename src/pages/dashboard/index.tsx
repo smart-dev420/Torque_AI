@@ -91,7 +91,7 @@ export const Dashboard = () => {
           >
             <div className="flex flex-row justify-between title-f24-700">
               <div className="flex flex-row items-center gap-x-[10px]">
-                <h3>Camaign Performance</h3>
+                <h3>Campaign Performance</h3>
                 <InfoOutlinedIcon sx={{ width: 15 }} />
               </div>
               <button
@@ -105,19 +105,19 @@ export const Dashboard = () => {
               </button>
             </div>
             <div className="flex flex-row justify-between gap-x-[8px]">
-              <CamaignItem
+              <CampaignItem
                 icon={<RemoveRedEyeOutlinedIcon style={{ height: "12px" }} />}
                 color="#41ECCD"
                 text="Impressions"
                 performance="245.5K"
               />
-              <CamaignItem
+              <CampaignItem
                 icon={<LanguageOutlinedIcon style={{ height: "12px" }} />}
                 color="#41B9EC"
                 text="Clicks"
                 performance="189"
               />
-              <CamaignItem
+              <CampaignItem
                 icon={<ShoppingCartOutlinedIcon style={{ height: "12px" }} />}
                 color="#6775F0"
                 text="Convensions"
@@ -192,7 +192,7 @@ export const Dashboard = () => {
           >
             <div className="flex flex-row justify-between title-f24-700">
               <div className="flex flex-row items-center gap-x-[10px]">
-                <h3>Camaign Performance</h3>
+                <h3>Campaign Performance</h3>
                 <InfoOutlinedIcon sx={{ width: 15 }} />
               </div>
               <div className="flex flex-row gap-x-[8px]">
@@ -346,7 +346,7 @@ export const ProgressBar: React.FC<{ step: number }> = ({ step }) => {
   );
 };
 
-export const CamaignItem: React.FC<{
+export const CampaignItem: React.FC<{
   icon: ReactElement;
   color: string;
   text: string;
