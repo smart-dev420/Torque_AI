@@ -3,16 +3,10 @@ import { imageAssets, iconAssets } from '../../utils/constant';
 import { pageVariant } from './progressbar';
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom"
-<<<<<<< HEAD
-
-export const Step3= ({setPages} : any) => {
-
-=======
 import { GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google';
 
 export const Step3= ({setPages} : any) => {
     const [loggedGoogle, setLoggedGoogle] = useState(false)
->>>>>>> 3b7b9d27fcb6151042784154465d5210d5261297
     const [goback, setGoBack] = useState<boolean>(false);
 
     const location = useLocation();
@@ -65,9 +59,6 @@ export const Step3= ({setPages} : any) => {
 
                 <div className='mt-[37.5px] mx-auto'>
                     <div className='font-b2-400 font-grey'>Analytics</div>
-<<<<<<< HEAD
-                    <button className='img-btn mt-[16px]'><img src={imageAssets.analytics} alt='' /></button>
-=======
                     <button className='img-btn mt-[16px]' onClick={manageLog}>{loggedGoogle ? 'Logout' : <img src={imageAssets.analytics} alt='' />}</button>
                     {/* <GoogleLogin
                         onSuccess={credentialResponse => {
@@ -78,7 +69,6 @@ export const Step3= ({setPages} : any) => {
                         }}
                     /> */}
                     
->>>>>>> 3b7b9d27fcb6151042784154465d5210d5261297
                 </div>
                 <div className='mt-[32px] mx-auto'>
                     <div className='font-b2-400 font-grey'>Social Media</div>
