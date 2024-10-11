@@ -1,15 +1,25 @@
-// Import the necessary Firebase modules
-import { initializeApp } from "firebase/app";
 
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASE_URL,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  apiKey: "AIzaSyBD9lAdS-AL6we3RZ4-iNQDgCat5ewO1pE",
+  authDomain: "torque-ai.firebaseapp.com",
+  projectId: "torque-ai",
+  storageBucket: "torque-ai.appspot.com",
+  messagingSenderId: "582672524351",
+  appId: "1:582672524351:web:72e9f6fbecf15bf21f448a",
+  measurementId: "G-5R2SQ80D5W"
 };
 
 // Initialize Firebase
-const config = initializeApp(firebaseConfig);
-export default config;
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+export default app;
