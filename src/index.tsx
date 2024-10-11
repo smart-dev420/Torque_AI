@@ -18,7 +18,7 @@ root.render(
   <React.StrictMode>
     <ThemeProvider>
       <FirebaseContext.Provider value={config}>
-        <GoogleOAuthProvider clientId="843568926513-vi3j7f1magt84slbpitlthvlg6ml7a63.apps.googleusercontent.com">
+        <GoogleOAuthProvider clientId="582672524351-12r3uptdcs129m090bta66p3ftbpbbnp.apps.googleusercontent.com">
           <App />
         </GoogleOAuthProvider>
       </FirebaseContext.Provider>
