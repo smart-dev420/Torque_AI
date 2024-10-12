@@ -52,9 +52,9 @@ app.post('/api/google-ads-data', async (req, res) => {
     const customerId = process.env.CUSTOMER_ID;
     try {
         const customer = client.Customer({
-            customer_id: '2478333258',
+            customer_id: customerId,
             refresh_token: accessToken,
-            // login_customer_id: '2463479895',
+            login_customer_id: process.env.MANAGE_CUSTOMER_ID,
         });
 
         // Query to fetch clicks, conversions, CTR, and CPA
