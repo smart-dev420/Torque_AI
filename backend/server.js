@@ -11,7 +11,7 @@ const app = express();
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: '*' }));
 
 // Initialize Google Ads API client
 const client = new GoogleAdsApi({
@@ -52,9 +52,9 @@ app.post('/api/google-ads-data', async (req, res) => {
     const customerId = process.env.CUSTOMER_ID;
     try {
         const customer = client.Customer({
-            customer_id: customerId,
+            customer_id: '2478333258',
             refresh_token: accessToken,
-            login_customer_id: process.env.MANAGE_CUSTOMER_ID,
+            // login_customer_id: '2463479895',
         });
 
         // Query to fetch clicks, conversions, CTR, and CPA
@@ -78,7 +78,7 @@ app.post('/api/google-ads-data', async (req, res) => {
         // Send the data back to the client
         res.status(200).json(data);
     } catch (error) {
-        console.error('Error fetching Google Ads data:', error.errors[0].error_code);
+        console.error('Error fetching Google Ads data:', error);
         res.status(500).json({ error: 'Failed to fetch Google Ads data' });
     }
 });
