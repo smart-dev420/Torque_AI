@@ -8,8 +8,8 @@ import { FirebaseContext } from "./components/Firebase";
 import config from "./components/Firebase/firebase";
 import { ThemeProvider } from "./components/Theme/context";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { UserProvider } from "./utils/userContext";
 
-  
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,11 +17,13 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ThemeProvider>
-      <FirebaseContext.Provider value={config}>
-        <GoogleOAuthProvider clientId="582672524351-12r3uptdcs129m090bta66p3ftbpbbnp.apps.googleusercontent.com">
-          <App />
-        </GoogleOAuthProvider>
-      </FirebaseContext.Provider>
+      <UserProvider>
+        <FirebaseContext.Provider value={config}>
+          <GoogleOAuthProvider clientId="582672524351-12r3uptdcs129m090bta66p3ftbpbbnp.apps.googleusercontent.com">
+            <App />
+          </GoogleOAuthProvider>
+        </FirebaseContext.Provider>
+      </UserProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

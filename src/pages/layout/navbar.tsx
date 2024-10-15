@@ -21,6 +21,12 @@ export const Navbar = () => {
     themeContext?.toggleTheme();
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
+  const initSetting = localStorage.getItem('initSetting');
+  let names;
+  if(initSetting){
+    const { name } = JSON.parse(initSetting);
+    names = name;
+  }
   return (
     <div className="flex justify-between flex-row">
       <div className="flex flex-row item-center gap-x-[16px]">
@@ -66,7 +72,7 @@ export const Navbar = () => {
         <img src={imageAssets.profile} alt="Profile" />
         <div className="flex flex-col">
           <label>Welcome</label>
-          <label>Chris</label>
+          <label>{names}</label>
         </div>
         <div
           className="rounded-[100%] p-[10px] cursor-pointer"

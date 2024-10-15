@@ -1,6 +1,6 @@
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { FBIcon, GoogleIcon } from ".";
-export const PerformingTable: React.FC<{}> = () => {
+export const PerformingTable = ({ perform }: { perform: any }) => {
     return (
         <table className="text-left font-b4-500">
             <thead>
@@ -16,13 +16,13 @@ export const PerformingTable: React.FC<{}> = () => {
             <tbody>
                 <tr>
                     <td><GoogleIcon /> </td>
-                    <td>3,200,000</td>
-                    <td>460,000</td>
-                    <td>28,500</td>
-                    <td>5.6%</td>
-                    <td>$13.50</td>
+                    <td>{perform.Impressions}</td>
+                    <td>{perform.Clicks}</td>
+                    <td>{perform.Conversions}</td>
+                    <td>{`${perform.CTR}%`}</td>
+                    <td>${perform.Cost}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                     <td><FBIcon/>  </td>
                     <td>2,500,000</td>
                     <td>140,000</td>
@@ -38,7 +38,7 @@ export const PerformingTable: React.FC<{}> = () => {
                     <td>5.6%</td>
                     <td>$15.00</td>
                 </tr>
-            
+             */}
             </tbody>
         </table>
     );

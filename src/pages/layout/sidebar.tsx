@@ -79,11 +79,10 @@ export const SideBar = () => {
   };
   const [isSidebar, setIsSidebar] = useState<boolean>(() => {
     const storedValue = localStorage.getItem("isSidebar");
-    console.log("res - " + storedValue);
+   
     if (storedValue === null) return true;
     return storedValue === "true";
   });
-  console.log(`${isSidebar}`);
   return (
     <div
       className={`${

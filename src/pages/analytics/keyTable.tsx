@@ -1,7 +1,18 @@
+export const KeyTable = ({ keyword, limit }: { keyword: any, limit?: number }) => {
+    const getColor = (str: string) => {
+        if(str === "MEDIUM" )
+            return '#ECBC41';
+        else if (str === "HIGH")
+            return '#EC6041';
+        else 
+            return '#41B9EC';
+    }
+    keyword.sort((a:any, b: any) => parseInt(b.SearchVolume) - parseInt(a.SearchVolume));
+    // Use slice to limit the number of items shown
+    const limitedKeywords = keyword.slice(0, limit || keyword.length); // default to showing all if no limit
 
-export const KeyTable: React.FC<{}> = () => {
     return (
-        <table className="text-left font-b5-500 border-spacing-2 table-auto">
+        <table className="text-left font-b4-500 border-spacing-2 table-auto">
             <thead>
                 <tr>
                     <th>Keyword</th>
@@ -12,28 +23,19 @@ export const KeyTable: React.FC<{}> = () => {
                 </tr>
             </thead>
             <tbody >
-                <tr>
-                    <td>Best REITs for 2024</td>
-                    <td>120,000/month</td>
-                    <td style={{color:'#ECBC41'}}>Medium</td>
-                    <td>88/100</td>
-                    <td>$3.20</td>
-                </tr>
-               
-                <tr>
-                    <td>Crypto Investment Strategies</td>
-                    <td>250,000/month</td>
-                    <td style={{color:"#EC6041"}}>High</td>
-                    <td>80/100</td>
-                    <td>$4.00</td>
-                </tr>
-                <tr>
-                    <td>Stock Market for Beginners</td>
-                    <td>300,000/month</td>
-                    <td style={{color:'#41B9EC'}}>Low</td>
-                    <td>92/100</td>
-                    <td>$2.80</td>
-                </tr>
+                {
+                    limitedKeywords.map((item: any, index: number) => {
+                        return (
+                            <tr key={index}>
+                                <td>{item.Keyword}</td>
+                                <td>{item.SearchVolume}/month</td>
+                                <td style={{ color: getColor(item.CompetitionLevel) }}>{item.CompetitionLevel}</td>
+                                <td>{item.OpportunityScore}/100</td>
+                                <td>${item.SuggestedBid}</td>
+                            </tr>
+                        )
+                    })
+                }
             </tbody>
         </table>
     );

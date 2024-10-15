@@ -7,11 +7,11 @@ import { Step5 } from "./step5";
 import { Step6 } from "./step6";
 import { imageAssets } from '../../utils/constant';
 import { ProgressBar } from "./progressbar";
-import { useState } from "react";
+import { useContext } from 'react';
+import UserContext from '../../utils/userContext';
+
 export const Index = () => {
-
-  const [pages, setPages] = useState(0);
-
+  const { pages, setPages } = useContext(UserContext);
   const renderStep = () => {
     switch(pages) {
       case 0:

@@ -1,4 +1,4 @@
-import { ReactElement, useContext } from "react";
+import { ReactElement, useContext, useState } from "react";
 import { ThemeContext } from "../../components/Theme/context";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
@@ -8,9 +8,22 @@ import { InfoAlert } from "../component/infoAlert";
 import { imageAssets } from "../../utils/constant";
 import { FirstIconTable, SecondTable } from "./iconTable";
 import { KeyTable } from "./keyTable";
+import { Modal, Box, Typography, Button } from '@mui/material';
 
+import perform from '../../services/perform.json';
+import keyword from '../../services/keyword.json';
 export const Campaigns = () => {
   const themeContext = useContext(ThemeContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleExploreClick = () => {
+    setIsModalOpen(true); // Open the modal when "Explore Keywords" is clicked
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // Close the modal when the user clicks "Close"
+  };
+
   return (
     <div>
       {/** Title Part */}
@@ -68,7 +81,7 @@ export const Campaigns = () => {
               <h3>Top Keyword and Strategy Opportunities</h3>
               <InfoOutlinedIcon sx={{ width: 15 }} />
             </div>
-            <KeyTable />
+            <KeyTable keyword={keyword} limit={3} />
             <div className="flex justify-end title-f12-700">
               <button
                 className="px-[15px] rounded-[50px]"
@@ -76,10 +89,53 @@ export const Campaigns = () => {
                   backgroundColor: themeContext?.theme.activeButtonBackground,
                   color: themeContext?.theme.activeColor,
                 }}
+                onClick={() => handleExploreClick()}
               >
                 Explore Opportunities
               </button>
             </div>
+            <Modal
+                        open={isModalOpen}
+                        onClose={handleCloseModal}
+                        aria-labelledby="modal-keywords-title"
+                        aria-describedby="modal-keywords-description"
+
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'flex-start', // Align items to the start
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                width: '70%',
+                                bgcolor: 'background.paper',
+                                borderRadius: '10px',
+                                boxShadow: 24,
+                                p: 4,
+                                maxHeight: '80%', // Limit height
+                                overflowY: 'auto',
+                                minHeight: '400px', // Ensure minimum height for visibility
+                            }}
+                        >
+                            <Typography id="modal-keywords-title"
+                                variant="h6"
+                                component="h2"
+                                sx={{ textAlign: 'center', marginBottom: 3 }}>
+                                Explore All Keywords
+                            </Typography>
+                            <Button
+                                onClick={handleCloseModal}
+                                sx={{ position: 'absolute', top: '10px', right: '10px' }}
+                            >
+                                Close
+                            </Button>
+                            <KeyTable keyword={keyword} />
+                        </Box>
+                    </Modal>
           </div>
         </div>
         <div
