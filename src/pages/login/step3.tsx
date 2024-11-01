@@ -18,16 +18,16 @@ export const Step3 = ({ setPages }: any) => {
     const [socialList, setSocialList] = useState<string[]>([]);
     const [userMail, setUserMail] = useState('');
     const handleNext = async () => {
-        if (userMail === '') {
-            login();
-        }
-        else {
-            await saveData();
+        // if (userMail === '') {
+        //     login();
+        // }
+        // else {
+        //     await saveData();
             const _saveData = { experience, socialList, userMail };
             localStorage.setItem('initSetting', JSON.stringify(_saveData));
             navigate('/dashboard', { state: { id: 3, name: 'step3' } })
             setGoBack(false);
-        }
+        // }
     };
 
     const handleBack = () => {
@@ -45,13 +45,14 @@ export const Step3 = ({ setPages }: any) => {
     }
 
     const manageLog = () => {
-        if (loggedGoogle) {
-            googleLogout();
-            setLoggedGoogle(false);
-        } else {
-            login();
-            // fetchGoogleAdsData("1//0e4mp8XEl_QkWCgYIARAAGA4SNwF-L9IrWpmarCLxLRgXhNrFp-i0BZk8m67o5feQiiPKYDAVXHYpe86ZOxckvaoZw7gai_gIUX0");
-        }
+        toast.success("Now, This app is running on Demo version");
+        // if (loggedGoogle) {
+        //     googleLogout();
+        //     setLoggedGoogle(false);
+        // } else {
+        //     login();
+        //     // fetchGoogleAdsData("1//0e4mp8XEl_QkWCgYIARAAGA4SNwF-L9IrWpmarCLxLRgXhNrFp-i0BZk8m67o5feQiiPKYDAVXHYpe86ZOxckvaoZw7gai_gIUX0");
+        // }
     };
     // async function fetchGoogleAdsData(accessToken: string) {
     //     try {
@@ -161,7 +162,7 @@ export const Step3 = ({ setPages }: any) => {
 
                 <div className='mt-[37.5px] mx-auto'>
                     <div className='font-b2-400 font-grey'>Analytics</div>
-                    <button className='img-btn mt-[16px]' onClick={manageLog}>{loggedGoogle ? 'Logout' : <img src={imageAssets.analytics} alt='' />}</button>
+                    <button className='img-btn mt-[16px]' onClick={manageLog}><img src={imageAssets.analytics} alt='' /></button>
                 </div>
 
 

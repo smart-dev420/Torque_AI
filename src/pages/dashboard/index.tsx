@@ -102,11 +102,11 @@ export const Dashboard = () => {
 
       {/** Content Part */}
 
-      <div className="flex flex-col gap-y-[32px]">
+      <div className="flex flex-col gap-y-[32px] ">
         {/** First Section Start */}
-        <div className="flex flex-row gap-x-[32px]">
+        <div className="flex flex-row gap-x-[32px] ">
           <div
-            className="flex flex-col w-[40%] rounded-[8px] p-[24px] gap-y-[16px]"
+            className="flex flex-col w-[40%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between title-f24-700">
@@ -152,7 +152,7 @@ export const Dashboard = () => {
             </div>
             <div className="flex justify-end Button">
               <button
-                className="px-[15px] rounded-[50px]"
+                className="px-[15px] rounded-[50px] absolute bottom-[20px]"
                 style={{
                   backgroundColor: themeContext?.theme.activeButtonBackground,
                   color: themeContext?.theme.activeColor,
@@ -165,7 +165,7 @@ export const Dashboard = () => {
           </div>
 
           <div
-            className="flex flex-col w-[60%] rounded-[8px] p-[24px] gap-y-[16px]"
+            className="flex flex-col w-[60%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between title-f24-700">
@@ -190,7 +190,7 @@ export const Dashboard = () => {
             <StrategyTable />
             <div className="flex justify-end Button">
               <button
-                className="px-[15px] rounded-[50px]"
+                className="px-[15px] rounded-[50px] absolute bottom-[20px]"
                 style={{
                   backgroundColor: themeContext?.theme.activeButtonBackground,
                   color: themeContext?.theme.activeColor,
@@ -205,9 +205,9 @@ export const Dashboard = () => {
         {/** First Part End */}
 
         {/** Second Part Start */}
-        <div className="flex flex-row gap-x-[32px]">
+        <div className="flex flex-row gap-x-[32px] ">
           <div
-            className="flex flex-col w-[60%] rounded-[8px] p-[24px] gap-y-[16px]"
+            className="flex flex-col w-[60%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between title-f24-700">
@@ -270,7 +270,7 @@ export const Dashboard = () => {
               </div>
             </div>
             <InfoAlert str="Consider posting at least 5 YouTube shorts per week to increase reach." />
-            <div className="flex flex-row justify-end gap-x-[8px]">
+            <div className="flex flex-row justify-end gap-x-[8px] absolute bottom-[15px] right-[15px]">
               <button
                 className="px-[12px] rounded-[50px] Button"
                 style={{
@@ -295,7 +295,7 @@ export const Dashboard = () => {
             </div>
           </div>
           <div
-            className="flex flex-col w-[40%] rounded-[8px] p-[24px] gap-y-[16px]"
+            className="flex flex-col w-[40%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between title-f24-700">
@@ -314,7 +314,7 @@ export const Dashboard = () => {
               </button>
             </div>
             <SettingsTable />
-            <div className="flex flex-row justify-end gap-x-[8px]">
+            <div className="flex flex-row justify-end gap-x-[8px] absolute bottom-[15px] right-[15px]">
               <button
                 className="px-[12px] rounded-[50px] Button"
                 style={{

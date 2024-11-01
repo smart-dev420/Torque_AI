@@ -15,7 +15,7 @@ export const Step5 = ({setPages} : any) => {
     const handleNext = async () => {
         setGoBack(false)
         setCompetitors(socialList);
-        await saveData();
+        // await saveData();
         const _saveData = { goals, competitors:socialList };
         localStorage.setItem('goalSetting', JSON.stringify(_saveData));
         navigate('/dashboard');
