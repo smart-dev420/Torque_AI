@@ -1,5 +1,5 @@
 import {
-    useContext,
+    useContext, useState,
 } from "react";
 import { ThemeContext } from "../../components/Theme/context";
 
@@ -19,84 +19,99 @@ import { ItemList } from "../component/itemList";
 import { ItemInfoList } from "../component/itemInfoList";
 import { PerformingTable } from "./performingTable";
 import { KeyTable } from "./keyTable";
-import { BarChartComponent , ChartData } from "./BarChart";
+import { BarChartComponent, ChartData } from "./BarChart";
 import { Divider } from "@mui/material";
+
+import perform from '../../services/perform.json';
+import keyword from '../../services/keyword.json';
+
+import { Modal, Box, Typography, Button } from '@mui/material';
 
 export const FBIcon = () => {
     return (
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g clip-path="url(#clip0_339_4968)">
-          <path
-            d="M16 8C16 3.58176 12.4182 0 8 0C3.58176 0 0 3.58176 0 8C0 11.7517 2.58304 14.8998 6.06752 15.7645V10.4448H4.41792V8H6.06752V6.94656C6.06752 4.22368 7.29984 2.9616 9.97312 2.9616C10.48 2.9616 11.3546 3.06112 11.7123 3.16032V5.37632C11.5235 5.35648 11.1955 5.34656 10.7882 5.34656C9.47648 5.34656 8.9696 5.84352 8.9696 7.13536V8H11.5827L11.1338 10.4448H8.9696V15.9414C12.9309 15.463 16.0003 12.0902 16.0003 8H16Z"
-            fill="#0866FF"
-          />
-          <path
-            d="M11.1334 10.4449L11.5824 8.00007H8.96928V7.13543C8.96928 5.84359 9.47616 5.34663 10.7878 5.34663C11.1952 5.34663 11.5232 5.35655 11.712 5.37639V3.16039C11.3542 3.06087 10.4797 2.96167 9.9728 2.96167C7.29952 2.96167 6.0672 4.22375 6.0672 6.94663V8.00007H4.4176V10.4449H6.0672V15.7646C6.68608 15.9182 7.33344 16.0001 7.99968 16.0001C8.32768 16.0001 8.6512 15.9799 8.96896 15.9415V10.4449H11.1331H11.1334Z"
-            fill="white"
-          />
-        </g>
-        <defs>
-          <clipPath id="clip0_339_4968">
-            <rect width="16" height="16" fill="white" />
-          </clipPath>
-        </defs>
-      </svg>
+        <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <g clip-path="url(#clip0_339_4968)">
+                <path
+                    d="M16 8C16 3.58176 12.4182 0 8 0C3.58176 0 0 3.58176 0 8C0 11.7517 2.58304 14.8998 6.06752 15.7645V10.4448H4.41792V8H6.06752V6.94656C6.06752 4.22368 7.29984 2.9616 9.97312 2.9616C10.48 2.9616 11.3546 3.06112 11.7123 3.16032V5.37632C11.5235 5.35648 11.1955 5.34656 10.7882 5.34656C9.47648 5.34656 8.9696 5.84352 8.9696 7.13536V8H11.5827L11.1338 10.4448H8.9696V15.9414C12.9309 15.463 16.0003 12.0902 16.0003 8H16Z"
+                    fill="#0866FF"
+                />
+                <path
+                    d="M11.1334 10.4449L11.5824 8.00007H8.96928V7.13543C8.96928 5.84359 9.47616 5.34663 10.7878 5.34663C11.1952 5.34663 11.5232 5.35655 11.712 5.37639V3.16039C11.3542 3.06087 10.4797 2.96167 9.9728 2.96167C7.29952 2.96167 6.0672 4.22375 6.0672 6.94663V8.00007H4.4176V10.4449H6.0672V15.7646C6.68608 15.9182 7.33344 16.0001 7.99968 16.0001C8.32768 16.0001 8.6512 15.9799 8.96896 15.9415V10.4449H11.1331H11.1334Z"
+                    fill="white"
+                />
+            </g>
+            <defs>
+                <clipPath id="clip0_339_4968">
+                    <rect width="16" height="16" fill="white" />
+                </clipPath>
+            </defs>
+        </svg>
     );
-  };
-  
-  export const GoogleIcon = () => {
+};
+
+export const GoogleIcon = () => {
     return (
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g clip-path="url(#clip0_339_5024)">
-          <path
-            d="M7.99988 6.54541V9.6436H12.3053C12.1163 10.64 11.5489 11.4836 10.698 12.0509L13.2944 14.0655C14.8071 12.6691 15.6798 10.6182 15.6798 8.18185C15.6798 7.61459 15.6289 7.06909 15.5344 6.5455L7.99988 6.54541Z"
-            fill="#4285F4"
-          />
-          <path
-            d="M3.51646 9.52271L2.93089 9.97096L0.858124 11.5855C2.17448 14.1964 4.87247 16 7.99971 16C10.1597 16 11.9705 15.2873 13.2942 14.0655L10.6979 12.0509C9.98513 12.5309 9.07603 12.8219 7.99971 12.8219C5.91973 12.8219 4.1525 11.4183 3.51973 9.52732L3.51646 9.52271Z"
-            fill="#34A853"
-          />
-          <path
-            d="M0.858119 4.41455C0.312695 5.49087 0 6.70543 0 7.99996C0 9.29448 0.312695 10.509 0.858119 11.5854C0.858119 11.5926 3.51998 9.51991 3.51998 9.51991C3.35998 9.03991 3.26541 8.53085 3.26541 7.99987C3.26541 7.46889 3.35998 6.95984 3.51998 6.47984L0.858119 4.41455Z"
-            fill="#FBBC05"
-          />
-          <path
-            d="M7.99988 3.18545C9.17808 3.18545 10.2253 3.59271 11.0617 4.37818L13.3526 2.0873C11.9635 0.792777 10.1599 0 7.99988 0C4.87263 0 2.17448 1.79636 0.858124 4.41455L3.51991 6.48001C4.1526 4.58908 5.91989 3.18545 7.99988 3.18545Z"
-            fill="#EA4335"
-          />
-        </g>
-        <defs>
-          <clipPath id="clip0_339_5024">
-            <rect width="16" height="16" fill="white" />
-          </clipPath>
-        </defs>
-      </svg>
+        <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <g clip-path="url(#clip0_339_5024)">
+                <path
+                    d="M7.99988 6.54541V9.6436H12.3053C12.1163 10.64 11.5489 11.4836 10.698 12.0509L13.2944 14.0655C14.8071 12.6691 15.6798 10.6182 15.6798 8.18185C15.6798 7.61459 15.6289 7.06909 15.5344 6.5455L7.99988 6.54541Z"
+                    fill="#4285F4"
+                />
+                <path
+                    d="M3.51646 9.52271L2.93089 9.97096L0.858124 11.5855C2.17448 14.1964 4.87247 16 7.99971 16C10.1597 16 11.9705 15.2873 13.2942 14.0655L10.6979 12.0509C9.98513 12.5309 9.07603 12.8219 7.99971 12.8219C5.91973 12.8219 4.1525 11.4183 3.51973 9.52732L3.51646 9.52271Z"
+                    fill="#34A853"
+                />
+                <path
+                    d="M0.858119 4.41455C0.312695 5.49087 0 6.70543 0 7.99996C0 9.29448 0.312695 10.509 0.858119 11.5854C0.858119 11.5926 3.51998 9.51991 3.51998 9.51991C3.35998 9.03991 3.26541 8.53085 3.26541 7.99987C3.26541 7.46889 3.35998 6.95984 3.51998 6.47984L0.858119 4.41455Z"
+                    fill="#FBBC05"
+                />
+                <path
+                    d="M7.99988 3.18545C9.17808 3.18545 10.2253 3.59271 11.0617 4.37818L13.3526 2.0873C11.9635 0.792777 10.1599 0 7.99988 0C4.87263 0 2.17448 1.79636 0.858124 4.41455L3.51991 6.48001C4.1526 4.58908 5.91989 3.18545 7.99988 3.18545Z"
+                    fill="#EA4335"
+                />
+            </g>
+            <defs>
+                <clipPath id="clip0_339_5024">
+                    <rect width="16" height="16" fill="white" />
+                </clipPath>
+            </defs>
+        </svg>
     );
-  };
+};
 
 export const Analaytics = () => {
     const themeContext = useContext(ThemeContext);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const dateData :ChartData= {
+    const dateData: ChartData = {
         data: [4000, 3000, 2000, 2780, 1890, 2390, 3490],
         label: ["Mon", "Tue", "Wed", "Thrs", "Fri", "Sat", "Sun"],
     }
-    const timeData :ChartData = {
+    const timeData: ChartData = {
         data: [2000, 3000, 2000, 2780, 1890, 2390, 3490],
         label: ["12 am", "3 am", "6 am", "12 pm", "3 pm", "6 pm", "9 pm"],
     }
+
+    const handleExploreClick = () => {
+        setIsModalOpen(true); // Open the modal when "Explore Keywords" is clicked
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false); // Close the modal when the user clicks "Close"
+    };
+
     return (
         <div>
             {/** Title Part */}
@@ -112,7 +127,7 @@ export const Analaytics = () => {
 
             <div className="grid grid-cols-12 gap-[32px]">
                 <div
-                    className="col-span-7 rounded-[8px] p-[24px] flex flex-col gap-[16px] relative" 
+                    className="col-span-7 rounded-[8px] p-[24px] flex flex-col gap-[16px] relative"
                     style={{ backgroundColor: themeContext?.theme.foreground }}
                 >
                     <div className="flex flex-row justify-between ">
@@ -129,22 +144,22 @@ export const Analaytics = () => {
                     </div>
                     <div className="grid grid-cols-6 gap-[8px]">
                         <div className="col-span-2">
-                            <ItemInfoList icon={<SendOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Clicks" content="460,000" />
+                            <ItemInfoList icon={<SendOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Clicks" content={perform.Clicks.toString()} />
                         </div>
                         <div className="col-span-2">
-                            <ItemInfoList icon={<ShoppingCartOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Conversions" content="28,500" />
+                            <ItemInfoList icon={<ShoppingCartOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Conversions" content={perform.Conversions.toString()} />
                         </div>
                         <div className="col-span-2">
-                            <ItemInfoList icon={<VisibilityOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Impressions" content="8,200,000" />
+                            <ItemInfoList icon={<VisibilityOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Impressions" content={perform.Impressions.toString()} />
                         </div>
                         <div className="col-span-3">
-                            <ItemInfoList icon={<ComputerOutlinedIcon style={{ fontSize: '8px' }} />} title="Overall CTR" content="5.6%" />
+                            <ItemInfoList icon={<ComputerOutlinedIcon style={{ fontSize: '8px' }} />} title="Overall CTR" content={`${perform.CTR}%`} />
                         </div>
                         <div className="col-span-3">
-                            <ItemInfoList icon={<DiscountOutlinedIcon style={{ fontSize: '8px' }} />} title="Average CPA" content="$13.50" />
+                            <ItemInfoList icon={<DiscountOutlinedIcon style={{ fontSize: '8px' }} />} title="Average CPA" content={`$${perform.Cost}`} />
                         </div>
                     </div>
-                    <PerformingTable />
+                    <PerformingTable perform={perform} />
                     <InfoAlert str="Consider reallocating part of the budget from Google Ads to Facebook Ads to balance the CPA while maintaining conversion rates." />
                     <div className="mb-[24px]">
                         <button className="px-[12px]  rounded-[50px] font-button-700 w-[153px]"
@@ -153,7 +168,7 @@ export const Analaytics = () => {
                                 color: themeContext?.theme.activeColor,
                                 position: 'absolute',
                                 right: '16px',
-                                bottom:'16px'
+                                bottom: '16px'
                             }} >
                             View Detailed Analytics
                         </button>
@@ -166,7 +181,7 @@ export const Analaytics = () => {
                     <div className="flex flex-row justify-between ">
                         <label className="font-h3-700">Top Keyword Opportunities <ErrorOutlineIcon style={{ fontSize: '14px' }} /></label>
                     </div>
-                    <KeyTable />
+                    <KeyTable keyword={keyword} limit={3} />
                     <InfoAlert str="High demand for beginner-level stock market content. Leverage low-competition keywords to capture new investors." />
                     <div className="mb-[24px]">
                         <button className="px-[12px]  rounded-[50px] font-button-700 w-[121px]"
@@ -176,10 +191,53 @@ export const Analaytics = () => {
                                 position: 'absolute',
                                 right: '16px',
                                 bottom: '16px'
-                            }} >
+                            }} onClick={() => handleExploreClick()}>
                             Explore Keywords
                         </button>
                     </div>
+
+                    <Modal
+                        open={isModalOpen}
+                        onClose={handleCloseModal}
+                        aria-labelledby="modal-keywords-title"
+                        aria-describedby="modal-keywords-description"
+
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'flex-start', // Align items to the start
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                width: '70%',
+                                bgcolor: 'background.paper',
+                                borderRadius: '10px',
+                                boxShadow: 24,
+                                p: 4,
+                                maxHeight: '80%', // Limit height
+                                overflowY: 'auto',
+                                minHeight: '400px', // Ensure minimum height for visibility
+                            }}
+                        >
+                            <Typography id="modal-keywords-title"
+                                variant="h6"
+                                component="h2"
+                                sx={{ textAlign: 'center', marginBottom: 3 }}>
+                                Explore All Keywords
+                            </Typography>
+                            <Button
+                                onClick={handleCloseModal}
+                                sx={{ position: 'absolute', top: '10px', right: '10px' }}
+                            >
+                                Close
+                            </Button>
+                            <KeyTable keyword={keyword} />
+                        </Box>
+                    </Modal>
                 </div>
 
 
@@ -261,18 +319,18 @@ export const Analaytics = () => {
                                     <p className="font-button-700">9 am</p>
                                 </div>
                             </div>
-                            <BarChartComponent datalist={timeData}/>
-                            <BarChartComponent datalist={dateData}/>
+                            <BarChartComponent datalist={timeData} />
+                            <BarChartComponent datalist={dateData} />
                         </div>
                     </div>
                     <button className="px-[12px]  rounded-[50px] font-button-700 w-[135px]"
                         style={{
-                            border:`1px solid ${themeContext?.theme.color}`,
+                            border: `1px solid ${themeContext?.theme.color}`,
                             color: themeContext?.theme.color,
                             position: 'absolute',
                             right: '176px',
                             bottom: '16px',
-                            height:'28px'
+                            height: '28px'
                         }} >
                         View All Insights
                     </button>

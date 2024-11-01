@@ -79,19 +79,18 @@ export const SideBar = () => {
   };
   const [isSidebar, setIsSidebar] = useState<boolean>(() => {
     const storedValue = localStorage.getItem("isSidebar");
-    console.log("res - " + storedValue);
+   
     if (storedValue === null) return true;
     return storedValue === "true";
   });
-  console.log(`${isSidebar}`);
   return (
     <div
       className={`${
-        isSidebar ? "w-[316px]" : "w-[120px]"
-      } m-[32px] rounded-[16px]`}
-      style={{ backgroundColor: themeContext?.theme.foreground }}
+        isSidebar ? "w-[316px]  sticky top-[32px] flex" : "w-[120px]"
+      } m-[32px] rounded-[16px]  sticky top-[32px] flex`}
+      style={{ backgroundColor: themeContext?.theme.foreground , height: 'calc(100vh - 64px)'}}
     >
-      <div className="flex flex-col m-[25px] gap-y-[60px]">
+      <div className="flex flex-col m-[25px] justify-around ">
         <div className="flex flex-row justify-start items-center gap-x-[16px]">
           <img src={imageAssets.symbol} alt="Symbol" width={25} height={24} />
 
@@ -123,7 +122,7 @@ export const SideBar = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-y-[12px]">
+        <div className="flex flex-col gap-y-[6px]">
           {buttonList.map((item, index) => (
             <IconButton
               key={index}

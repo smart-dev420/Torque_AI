@@ -1,80 +1,146 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { imageAssets, iconAssets } from '../../utils/constant';
 import { pageVariant } from './progressbar';
 import { motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
-import { GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google';
+import { useLocation, useNavigate } from "react-router-dom";
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+import UserContext from '../../utils/userContext';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { collection, getDocs, query, where, setDoc, addDoc } from "firebase/firestore"; 
+import { firestore } from '../../components/Firebase/firebase';
 export const Step3 = ({ setPages }: any) => {
+    const navigate = useNavigate();
+    const { setSocials, experience } = useContext(UserContext);
     const [loggedGoogle, setLoggedGoogle] = useState(false);
     const [goback, setGoBack] = useState<boolean>(false);
-    const [adsData, setAdsData] = useState(null);
     const location = useLocation();
-
-    const handleNext = () => {
-        setGoBack(false);
-        setPages(3);
+    const [socialList, setSocialList] = useState<string[]>([]);
+    const [userMail, setUserMail] = useState('');
+    const handleNext = async () => {
+        // if (userMail === '') {
+        //     login();
+        // }
+        // else {
+        //     await saveData();
+            const _saveData = { experience, socialList, userMail };
+            localStorage.setItem('initSetting', JSON.stringify(_saveData));
+            navigate('/dashboard', { state: { id: 3, name: 'step3' } })
+            setGoBack(false);
+        // }
     };
 
     const handleBack = () => {
         setGoBack(true);
         setPages(1);
     };
+    const selectList = (str: string) => {
+        if (socialList.includes(str)) {
+            // If str is already in the list, remove it
+            setSocialList(socialList.filter(item => item !== str));
+        } else {
+            // If str is not in the list, add it
+            setSocialList([...socialList, str]);
+        }
+    }
 
     const manageLog = () => {
-        if (loggedGoogle) {
-            googleLogout();
-            setLoggedGoogle(false);
-        } else {
-            login();
-        }
+        toast.success("Now, This app is running on Demo version");
+        // if (loggedGoogle) {
+        //     googleLogout();
+        //     setLoggedGoogle(false);
+        // } else {
+        //     login();
+        //     // fetchGoogleAdsData("1//0e4mp8XEl_QkWCgYIARAAGA4SNwF-L9IrWpmarCLxLRgXhNrFp-i0BZk8m67o5feQiiPKYDAVXHYpe86ZOxckvaoZw7gai_gIUX0");
+        // }
     };
-    async function fetchGoogleAdsData(accessToken: string) {
-        try {
-          const response = await axios.post('http://localhost:5000/api/google-ads-data', {
-            accessToken: accessToken, // Use the access token from your auth flow
-          });
-      
-          console.log('Google Ads Data:', response.data);
-        } catch (error) {
-          console.error('Error fetching Google Ads data:', error);
-        }
-      }
-      const login = useGoogleLogin({
+    // async function fetchGoogleAdsData(accessToken: string) {
+    //     try {
+    //         const response = await axios.post('http://localhost:5000/api/google-ads-data', {
+    //             accessToken: accessToken, // Use the access token from your auth flow
+    //         });
+
+    //         console.log('Google Ads Data:', response.data);
+    //     } catch (error) {
+    //         console.error('Error fetching Google Ads data:', error);
+    //     }
+    // }
+    const login = useGoogleLogin({
         flow: 'auth-code', // Explicitly use auth-code flow
         onSuccess: async (codeResponse) => {
-            console.log('Authorization Code:', codeResponse.code);
-    
-            // You now need to send this code to your backend to exchange it for access and refresh tokens.
-            const authorizationCode = codeResponse.code;
-    
-            // Backend call to exchange authorization code for tokens
+            // console.log('Authorization Code:', codeResponse.code);
             try {
-                const response = await fetch('http://localhost:5000/api/exchange-code', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ code: authorizationCode }),
+                const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
+                    code: codeResponse.code,
+                    client_id: process.env.REACT_APP_CLIENT_ID, // Replace with your Google Client ID
+                    client_secret: process.env.REACT_APP_CLIENT_SECRET, // Replace with your Google Client Secret
+                    redirect_uri: 'http://localhost:3000', // Replace with your redirect URI
+                    grant_type: 'authorization_code',
                 });
-    
-                const data = await response.json();
-                const { accessToken, refreshToken } = data;
-    
-                // Use the accessToken for Google Ads API requests
-                console.log('Refresh Token:', refreshToken); // Store this refresh token securely
-                fetchGoogleAdsData(refreshToken);
+
+                const accessToken = tokenResponse.data.access_token;
+
+                // Step 2: Use the access token to fetch user info
+                const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
+                // Now you can access the user's email address
+                console.log(userInfoResponse)
+                const email = userInfoResponse.data.email;
+                const name = userInfoResponse.data.name;
+                setUserMail(email);
+
+                await saveData();
+                const _saveData = { experience, socialList, email, name };
+                localStorage.setItem('initSetting', JSON.stringify(_saveData));
+                navigate('/dashboard', { state: { id: 3, name: 'step3' } })
+                setGoBack(false);
+
             } catch (error) {
-                console.error('Error exchanging authorization code:', error);
+                toast.error('Error retrieving user info:' + error);
             }
         },
         onError: (errorResponse) => {
-            console.error('Login Failed:', errorResponse);
+            toast.error('Login Failed:' + errorResponse);
         },
         scope: 'https://www.googleapis.com/auth/adwords', // Google Ads API scope
     });
-    
 
+    const saveData = async () => {
+        setSocials(socialList);
+        try {
+            // Query to check if an experience document for the selected user exists
+            const q = query(collection(firestore, "initSetting"), where("userMail", "==", userMail)); // Replace selectedUserId with your actual user ID
+
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                // If no document exists, create a new one
+                const docRef = await addDoc(collection(firestore, "initSetting"), {
+                    experience,
+                    socialList,
+                    userMail, // Make sure to include userId to associate the experience
+                });
+
+                console.log("New document created with ID: ", docRef.id);
+            } else {
+                // If the document exists, update it
+                querySnapshot.forEach(async (doc) => {
+                    await setDoc(doc.ref, {
+                        experience,
+                        socialList
+                    }, { merge: true }); // Use merge: true to only update specified fields
+
+                    console.log("Document updated with ID: ", doc.id);
+                });
+            }
+        } catch (e) {
+            console.error("Error adding/updating document: ", e);
+        }
+    }
     return (
         <div>
             <motion.section
@@ -96,26 +162,26 @@ export const Step3 = ({ setPages }: any) => {
 
                 <div className='mt-[37.5px] mx-auto'>
                     <div className='font-b2-400 font-grey'>Analytics</div>
-                    <button className='img-btn mt-[16px]' onClick={manageLog}>{loggedGoogle ? 'Logout' : <img src={imageAssets.analytics} alt='' />}</button>
+                    <button className='img-btn mt-[16px]' onClick={manageLog}><img src={imageAssets.analytics} alt='' /></button>
                 </div>
 
 
                 <div className='mt-[32px] mx-auto'>
                     <div className='font-b2-400 font-grey'>Social Media</div>
                     <div className='flex flex-row gap-[8px] mt-[16px]'>
-                        <button className='img-btn'><img src={imageAssets.facebook} alt='' /></button>
-                        <button className='img-btn'><img src={imageAssets.instagram} alt='' /></button>
-                        <button className='img-btn'><img src={imageAssets.linkedin} alt='' /></button>
-                        <button className='img-btn'><img src={imageAssets.twitter} alt='' /></button>
+                        <button className={socialList.includes('facebook') ? 'img-btn active' : 'img-btn'} onClick={() => selectList('facebook')}><img src={imageAssets.facebook} alt='' /></button>
+                        <button className={socialList.includes('instagram') ? 'img-btn active' : 'img-btn'} onClick={() => selectList('instagram')}><img src={imageAssets.instagram} alt='' /></button>
+                        <button className={socialList.includes('linkedin') ? 'img-btn active' : 'img-btn'} onClick={() => selectList('linkedin')}><img src={imageAssets.linkedin} alt='' /></button>
+                        <button className={socialList.includes('twitter') ? 'img-btn active' : 'img-btn'} onClick={() => selectList('twitter')}><img src={imageAssets.twitter} alt='' /></button>
                     </div>
                 </div>
 
                 <div className='mt-[32px] mx-auto'>
                     <div className='font-b2-400 font-grey'>CRM</div>
                     <div className='flex flex-row gap-[8px] mt-[16px]'>
-                        <button className='img-btn'><img src={imageAssets.hubspot} alt='' /></button>
-                        <button className='img-btn'><img src={imageAssets.mail} alt='' /></button>
-                        <button className='img-btn'><img src={imageAssets.saleforce} alt='' /></button>
+                        <button className={socialList.includes('hubspot') ? 'img-btn active' : 'img-btn'} onClick={() => selectList('hubspot')}><img src={imageAssets.hubspot} alt='' /></button>
+                        <button className={socialList.includes('mail') ? 'img-btn active' : 'img-btn'} onClick={() => selectList('mail')}><img src={imageAssets.mail} alt='' /></button>
+                        <button className={socialList.includes('saleforce') ? 'img-btn active' : 'img-btn'} onClick={() => selectList('saleforce')}><img src={imageAssets.saleforce} alt='' /></button>
                     </div>
                 </div>
 

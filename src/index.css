@@ -32,7 +32,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+Button:hover{
+  opacity: 0.6;
+}
 .font-grey {
   color: #CDCDCD;
 }
@@ -123,7 +125,7 @@ h5, .h5,
 .b5,
 .font-b5-500 {
   font-family: "Quicksand", sans-serif;
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 500;
   line-height: 10px;
 }
@@ -200,7 +202,9 @@ h5, .h5,
   border: none;
   opacity: 1;
 }
-
+.active{
+  background-color: #292929;
+}
 .img-btn:hover {
   opacity: 0.7;
 }

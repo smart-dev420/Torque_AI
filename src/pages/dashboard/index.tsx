@@ -14,6 +14,8 @@ import { InfoAlert } from "../../components/InfoAlert";
 import { StrategyTable } from "./strategyTable";
 import Grid from "@mui/material/Grid";
 import { SettingsTable } from "./settingTable";
+import { useNavigate } from "react-router-dom";
+import UserContext from "../../utils/userContext";
 
 const testData: ChartData = {
   firstData: [4000, 3000, 2000, 2780, 1890, 2390, 3490],
@@ -38,11 +40,18 @@ const industryImages: string[] = [
 
 export const Dashboard = () => {
   const themeContext = useContext(ThemeContext);
+  const { setPages } = useContext(UserContext);
   const router = useRouter();
   const handleGoPage = (url: string) => {
     router.push(`/${url}`);
   };
   const [selectTap, setSelectTap] = useState<number>(0);
+  const navigate = useNavigate();
+  const setGoal = () => {
+    setPages(3);
+    navigate('/login')
+  }
+
   return (
     <div>
       {/** Title Part */}
@@ -53,40 +62,51 @@ export const Dashboard = () => {
         >
           Dashboard
         </h1>
-        <h4
-          className="w-[30%]"
-          style={{ color: themeContext?.theme.titleColor }}
-        >
-          Global Score &nbsp;
-          <label>
-            <label style={{ color: "#6775F0" }}>85</label>/100
-          </label>
-        </h4>
-        <div
-          className="flex flex-row items-center justify-end h4 gap-x-[20px] w-[40%]"
-          style={{ color: themeContext?.theme.titleColor }}
-        >
-          <label>
-            Account Setup Progress <label style={{ color: "#6775F0" }}>3</label>
-            /6
-          </label>
-          <ProgressBar step={2} />
-          <button
-            className="rounded-[100px] min-w-[150px] Button px-[12px]"
-            style={{ border: `2px solid ${themeContext?.theme.color}` }}
-          >
-            Continue Setup
-          </button>
-        </div>
+        {
+          localStorage.getItem('goalSetting') ?
+            (
+              <></>
+            ) : (
+              <>
+                <h4
+                  className="w-[30%]"
+                  style={{ color: themeContext?.theme.titleColor }}
+                >
+                  Global Score &nbsp;
+                  <label>
+                    <label style={{ color: "#6775F0" }}>85</label>/100
+                  </label>
+                </h4>
+                <div
+                  className="flex flex-row items-center justify-end h4 gap-x-[20px] w-[40%]"
+                  style={{ color: themeContext?.theme.titleColor }}
+                >
+                  <label>
+                    Account Setup Progress <label style={{ color: "#6775F0" }}>3</label>
+                    /6
+                  </label>
+                  <ProgressBar step={2} />
+                  <button
+                    className="rounded-[100px] min-w-[150px] Button px-[12px]"
+                    style={{ border: `2px solid ${themeContext?.theme.color}` }}
+                    onClick={setGoal}
+                  >
+                    Continue Setup
+                  </button>
+                </div>
+              </>
+            )
+        }
+
       </div>
 
       {/** Content Part */}
 
-      <div className="flex flex-col gap-y-[32px]">
+      <div className="flex flex-col gap-y-[32px] ">
         {/** First Section Start */}
-        <div className="flex flex-row gap-x-[32px]">
+        <div className="flex flex-row gap-x-[32px] ">
           <div
-            className="flex flex-col w-[40%] rounded-[8px] p-[24px] gap-y-[16px]"
+            className="flex flex-col w-[40%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between title-f24-700">
@@ -132,7 +152,7 @@ export const Dashboard = () => {
             </div>
             <div className="flex justify-end Button">
               <button
-                className="px-[15px] rounded-[50px]"
+                className="px-[15px] rounded-[50px] absolute bottom-[20px]"
                 style={{
                   backgroundColor: themeContext?.theme.activeButtonBackground,
                   color: themeContext?.theme.activeColor,
@@ -145,7 +165,7 @@ export const Dashboard = () => {
           </div>
 
           <div
-            className="flex flex-col w-[60%] rounded-[8px] p-[24px] gap-y-[16px]"
+            className="flex flex-col w-[60%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between title-f24-700">
@@ -170,12 +190,12 @@ export const Dashboard = () => {
             <StrategyTable />
             <div className="flex justify-end Button">
               <button
-                className="px-[15px] rounded-[50px]"
+                className="px-[15px] rounded-[50px] absolute bottom-[20px]"
                 style={{
                   backgroundColor: themeContext?.theme.activeButtonBackground,
                   color: themeContext?.theme.activeColor,
                 }}
-                onClick={()=>{handleGoPage('strategies')}}
+                onClick={() => { handleGoPage('strategies') }}
               >
                 Explore Strategies
               </button>
@@ -185,9 +205,9 @@ export const Dashboard = () => {
         {/** First Part End */}
 
         {/** Second Part Start */}
-        <div className="flex flex-row gap-x-[32px]">
+        <div className="flex flex-row gap-x-[32px] ">
           <div
-            className="flex flex-col w-[60%] rounded-[8px] p-[24px] gap-y-[16px]"
+            className="flex flex-col w-[60%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between title-f24-700">
@@ -235,7 +255,7 @@ export const Dashboard = () => {
                 </Grid>
               </div>
               <div className="flex flex-col w-[50%] gap-y-[8px]">
-              <p className="b5">Industry Trends</p>
+                <p className="b5">Industry Trends</p>
                 <Grid
                   container
                   spacing={{ xs: 2, md: 1 }}
@@ -250,7 +270,7 @@ export const Dashboard = () => {
               </div>
             </div>
             <InfoAlert str="Consider posting at least 5 YouTube shorts per week to increase reach." />
-            <div className="flex flex-row justify-end gap-x-[8px]">
+            <div className="flex flex-row justify-end gap-x-[8px] absolute bottom-[15px] right-[15px]">
               <button
                 className="px-[12px] rounded-[50px] Button"
                 style={{
@@ -258,7 +278,7 @@ export const Dashboard = () => {
                   color: themeContext?.theme.color,
                   border: `1px solid ${themeContext?.theme.activeButtonBackground}`
                 }}
-                onClick={()=>{handleGoPage('creatives')}}
+                onClick={() => { handleGoPage('creatives') }}
               >
                 Explore Creatives
               </button>
@@ -275,10 +295,10 @@ export const Dashboard = () => {
             </div>
           </div>
           <div
-            className="flex flex-col w-[40%] rounded-[8px] p-[24px] gap-y-[16px]"
+            className="flex flex-col w-[40%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
-             <div className="flex flex-row justify-between title-f24-700">
+            <div className="flex flex-row justify-between title-f24-700">
               <div className="flex flex-row items-center gap-x-[10px]">
                 <h3>Settings & Alerts</h3>
                 <InfoOutlinedIcon sx={{ width: 15 }} />
@@ -294,7 +314,7 @@ export const Dashboard = () => {
               </button>
             </div>
             <SettingsTable />
-            <div className="flex flex-row justify-end gap-x-[8px]">
+            <div className="flex flex-row justify-end gap-x-[8px] absolute bottom-[15px] right-[15px]">
               <button
                 className="px-[12px] rounded-[50px] Button"
                 style={{
@@ -334,11 +354,9 @@ export const ProgressBar: React.FC<{ step: number }> = ({ step }) => {
         return (
           <div
             key={index}
-            className={`h-[8px] w-full ${
-              index <= step ? "bg-[#6775F0]" : "bg-[#141414]"
-            } ${index === 0 ? "rounded-l-lg" : ""} ${
-              index === totalSteps - 1 ? "rounded-r-lg" : ""
-            }`}
+            className={`h-[8px] w-full ${index <= step ? "bg-[#6775F0]" : "bg-[#141414]"
+              } ${index === 0 ? "rounded-l-lg" : ""} ${index === totalSteps - 1 ? "rounded-r-lg" : ""
+              }`}
           />
         );
       })}
