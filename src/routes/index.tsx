@@ -12,6 +12,7 @@ import { Strategies } from '../pages/strategies';
 import {Analaytics} from '../pages/analytics';
 import { Campaigns } from "../pages/campaigns";
 import { Creatives } from "../pages/creatives";
+import { Reports } from "../pages/reports";
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -79,7 +80,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "reports",
-        element: <></>,
+        element: <Reports />,
         errorElement: <NotFound />,
       },
       {

@@ -310,9 +310,9 @@ export const Analaytics = () => {
                         </div>
 
                         <div className="shrink-0 w-1/2 flex flex-col gap-[8px]">
-                            <div className="flex flex-row justify-between p-[8px]">
+                            <div className="flex flex-row justify-between p-[8px] rounded-[4px]" style={{backgroundColor: themeContext?.theme.hoverBackground}}>
                                 <p className="font-button-700">Top Performance</p>
-                                <div className="flex flex-row gap-[8px]">
+                                <div className="flex flex-row gap-[8px] items-center">
                                     <ArrowCircleUpOutlinedIcon style={{ fontSize: '16px', color: '#4152EC' }} />
                                     <p className="font-button-700">Tuesday</p>
                                     <ArrowCircleUpOutlinedIcon style={{ fontSize: '16px', color: '#4152EC' }} />

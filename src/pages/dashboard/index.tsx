@@ -6,7 +6,7 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import {
-  ChartData,
+  LineChartData,
   LineChartComponent,
 } from "../../components/LineChartComponent";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -17,7 +17,7 @@ import { SettingsTable } from "./settingTable";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/userContext";
 
-const testData: ChartData = {
+const testData: LineChartData = {
   firstData: [4000, 3000, 2000, 2780, 1890, 2390, 3490],
   secondData: [2400, 1398, 9800, 3908, 4800, 3800, 4300],
   thirdData: [5400, 1698, 1800, 308, 4800, 3800, 4300],

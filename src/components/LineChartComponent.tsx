@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { ThemeContext } from "./Theme/context";
-export interface ChartData {
+export interface LineChartData {
   firstData: number[];
   secondData: number[];
   thirdData: number[];
   xLabel: string[];
 }
 export const LineChartComponent: React.FC<{
-  data: ChartData;
+  data: LineChartData;
 }> = ({ data }) => {
   const themeContext = useContext(ThemeContext);
   return (
