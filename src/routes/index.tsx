@@ -1,11 +1,6 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import { NotFound } from "../components/NotFound";
 import {Index} from '../pages/login/index'
-import { Step2 } from "../pages/login/step2";
-import { Step3 } from "../pages/login/step3";
-import { Step4 } from "../pages/login/step4";
-import { Step5 } from "../pages/login/step5";
-import { Step6 } from "../pages/login/step6";
 import { PageLayout } from "../pages/PageLayout";
 import { Dashboard } from "../pages/dashboard";
 import { Strategies } from '../pages/strategies';
@@ -13,39 +8,20 @@ import {Analaytics} from '../pages/analytics';
 import { Campaigns } from "../pages/campaigns";
 import { Creatives } from "../pages/creatives";
 import { Reports } from "../pages/reports";
+import { Register } from "../pages/login/register";
 export const router = createBrowserRouter([
   {
-    path: "/login",
+    path: "/",
     element: <Index />,
     errorElement: <NotFound />,
   },
   {
-    path: "/login/step2",
-    element: <Step2 />,
+    path: "/register",
+    element: <Register />,
     errorElement: <NotFound />,
   },
   {
-    path: "/login/step3",
-    element: <Step3 />,
-    errorElement: <NotFound />,
-  },
-  {
-    path: "/login/step4",
-    element: <Step4 />,
-    errorElement: <NotFound />,
-  },
-  {
-    path: "/login/step5",
-    element: <Step5 />,
-    errorElement: <NotFound />,
-  },
-  {
-    path: "/login/step6",
-    element: <Step6 />,
-    errorElement: <NotFound />,
-  },
-  {
-    path: "",
+    path: "/home",
     element: (
       <PageLayout>
         <Outlet />
