@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import { SideBar } from "./layout/sidebar";
 import { Navbar } from "./layout/navbar";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ export const PageLayout: React.FC<{
     if(localStorage.getItem("initSetting"))
       navigate('/dashboard')
     else
-      navigate('/login')
+      navigate('/')
   }, [])
 
   return (

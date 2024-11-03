@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
     errorElement: <NotFound />,
   },
   {
-    path: "/home",
+    path: "/",
     element: (
       <PageLayout>
         <Outlet />
