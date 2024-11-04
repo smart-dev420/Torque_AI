@@ -86,8 +86,8 @@ export const SideBar = () => {
   return (
     <div
       className={`${
-        isSidebar ? "w-[316px]  sticky top-[32px] flex" : "w-[120px]"
-      } m-[32px] rounded-[16px]  sticky top-[32px] flex`}
+        isSidebar ? "w-[316px]  sticky top-[32px] md:flex hidden" : "w-[120px]"
+      } m-[32px] rounded-[16px]  sticky top-[32px] md:flex hidden`}
       style={{ backgroundColor: themeContext?.theme.foreground , height: 'calc(100vh - 64px)'}}
     >
       <div className="flex flex-col m-[25px] justify-around ">

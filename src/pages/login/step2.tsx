@@ -178,7 +178,7 @@ export const Step2 = ({ setPages }: any) => {
                         </CustomSelect>
                     </div>
                 </div>
-                <div className='pt-[114px] pb-[40px] flex flex-row justify-between'>
+                <div className='md:pt-[114px] pt-[88px] pb-[40px] flex flex-row justify-between'>
                     <button className='w-[69px] h-[28px] px-[12px] py-[8px] btn-white ' onClick={() => handleBack()}>Go Back</button>
                     <button className='w-[50px] h-[28px] px-[12px] py-[8px] btn-blue ' onClick={() => handleNext()}>Next</button>
                 </div>

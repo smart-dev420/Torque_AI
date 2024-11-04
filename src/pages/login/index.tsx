@@ -1,19 +1,17 @@
-
-import { Step1 } from './step1';
-import { Step2 } from './step2';
-import { Step3 } from './step3';
+import { Step1 } from "./step1";
+import { Step2 } from "./step2";
+import { Step3 } from "./step3";
 import { Step4 } from "./step4";
 import { Step5 } from "./step5";
 import { Step6 } from "./step6";
-import { imageAssets } from '../../utils/constant';
+import { imageAssets } from "../../utils/constant";
 import { ProgressBar } from "./progressbar";
-import { useContext } from 'react';
-import UserContext from '../../utils/userContext';
-
+import { useContext } from "react";
+import UserContext from "../../utils/userContext";
 export const Index = () => {
   const { pages, setPages } = useContext(UserContext);
   const renderStep = () => {
-    switch(pages) {
+    switch (pages) {
       case 0:
         return <Step1 setPages={setPages} />;
       case 1:
@@ -32,18 +30,20 @@ export const Index = () => {
   };
 
   return (
-    <div className='bg-[#000] w-full min-h-screen'>
-      <div className="max-w-[600px] w-full flex-col mx-[auto]">
-        <div className='pt-[64px] '>
-          <img src={imageAssets.logo} alt='Torque AI' className='mx-[auto] max-w-[210px] max-h-[50px]' />
+    <div className="bg-[#000] w-full min-h-screen">
+      <div className="max-w-[90%] md:max-w-[600px] w-full flex-col mx-[auto]">
+        <div className="pt-[64px] ">
+          <img
+            src={imageAssets.logo}
+            alt="Torque AI"
+            className="mx-[auto] max-w-[210px] max-h-[50px]"
+          />
         </div>
-        <div className='mt-[64px] rounded-[8px] bg-[#141414] max-h-[680px] h-full flex-col text-center	px-[40px]'>
-          {
-            renderStep()
-          }
+        <div className="mt-[64px] rounded-[8px] bg-[#141414] max-h-[680px] h-full flex-col text-center	md:px-[40px] px-[16px]">
+          {renderStep()}
         </div>
         <ProgressBar step={pages} />
       </div>
     </div>
-  )
-}
+  );
+};

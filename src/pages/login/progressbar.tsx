@@ -11,7 +11,7 @@ export const ProgressBar: React.FC<{ step: number }> = ({ step }) => {
           <div
             key={index}
             className={`h-[8px] w-full ${
-              index === step ? "bg-[#6775F0]" : "bg-[#141414]"
+              index === 6 || index === step ? "bg-[#6775F0]" : "bg-[#141414]"
             } ${index === 0 ? "rounded-l-lg" : ""} ${
               index === totalSteps - 1 ? "rounded-r-lg" : ""
             }`}

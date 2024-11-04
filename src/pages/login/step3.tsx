@@ -7,7 +7,7 @@ import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import UserContext from '../../utils/userContext';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { collection, getDocs, query, where, setDoc, addDoc } from "firebase/firestore"; 
+import { collection, getDocs, query, where, setDoc, addDoc } from "firebase/firestore";
 import { firestore } from '../../components/Firebase/firebase';
 export const Step3 = ({ setPages }: any) => {
     const navigate = useNavigate();
@@ -23,10 +23,10 @@ export const Step3 = ({ setPages }: any) => {
         // }
         // else {
         //     await saveData();
-            const _saveData = { experience, socialList, userMail };
-            localStorage.setItem('initSetting', JSON.stringify(_saveData));
-            navigate('/dashboard', { state: { id: 3, name: 'step3' } })
-            setGoBack(false);
+        const _saveData = { experience, socialList, userMail };
+        localStorage.setItem('initSetting', JSON.stringify(_saveData));
+        navigate('/dashboard', { state: { id: 3, name: 'step3' } })
+        setGoBack(false);
         // }
     };
 
@@ -160,13 +160,16 @@ export const Step3 = ({ setPages }: any) => {
                     <span className='text-white font-b4-500'>Your data is anonymized and securely handled.</span>
                 </div>
 
-                <div className='mt-[37.5px] mx-auto'>
+                <div className='md:mt-[162px] mt-[142px] mx-auto'>
                     <div className='font-b2-400 font-grey'>Analytics</div>
-                    <button className='img-btn mt-[16px]' onClick={manageLog}><img src={imageAssets.analytics} alt='' /></button>
+                    <div className='flex flex-row gap-[16px] justify-self-center'>
+                        <button className='img-btn mt-[16px]' onClick={manageLog}><img src={imageAssets.analytics} alt='' /></button>
+                        <button className='img-btn mt-[16px]' onClick={manageLog}><img src={imageAssets.csv} alt='' /></button>
+                    </div>
                 </div>
 
 
-                <div className='mt-[32px] mx-auto'>
+                {/* <div className='mt-[32px] mx-auto'>
                     <div className='font-b2-400 font-grey'>Social Media</div>
                     <div className='flex flex-row gap-[8px] mt-[16px]'>
                         <button className={socialList.includes('facebook') ? 'img-btn active' : 'img-btn'} onClick={() => selectList('facebook')}><img src={imageAssets.facebook} alt='' /></button>
@@ -183,9 +186,9 @@ export const Step3 = ({ setPages }: any) => {
                         <button className={socialList.includes('mail') ? 'img-btn active' : 'img-btn'} onClick={() => selectList('mail')}><img src={imageAssets.mail} alt='' /></button>
                         <button className={socialList.includes('saleforce') ? 'img-btn active' : 'img-btn'} onClick={() => selectList('saleforce')}><img src={imageAssets.saleforce} alt='' /></button>
                     </div>
-                </div>
+                </div> */}
 
-                <div className='pt-[32px] pb-[40px] flex flex-row justify-between'>
+                <div className='pt-[162px] pb-[40px] flex flex-row justify-between'>
                     <button className='w-[69px] h-[28px] px-[12px] py-[8px] btn-white' onClick={() => handleBack()}>Go Back</button>
                     <button className='w-[114px] h-[28px] px-[12px] py-[8px] btn-blue' onClick={() => handleNext()}>Let’s Get Started</button>
                 </div>

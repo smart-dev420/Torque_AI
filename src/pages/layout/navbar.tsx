@@ -31,7 +31,7 @@ export const Navbar = () => {
     <div className="flex justify-between flex-row">
       <div className="flex flex-row item-center gap-x-[16px]">
         <div
-          className="flex justify-start items-center rounded-[8px] h-[48px] w-[300px] px-[16px] py-[12px] gap-[10px]"
+          className="hidden md:flex justify-start items-center rounded-[8px] h-[48px] w-[300px] px-[16px] py-[12px] gap-[10px]"
           style={{
             backgroundColor: themeContext?.theme.inputBackground,
             boxShadow: `0px 1px 0px ${themeContext?.theme.shadowColor}`,
@@ -47,7 +47,7 @@ export const Navbar = () => {
           />
         </div>
         <div
-          className="flex justify-start items-center rounded-[8px] h-[48px] w-[178px] px-[16px] py-[12px] gap-[10px]"
+          className="hidden md:flex justify-start items-center rounded-[8px] h-[48px] w-[178px] px-[16px] py-[12px] gap-[10px]"
           style={{
             backgroundColor: themeContext?.theme.inputBackground,
             boxShadow: `0px 1px 0px ${themeContext?.theme.shadowColor}`,
@@ -57,7 +57,7 @@ export const Navbar = () => {
           <label className="letter-f12-700">Investment Industry</label>
         </div>
         <div
-          className="flex justify-start items-center rounded-[8px] h-[48px] w-[178px] px-[16px] py-[12px] gap-[10px]"
+          className="hidden md:flex justify-start items-center rounded-[8px] h-[48px] w-[178px] px-[16px] py-[12px] gap-[10px]"
           style={{
             backgroundColor: themeContext?.theme.inputBackground,
             boxShadow: `0px 1px 0px ${themeContext?.theme.shadowColor}`,
