@@ -1,20 +1,20 @@
 import { ReactNode, useEffect } from "react";
 import { SideBar } from "./layout/sidebar";
 import { Navbar } from "./layout/navbar";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "../routes/hooks";
 
 export const PageLayout: React.FC<{
   children: ReactNode;
 }> = ({ children }) => {
-  const navigate = useNavigate();
-  
-  useEffect(() =>{
-    console.log(localStorage.getItem("initSetting"))
-    if(localStorage.getItem("initSetting"))
-      navigate('/dashboard')
-    else
-      navigate('/')
-  }, [])
+  const router = useRouter();
+  useEffect(() => {
+    console.log(localStorage.getItem("initSetting"));
+    if (localStorage.getItem("initSetting")) {
+      router.push("/dashboard");
+    } else {
+      router.push("/");
+    }
+  }, [router]);
 
   return (
     <div className={`flex flex-row min-h-screen`}>

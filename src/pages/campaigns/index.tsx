@@ -10,7 +10,6 @@ import { FirstIconTable, SecondTable } from "./iconTable";
 import { KeyTable } from "./keyTable";
 import { Modal, Box, Typography, Button } from '@mui/material';
 
-import perform from '../../services/perform.json';
 import keyword from '../../services/keyword.json';
 export const Campaigns = () => {
   const themeContext = useContext(ThemeContext);

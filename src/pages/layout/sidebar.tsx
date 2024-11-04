@@ -16,6 +16,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useRouter } from "../../routes/hooks/index";
 import Tooltip from "@mui/material/Tooltip";
+import { AppIcon } from "../component/icons";
 interface IconButtonData {
   icon: ReactElement;
   text: string;
@@ -92,8 +93,7 @@ export const SideBar = () => {
     >
       <div className="flex flex-col m-[25px] justify-around ">
         <div className="flex flex-row justify-start items-center gap-x-[16px]">
-          <img src={imageAssets.symbol} alt="Symbol" width={25} height={24} />
-
+          <AppIcon />
           <div className="flex flex-row justify-between letter-f18-400 w-full">
             <div
               className="letter-f18-400"
