@@ -36,8 +36,8 @@ export const Campaigns = () => {
         </h1>
       </div>
       {/** Content */}
-      <div className="flex flex-row gap-x-8">
-        <div className="flex flex-col w-[60%] gap-y-[16px]">
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:w-[60%] gap-y-[16px]">
           <div
             className="flex flex-col gap-x-[10px] rounded-[8px] p-6 gap-y-4"
             style={{ backgroundColor: themeContext?.theme.foreground }}
@@ -139,7 +139,7 @@ export const Campaigns = () => {
           </div>
         </div>
         <div
-          className="flex flex-col w-[40%] rounded-[8px] p-6 gap-y-4"
+          className="flex flex-col md:w-[40%] rounded-[8px] p-6 gap-y-4"
           style={{ backgroundColor: themeContext?.theme.foreground }}
         >
           <div className="flex flex-row items-center gap-x-[10px]">

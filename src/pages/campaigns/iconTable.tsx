@@ -4,7 +4,7 @@ import { ThemeContext } from "../../components/Theme/context";
 export const FirstIconTable: React.FC<{}> = () => {
   const themeContext = useContext(ThemeContext);
   return (
-    <table className="text-left b5 w-full">
+    <table className="text-left b5 w-full md:overflow-auto overflow-scroll block  md:table ">
       <thead>
         <tr>
           <th>Channel</th>
@@ -48,7 +48,7 @@ export const FirstIconTable: React.FC<{}> = () => {
 export const SecondTable: React.FC<{}> = () => {
   const themeContext = useContext(ThemeContext);
   return (
-    <table className="text-left font-b4-500">
+    <table className="text-left font-b4-500 md:overflow-auto overflow-scroll block md:table">
       <thead>
         <tr>
           <th>Channel</th>

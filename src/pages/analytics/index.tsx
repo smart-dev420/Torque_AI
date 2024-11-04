@@ -125,7 +125,7 @@ export const Analaytics = () => {
             </div>
             {/** Content Part */}
 
-            <div className="grid grid-cols-12 gap-[32px]">
+            <div className="flex flex-col md:grid md:grid-cols-12 gap-[32px]">
                 <div
                     className="col-span-7 rounded-[8px] p-[24px] flex flex-col gap-[16px] relative"
                     style={{ backgroundColor: themeContext?.theme.foreground }}
@@ -143,24 +143,19 @@ export const Analaytics = () => {
                         </button>
                     </div>
                     <div className="grid grid-cols-6 gap-[8px]">
-                        <div className="col-span-2">
-                            <ItemInfoList icon={<SendOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Clicks" content={perform.Clicks.toString()} />
+                        <div className="md:col-span-2 col-span-3">
                             <ItemInfoList icon={<SendOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Clicks" content={perform.Clicks.toString()} />
                         </div>
-                        <div className="col-span-2">
-                            <ItemInfoList icon={<ShoppingCartOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Conversions" content={perform.Conversions.toString()} />
+                        <div className="md:col-span-2 col-span-3">
                             <ItemInfoList icon={<ShoppingCartOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Conversions" content={perform.Conversions.toString()} />
                         </div>
-                        <div className="col-span-2">
-                            <ItemInfoList icon={<VisibilityOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Impressions" content={perform.Impressions.toString()} />
+                        <div className="md:col-span-2 col-span-6">
                             <ItemInfoList icon={<VisibilityOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Impressions" content={perform.Impressions.toString()} />
                         </div>
                         <div className="col-span-3">
                             <ItemInfoList icon={<ComputerOutlinedIcon style={{ fontSize: '8px' }} />} title="Overall CTR" content={`${perform.CTR}%`} />
-                            <ItemInfoList icon={<ComputerOutlinedIcon style={{ fontSize: '8px' }} />} title="Overall CTR" content={`${perform.CTR}%`} />
                         </div>
                         <div className="col-span-3">
-                            <ItemInfoList icon={<DiscountOutlinedIcon style={{ fontSize: '8px' }} />} title="Average CPA" content={`$${perform.Cost}`} />
                             <ItemInfoList icon={<DiscountOutlinedIcon style={{ fontSize: '8px' }} />} title="Average CPA" content={`$${perform.Cost}`} />
                         </div>
                     </div>
@@ -341,7 +336,7 @@ export const Analaytics = () => {
                         <label className="font-h3-700">Audience Insights and Best Times to Engage <ErrorOutlineIcon style={{ fontSize: '14px' }} /></label>
                     </div>
 
-                    <div className="mb-[24px] flex flex-row gap-[16px]">
+                    <div className="mb-[24px] flex md:flex-row flex-col gap-[16px]">
 
                         <div className="rounded-[2px] flex flex-col gap-[13px] mb-[16px]">
                             <div className="font-button-700">Top Demographics</div>
@@ -357,7 +352,7 @@ export const Analaytics = () => {
                             <InfoAlert str="Increase video content Tuesday mornings to maximize reach and engagement." />
                         </div>
 
-                        <div className="shrink-0 w-1/2 flex flex-col gap-[8px]">
+                        <div className="shrink-0 md:w-1/2 flex flex-col gap-[8px] mb-4 md:mb-0">
                             <div className="flex flex-row justify-between p-[8px] rounded-[4px]" style={{backgroundColor: themeContext?.theme.hoverBackground}}>
                                 <p className="font-button-700">Top Performance</p>
                                 <div className="flex flex-row gap-[8px] items-center">

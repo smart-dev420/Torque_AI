@@ -23,7 +23,7 @@ export const Strategies = () => {
             </div>
             {/** Content Part */}
 
-            <div className="grid grid-cols-12 gap-[32px]" >
+            <div className="flex flex-col md:grid md:grid-cols-12 gap-[32px]" >
                 <div
                     className="col-span-7 rounded-[8px] p-[24px] flex flex-col gap-[16px] relative"
                     style={{ backgroundColor: themeContext?.theme.foreground }}
@@ -110,7 +110,7 @@ export const Strategies = () => {
                     <div className="flex flex-row justify-between ">
                         <label className="font-h3-700">Dynamic Buyer Personas <ErrorOutlineIcon style={{ fontSize: '14px' }} /></label>
                     </div>
-                    <div className="flex flex-row gap-[8px]">
+                    <div className="flex md:flex-row flex-col gap-[8px]">
                         <PersonCard title="Persona 1" author="Cautious Carla – The Safe Investor" age={45} perference="REITs, low-risk stocks." top="LinkedIn, Email newsletters." tradit="Seeks stability, values long-term growth, responds well to educational content." strategies="Educational content, performance comparisons, safe investment showcases." />
 
                         <PersonCard title="Persona 2" author="Bold Brian – The Risk-Taker" age={30} perference="Cryptocurrencies, high-risk stocks." top="Twitter, Reddit, YouTube." tradit="Thrives on excitement, values high potential returns, influenced by peer endorsements." strategies="Influencer endorsements, performance highlights, exclusive investment tips." />
@@ -152,7 +152,6 @@ export const Strategies = () => {
 
                     <div className="flex flex-col gap-[8px]">
                         <div className="flex flex-row gap-[8px]">
-                            <div className="font-h5-700">CryptoChamp</div>
                             <div className="font-h5-700 self-center">CryptoChamp</div>
                             <div className=" font-button-700 self-center p-[4px]" style={{backgroundColor:themeContext?.theme.activeColor}}>Influencer-Led Crypto Challenges</div>
                         </div>

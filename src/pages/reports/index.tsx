@@ -45,7 +45,7 @@ export const Reports = () => {
       </div>
       {/** Content Part */}
 
-      <div className="grid grid-cols-12 gap-[32px]">
+      <div className="flex flex-col md:grid md:grid-cols-12 gap-[32px]">
         <div className="flex flex-col col-span-4 gap-y-8">
           <div
             className="rounded-[8px] p-[24px] flex flex-col gap-[16px] relative"

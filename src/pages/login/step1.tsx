@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../../components/Theme/context";
 import { GoogleIcon, LinkEdinIcon } from "../component/icons";
 import Button from "@mui/material/Button";
+import { signInWithGooglePopup } from "../../components/Firebase/firebase";
 
 const pageVariant: Variants = {
   initial: {
@@ -42,6 +43,11 @@ export const Step1 = ({ setPages }: StepProps) => {
     // navigate('/login/step2', { state: { id: 1, name: 'step1' } })
     setPages(1);
   };
+
+  const SignIn = async () => {
+    const response = await signInWithGooglePopup();
+    console.log(response);
+  }
 
   const themeContext = useContext(ThemeContext);
   return (
@@ -107,6 +113,7 @@ export const Step1 = ({ setPages }: StepProps) => {
                 border: `1px solid ${themeContext?.theme.activeButtonBackground}`,
                 textTransform: "none",
               }}
+              onClick={() => SignIn()}
             >
               <p
                 className="Button"

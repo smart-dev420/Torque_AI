@@ -8,6 +8,7 @@ export const UserProvider = ({ children }) => {
   const [customSettings, setCustomSettings] = useState({});
   const [socials, setSocials] = useState({});
   const [pages, setPages] = useState(0);
+  const [siderbar, setSiderbar] = useState(false);
   useEffect (()=>{
     const initSetting = localStorage.getItem('initSetting');
     if (initSetting){
@@ -17,7 +18,7 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
   return (
-    <UserContext.Provider value={{ experience, setExperience , socials, setSocials, goals, setGoals, competitors, setCompetitors , customSettings, setCustomSettings, pages, setPages }}>
+    <UserContext.Provider value={{ experience, setExperience , socials, setSocials, goals, setGoals, competitors, setCompetitors , customSettings, setCustomSettings, pages, setPages , siderbar, setSiderbar }}>
       {children}
     </UserContext.Provider>
   );

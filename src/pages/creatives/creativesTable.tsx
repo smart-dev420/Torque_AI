@@ -4,7 +4,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import XIcon from '@mui/icons-material/X';
 export const CreativesTable: React.FC<{}> = () => {
     return (
-        <table className="text-left b5 w-full">
+        <table className="text-left b5 w-full md:overflow-auto overflow-scroll block md:table">
             <thead>
                 <tr>
                     <th>Format</th>

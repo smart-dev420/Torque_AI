@@ -49,7 +49,7 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const setGoal = () => {
     setPages(3);
-    navigate('/login')
+    navigate('/')
   }
 
   return (

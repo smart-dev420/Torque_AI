@@ -16,6 +16,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useRouter } from "../../routes/hooks/index";
 import Tooltip from "@mui/material/Tooltip";
+import UserContext from '../../utils/userContext';
 interface IconButtonData {
   icon: ReactElement;
   text: string;
@@ -72,9 +73,11 @@ const buttonList: IconButtonData[] = [
 
 export const SideBar = () => {
   const themeContext = useContext(ThemeContext);
+  const { siderbar, setSiderbar } = useContext(UserContext);
   const usePathName = usePathname();
   const router = useRouter();
   const handleGoPage = (url: string) => {
+    setSiderbar(false);
     router.push(`/${url}`);
   };
   const [isSidebar, setIsSidebar] = useState<boolean>(() => {
@@ -84,13 +87,15 @@ export const SideBar = () => {
     return storedValue === "true";
   });
   return (
+    <div className={`md:flex ${siderbar ? `flex fixed z-[100] bg-[#9ba6afdb] w-full h-full ` : `hidden `}`}>
     <div
       className={`${
-        isSidebar ? "w-[316px]  sticky top-[32px] md:flex hidden" : "w-[120px]"
-      } m-[32px] rounded-[16px]  sticky top-[32px] md:flex hidden`}
+        isSidebar ? "md:w-[316px] w-full sticky place-content-center top-[32px] flex" : "md:w-[120px]"
+      } md:m-[32px] rounded-[16px]  sticky top-[32px] flex`}
       style={{ backgroundColor: themeContext?.theme.foreground , height: 'calc(100vh - 64px)'}}
     >
-      <div className="flex flex-col m-[25px] justify-around ">
+     
+      <div className="flex flex-col m-[25px] justify-around md:w-auto w-full">
         <div className="flex flex-row justify-start items-center gap-x-[16px]">
           <img src={imageAssets.symbol} alt="Symbol" width={25} height={24} />
 
@@ -106,7 +111,7 @@ export const SideBar = () => {
             <img
               src={iconAssets.ic_close}
               alt="Close"
-              className="cursor-pointer"
+              className="cursor-pointer hidden md:block"
               style={{transform: isSidebar ? "rotate(0deg)" : "rotate(180deg)"}}
               onClick={() => {
                 setIsSidebar((prevState) => {
@@ -119,10 +124,19 @@ export const SideBar = () => {
                 });
               }}
             />
+            <img
+              src={iconAssets.ic_close}
+              alt="Close"
+              className="cursor-pointer block md:hidden"
+              style={{transform: isSidebar ? "rotate(0deg)" : "rotate(180deg)"}}
+              onClick={() => {
+                setSiderbar(false);
+              }}
+            />
           </div>
         </div>
 
-        <div className="flex flex-col gap-y-[6px]">
+        <div className="flex flex-col gap-y-[16px]">
           {buttonList.map((item, index) => (
             <IconButton
               key={index}
@@ -218,7 +232,7 @@ export const SideBar = () => {
               backgroundColor: themeContext?.theme.activeButtonBackground,
               color: themeContext?.theme.activeColor,
             }}
-            onClick={() => handleGoPage("login")}
+            onClick={() => handleGoPage("")}
           >
             <LogoutOutlinedIcon sx={{ width: "20px", color: "#6775F0" }} />
 
@@ -234,6 +248,8 @@ export const SideBar = () => {
           </div>
         </Tooltip>
       </div>
+    </div>
+
     </div>
   );
 };
