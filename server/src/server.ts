@@ -3,7 +3,6 @@ import cors from "cors";
 import config from "./config/config";
 import setupRoute from "./routes";
 import { StatusCodes } from "http-status-codes";
-import logger from "./utils/logger";
 import { createServer as createHTTPServer } from "http";
 
 const bodyParser = require("body-parser");
@@ -42,9 +41,6 @@ setupRoute(app);
 var http = createHTTPServer(app);
 
 http.listen(config.server.port, async () => {
-  logger.info(
-    `Server started at http://${config.server.hostname}:${config.server.port}`
-  );
   console.log(`server started ${config.server.port}`);
 });
 

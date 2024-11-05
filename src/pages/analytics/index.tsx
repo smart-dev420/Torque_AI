@@ -1,5 +1,5 @@
 import {
-    useContext, useState,
+    useContext, useEffect, useState
 } from "react";
 import { ThemeContext } from "../../components/Theme/context";
 
@@ -26,6 +26,7 @@ import perform from '../../services/perform.json';
 import keyword from '../../services/keyword.json';
 
 import { Modal, Box, Typography, Button } from '@mui/material';
+import axios from "axios";
 
 export const FBIcon = () => {
     return (
@@ -112,6 +113,21 @@ export const Analaytics = () => {
         setIsModalOpen(false); // Close the modal when the user clicks "Close"
     };
 
+    const access_token = localStorage.getItem('access_token');
+    useEffect(() => {
+        initialze();
+    }, []);
+
+    const initialze = async () => {
+        try {
+            await axios.post(`${process.env.REACT_APP_SERVER}/analytics`, {
+                refresh_token: access_token
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
         <div>
             {/** Title Part */}
@@ -125,7 +141,7 @@ export const Analaytics = () => {
             </div>
             {/** Content Part */}
 
-            <div className="grid grid-cols-12 gap-[32px]">
+            <div className="flex flex-col md:grid md:grid-cols-12 gap-[32px]">
                 <div
                     className="col-span-7 rounded-[8px] p-[24px] flex flex-col gap-[16px] relative"
                     style={{ backgroundColor: themeContext?.theme.foreground }}
@@ -143,13 +159,13 @@ export const Analaytics = () => {
                         </button>
                     </div>
                     <div className="grid grid-cols-6 gap-[8px]">
-                        <div className="col-span-2">
+                        <div className="md:col-span-2 col-span-3">
                             <ItemInfoList icon={<SendOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Clicks" content={perform.Clicks.toString()} />
                         </div>
-                        <div className="col-span-2">
+                        <div className="md:col-span-2 col-span-3">
                             <ItemInfoList icon={<ShoppingCartOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Conversions" content={perform.Conversions.toString()} />
                         </div>
-                        <div className="col-span-2">
+                        <div className="md:col-span-2 col-span-6">
                             <ItemInfoList icon={<VisibilityOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Impressions" content={perform.Impressions.toString()} />
                         </div>
                         <div className="col-span-3">
@@ -195,6 +211,49 @@ export const Analaytics = () => {
                             Explore Keywords
                         </button>
                     </div>
+
+                    <Modal
+                        open={isModalOpen}
+                        onClose={handleCloseModal}
+                        aria-labelledby="modal-keywords-title"
+                        aria-describedby="modal-keywords-description"
+
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'flex-start', // Align items to the start
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                width: '70%',
+                                bgcolor: 'background.paper',
+                                borderRadius: '10px',
+                                boxShadow: 24,
+                                p: 4,
+                                maxHeight: '80%', // Limit height
+                                overflowY: 'auto',
+                                minHeight: '400px', // Ensure minimum height for visibility
+                            }}
+                        >
+                            <Typography id="modal-keywords-title"
+                                variant="h6"
+                                component="h2"
+                                sx={{ textAlign: 'center', marginBottom: 3 }}>
+                                Explore All Keywords
+                            </Typography>
+                            <Button
+                                onClick={handleCloseModal}
+                                sx={{ position: 'absolute', top: '10px', right: '10px' }}
+                            >
+                                Close
+                            </Button>
+                            <KeyTable keyword={keyword} />
+                        </Box>
+                    </Modal>
 
                     <Modal
                         open={isModalOpen}
@@ -293,7 +352,7 @@ export const Analaytics = () => {
                         <label className="font-h3-700">Audience Insights and Best Times to Engage <ErrorOutlineIcon style={{ fontSize: '14px' }} /></label>
                     </div>
 
-                    <div className="mb-[24px] flex flex-row gap-[16px]">
+                    <div className="mb-[24px] flex md:flex-row flex-col gap-[16px]">
 
                         <div className="rounded-[2px] flex flex-col gap-[13px] mb-[16px]">
                             <div className="font-button-700">Top Demographics</div>
@@ -309,8 +368,8 @@ export const Analaytics = () => {
                             <InfoAlert str="Increase video content Tuesday mornings to maximize reach and engagement." />
                         </div>
 
-                        <div className="shrink-0 w-1/2 flex flex-col gap-[8px]">
-                            <div className="flex flex-row justify-between p-[8px] rounded-[4px]" style={{backgroundColor: themeContext?.theme.hoverBackground}}>
+                        <div className="shrink-0 md:w-1/2 flex flex-col gap-[8px] mb-4 md:mb-0">
+                            <div className="flex flex-row justify-between p-[8px] rounded-[4px]" style={{ backgroundColor: themeContext?.theme.hoverBackground }}>
                                 <p className="font-button-700">Top Performance</p>
                                 <div className="flex flex-row gap-[8px] items-center">
                                     <ArrowCircleUpOutlinedIcon style={{ fontSize: '16px', color: '#4152EC' }} />

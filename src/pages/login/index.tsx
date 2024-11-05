@@ -31,7 +31,7 @@ export const Index = () => {
 
   return (
     <div className="bg-[#000] w-full min-h-screen">
-      <div className="max-w-[600px] w-full flex-col mx-[auto]">
+      <div className="max-w-[90%] md:max-w-[600px] w-full flex-col mx-[auto]">
         <div className="pt-[64px] ">
           <img
             src={imageAssets.logo}
@@ -39,7 +39,7 @@ export const Index = () => {
             className="mx-[auto] max-w-[210px] max-h-[50px]"
           />
         </div>
-        <div className="mt-[64px] rounded-[8px] bg-[#141414] max-h-[680px] h-full flex-col text-center	px-[40px]">
+        <div className="mt-[64px] rounded-[8px] bg-[#141414] max-h-[680px] h-full flex-col text-center	md:px-[40px] px-[16px]">
           {renderStep()}
         </div>
         <ProgressBar step={pages} />

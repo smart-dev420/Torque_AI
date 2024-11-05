@@ -49,13 +49,13 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const setGoal = () => {
     setPages(3);
-    navigate('/login')
+    navigate('/')
   }
 
   return (
     <div>
       {/** Title Part */}
-      <div className="flex flex-row items-center my-[32px]">
+      <div className="flex flex-col md:flex-row items-start md:items-center my-[32px]">
         <h1
           className="w-[30%]"
           style={{ color: themeContext?.theme.titleColor }}
@@ -69,7 +69,7 @@ export const Dashboard = () => {
             ) : (
               <>
                 <h4
-                  className="w-[30%]"
+                  className="md:w-[30%] mt-[16px] md:mt-0 md:block flex flex-row gap-[8px]"
                   style={{ color: themeContext?.theme.titleColor }}
                 >
                   Global Score &nbsp;
@@ -78,16 +78,16 @@ export const Dashboard = () => {
                   </label>
                 </h4>
                 <div
-                  className="flex flex-row items-center justify-end h4 gap-x-[20px] w-[40%]"
+                  className="flex flex-row items-center md:justify-end h4 md:gap-x-[20px] gap-x-[8px] md:w-[40%] w-full"
                   style={{ color: themeContext?.theme.titleColor }}
                 >
-                  <label>
+                  <label className="w-[35%]">
                     Account Setup Progress <label style={{ color: "#6775F0" }}>3</label>
                     /6
                   </label>
                   <ProgressBar step={2} />
                   <button
-                    className="rounded-[100px] min-w-[150px] Button px-[12px]"
+                    className="rounded-[100px] md:min-w-[150px] w-[30%] Button px-[12px]"
                     style={{ border: `2px solid ${themeContext?.theme.color}` }}
                     onClick={setGoal}
                   >
@@ -104,9 +104,9 @@ export const Dashboard = () => {
 
       <div className="flex flex-col gap-y-[32px] ">
         {/** First Section Start */}
-        <div className="flex flex-row gap-x-[32px] ">
+        <div className="flex flex-col md:flex-row md:gap-x-[32px] gap-[16px]">
           <div
-            className="flex flex-col w-[40%] rounded-[8px] p-[24px] gap-y-[16px] relative"
+            className="flex flex-col md:w-[40%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between title-f24-700">
@@ -124,7 +124,7 @@ export const Dashboard = () => {
                 30d
               </button>
             </div>
-            <div className="flex flex-row justify-between gap-x-[8px]">
+            <div className="flex flex-col md:flex-row justify-between gap-x-[8px] gap-[8px]">
               <CampaignItem
                 icon={<RemoveRedEyeOutlinedIcon style={{ height: "12px" }} />}
                 color="#41ECCD"
@@ -165,7 +165,7 @@ export const Dashboard = () => {
           </div>
 
           <div
-            className="flex flex-col w-[60%] rounded-[8px] p-[24px] gap-y-[16px] relative"
+            className="flex flex-col md:w-[60%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between title-f24-700">
@@ -205,12 +205,12 @@ export const Dashboard = () => {
         {/** First Part End */}
 
         {/** Second Part Start */}
-        <div className="flex flex-row gap-x-[32px] ">
+        <div className="flex flex-col md:flex-row md:gap-x-[32px] gap-[16px] ">
           <div
-            className="flex flex-col w-[60%] rounded-[8px] p-[24px] gap-y-[16px] relative"
+            className="flex flex-col md:w-[60%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
-            <div className="flex flex-row justify-between title-f24-700">
+            <div className="flex flex-col md:flex-row justify-between title-f24-700 gap-4">
               <div className="flex flex-row items-center gap-x-[10px]">
                 <h3>Campaign Performance</h3>
                 <InfoOutlinedIcon sx={{ width: 15 }} />
@@ -295,7 +295,7 @@ export const Dashboard = () => {
             </div>
           </div>
           <div
-            className="flex flex-col w-[40%] rounded-[8px] p-[24px] gap-y-[16px] relative"
+            className="flex flex-col md:w-[40%] rounded-[8px] p-[24px] gap-y-[16px] relative"
             style={{ backgroundColor: themeContext?.theme.foreground }}
           >
             <div className="flex flex-row justify-between title-f24-700">
@@ -349,7 +349,7 @@ export const ProgressBar: React.FC<{ step: number }> = ({ step }) => {
   const totalSteps = 6;
 
   return (
-    <div className="w-[120px] h-[8px] flex flex-row items-center justify-center gap-[8px]">
+    <div className="md:w-[120px] w-[20%] h-[8px] flex flex-row items-center justify-center gap-[8px]">
       {Array.from({ length: totalSteps }).map((_, index) => {
         return (
           <div

@@ -12,7 +12,7 @@ export const KeyTable = ({ keyword, limit }: { keyword: any, limit?: number }) =
     const limitedKeywords = keyword.slice(0, limit || keyword.length); // default to showing all if no limit
 
     return (
-        <table className="text-left font-b4-500 border-spacing-2 table-auto">
+        <table className="text-left font-b4-500 border-spacing-2 md:table-auto block overflow-scroll md:overflow-auto">
             <thead>
                 <tr>
                     <th>Keyword</th>

@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useState } from "react";
+import { ReactElement, useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../components/Theme/context";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
@@ -11,10 +11,21 @@ import { KeyTable } from "./keyTable";
 import { Modal, Box, Typography, Button } from '@mui/material';
 
 import keyword from '../../services/keyword.json';
+import axios from "axios";
 export const Campaigns = () => {
   const themeContext = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const access_token = localStorage.getItem('access_token');
+  useEffect(()=>{
+    initialze();
+  }, []);
+
+  const initialze = async () => {
+    await axios.post(`${process.env.REACT_APP_SERVER}/campaigns`, {
+      refresh_token : access_token
+    })
+  }
   const handleExploreClick = () => {
     setIsModalOpen(true); // Open the modal when "Explore Keywords" is clicked
   };
@@ -35,8 +46,8 @@ export const Campaigns = () => {
         </h1>
       </div>
       {/** Content */}
-      <div className="flex flex-row gap-x-8">
-        <div className="flex flex-col w-[60%] gap-y-[16px]">
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:w-[60%] gap-y-[16px]">
           <div
             className="flex flex-col gap-x-[10px] rounded-[8px] p-6 gap-y-4"
             style={{ backgroundColor: themeContext?.theme.foreground }}
@@ -138,7 +149,7 @@ export const Campaigns = () => {
           </div>
         </div>
         <div
-          className="flex flex-col w-[40%] rounded-[8px] p-6 gap-y-4"
+          className="flex flex-col md:w-[40%] rounded-[8px] p-6 gap-y-4"
           style={{ backgroundColor: themeContext?.theme.foreground }}
         >
           <div className="flex flex-row items-center gap-x-[10px]">

@@ -4,7 +4,10 @@ import { useContext } from "react";
 import { ThemeContext } from "../../components/Theme/context";
 import { GoogleIcon, LinkEdinIcon } from "../component/icons";
 import Button from "@mui/material/Button";
-
+import { signInWithGooglePopup } from "../../components/Firebase/firebase";
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 const pageVariant: Variants = {
   initial: {
     x: "-60%",
@@ -43,6 +46,44 @@ export const Step1 = ({ setPages }: StepProps) => {
     setPages(1);
   };
 
+  const SignIn = async () => {
+    try {
+      // const response = await signInWithGooglePopup();
+      // console.log("Access Token:", response);
+      login();
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }
+
+  const login = useGoogleLogin({
+    flow: 'auth-code', // Explicitly use auth-code flow
+    onSuccess: async (codeResponse) => {
+      try {
+        const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
+          code: codeResponse.code,
+          client_id: process.env.REACT_APP_CLIENT_ID, // Replace with your Google Client ID
+          client_secret: process.env.REACT_APP_CLIENT_SECRET, // Replace with your Google Client Secret
+          redirect_uri: 'http://localhost:3000', // Replace with your redirect URI
+          grant_type: 'authorization_code',
+        });
+
+        const accessToken = tokenResponse.data.refresh_token;
+
+        localStorage.setItem('access_token',accessToken );
+        setPages(1);
+
+        // Now you can access the user's email address
+       
+      } catch (error) {
+        toast.error('Error retrieving user info:' + error);
+      }
+    },
+    onError: (errorResponse) => {
+      toast.error('Login Failed:' + errorResponse);
+    },
+    scope: 'https://www.googleapis.com/auth/adwords', // Google Ads API scope
+  });
   const themeContext = useContext(ThemeContext);
   return (
     <div>
@@ -60,7 +101,7 @@ export const Step1 = ({ setPages }: StepProps) => {
             Welcome to Torque AI! Let's set up your account to unlock powerful
             marketing insights.
           </div>
-          <div className="flex flex-col w-[100%] gap-y-2">
+          <div className="flex flex-col w-[100%] gap-y-2 md:mt-[32px] mt-[8px]">
             <h5 style={{ textAlign: "left" }}>Email</h5>
             <input
               type="email"
@@ -98,7 +139,7 @@ export const Step1 = ({ setPages }: StepProps) => {
               Forgot password
             </p>
           </div>
-          <div className="flex justify-center w-full cursor-pointer">
+          <div className="flex justify-center w-full cursor-pointer md:mt-[32px] mt-[8px]">
             <Button
               variant="outlined"
               startIcon={<GoogleIcon />}
@@ -107,6 +148,7 @@ export const Step1 = ({ setPages }: StepProps) => {
                 border: `1px solid ${themeContext?.theme.activeButtonBackground}`,
                 textTransform: "none",
               }}
+              onClick={() => SignIn()}
             >
               <p
                 className="Button"

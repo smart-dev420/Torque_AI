@@ -3,7 +3,7 @@ import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 export const StrategyTable: React.FC<{}> = () => {
   return (
-    <table className="text-left font-b4-500">
+    <table className="text-left font-b4-500 w-[100%] overflow-scroll md:overflow-auto block md:mb-0 mb-[16px]">
       <thead>
         <tr>
           <th>Strategy</th>
@@ -17,8 +17,8 @@ export const StrategyTable: React.FC<{}> = () => {
       <tbody>
         <tr>
           <td>
-            <div className="flex flex-col">
-              <RemoveRedEyeOutlinedIcon sx={{ fontSize: 10 }} />
+            <div className="flex flex-row">
+              {/* <RemoveRedEyeOutlinedIcon sx={{ fontSize: 10 }} /> */}
               <label>Paid Search (PRC)</label>
             </div>
           </td>
@@ -31,7 +31,7 @@ export const StrategyTable: React.FC<{}> = () => {
         <tr>
           <td>
             <div className="flex flex-col">
-              <LanguageOutlinedIcon sx={{ fontSize: 10 }} />
+              {/* <LanguageOutlinedIcon sx={{ fontSize: 10 }} /> */}
               <label>Email Marketing:</label>
             </div>
           </td>
@@ -44,7 +44,7 @@ export const StrategyTable: React.FC<{}> = () => {
         <tr>
           <td>
             <div className="flex flex-col">
-              <ShoppingCartOutlinedIcon sx={{ fontSize: 10 }} />
+              {/* <ShoppingCartOutlinedIcon sx={{ fontSize: 10 }} /> */}
               <label>Social Media (Organic)</label>
             </div>
           </td>

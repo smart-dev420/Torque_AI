@@ -22,8 +22,12 @@ tbody > tr {
 tbody > tr:last-child{
   border:none;
 }
-tbody > tr > td{
+tbody > tr > td , tbody > tr > td > div > label{
   padding:8px;
+  max-width: 80px;    /* Set a fixed width */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden;    /* Hide overflowed text */
+  text-overflow: ellipsis;
 }
 thead > tr > th{
   padding:8px;

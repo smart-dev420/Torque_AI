@@ -16,13 +16,13 @@ export const PageLayout: React.FC<{
     }
   }, [router]);
 
-  return (
-    <div className={`flex flex-row min-h-screen`}>
-      <SideBar />
-      <div className="flex flex-col w-full m-[32px]">
-        <Navbar />
-        {children}
+    return (
+      <div className={`flex flex-row min-h-screen`}>
+        <SideBar />
+        <div className="flex flex-col w-full  p-[16px]">
+          <Navbar />
+          {children}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
