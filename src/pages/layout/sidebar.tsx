@@ -17,6 +17,8 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useRouter } from "../../routes/hooks/index";
 import Tooltip from "@mui/material/Tooltip";
 import UserContext from '../../utils/userContext';
+import { AppIcon } from "../component/icons";
+import axios from "axios";
 interface IconButtonData {
   icon: ReactElement;
   text: string;
@@ -76,7 +78,7 @@ export const SideBar = () => {
   const { siderbar, setSiderbar } = useContext(UserContext);
   const usePathName = usePathname();
   const router = useRouter();
-  const handleGoPage = (url: string) => {
+  const handleGoPage = async (url: string) => {
     setSiderbar(false);
     router.push(`/${url}`);
   };
@@ -97,8 +99,7 @@ export const SideBar = () => {
      
       <div className="flex flex-col m-[25px] justify-around md:w-auto w-full">
         <div className="flex flex-row justify-start items-center gap-x-[16px]">
-          <img src={imageAssets.symbol} alt="Symbol" width={25} height={24} />
-
+          <AppIcon />
           <div className="flex flex-row justify-between letter-f18-400 w-full">
             <div
               className="letter-f18-400"

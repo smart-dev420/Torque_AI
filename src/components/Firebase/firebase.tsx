@@ -24,7 +24,7 @@ const provider = new GoogleAuthProvider();
 provider.setCustomParameters({   
   prompt : "select_account "
 });
-
+provider.addScope("https://www.googleapis.com/auth/adwords");
 export const auth = getAuth(app);
 
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);

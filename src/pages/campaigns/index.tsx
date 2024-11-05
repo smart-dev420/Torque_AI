@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useState } from "react";
+import { ReactElement, useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../components/Theme/context";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
@@ -10,12 +10,22 @@ import { FirstIconTable, SecondTable } from "./iconTable";
 import { KeyTable } from "./keyTable";
 import { Modal, Box, Typography, Button } from '@mui/material';
 
-import perform from '../../services/perform.json';
 import keyword from '../../services/keyword.json';
+import axios from "axios";
 export const Campaigns = () => {
   const themeContext = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const access_token = localStorage.getItem('access_token');
+  useEffect(()=>{
+    initialze();
+  }, []);
+
+  const initialze = async () => {
+    await axios.post(`${process.env.REACT_APP_SERVER}/campaigns`, {
+      refresh_token : access_token
+    })
+  }
   const handleExploreClick = () => {
     setIsModalOpen(true); // Open the modal when "Explore Keywords" is clicked
   };
