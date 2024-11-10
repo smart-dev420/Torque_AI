@@ -140,7 +140,7 @@ export const Dashboard = () => {
               <CampaignItem
                 icon={<ShoppingCartOutlinedIcon style={{ height: "12px" }} />}
                 color="#6775F0"
-                text="Convensions"
+                text="Conversions"
                 performance="80"
               />
             </div>
@@ -212,7 +212,7 @@ export const Dashboard = () => {
           >
             <div className="flex flex-col md:flex-row justify-between title-f24-700 gap-4">
               <div className="flex flex-row items-center gap-x-[10px]">
-                <h3>Campaign Performance</h3>
+                <h3>Creative Highlights</h3>
                 <InfoOutlinedIcon sx={{ width: 15 }} />
               </div>
               <div className="flex flex-row gap-x-[8px]">

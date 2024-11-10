@@ -287,8 +287,8 @@ export const Reports = () => {
                 <p className="font-button-700">9 am</p>
               </div>
             </div>
-            <BarChartComponent datalist={timeData} />
-            <BarChartComponent datalist={dateData} />
+            <BarChartComponent dateValue={dateData.data} dateLabel={dateData.label} />
+           
           </div>
           <div className="flex flex-row justify-end">
             <button

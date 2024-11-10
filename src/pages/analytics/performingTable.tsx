@@ -16,11 +16,11 @@ export const PerformingTable = ({ perform }: { perform: any }) => {
             <tbody>
                 <tr>
                     <td><GoogleIcon /> </td>
-                    <td>{perform.Impressions}</td>
-                    <td>{perform.Clicks}</td>
-                    <td>{perform.Conversions}</td>
-                    <td>{`${perform.CTR}%`}</td>
-                    <td>${perform.Cost}</td>
+                    <td>{perform.impressions}</td>
+                    <td>{perform.clicks}</td>
+                    <td>{perform.conversions}</td>
+                    <td>{`${(Math.floor(perform?.ctr * 10000 )/100)}%`}</td>
+                    <td>${perform.cpa}</td>
                 </tr>
                 {/* <tr>
                     <td><FBIcon/>  </td>

@@ -16,9 +16,7 @@ const getMetrics: RequestHandler = async (req, res) => {
             customer_id: process.env.CUSTOMER_ID!,
         });
 
-
-
-
+        // fetch campaign metrics from google ads
         const performMetrics = await perfromMetrics(customer);
         const perfrom = performMetrics.map((item: any) => {
             const costMicros = item.campaign.cost_micros;
@@ -37,12 +35,17 @@ const getMetrics: RequestHandler = async (req, res) => {
             }
             return list;
         });
-
-
-
+        // fetch keyword metrics from google ads
         // fetchKeywordPerformance(customer);
-        fetchAudience(customer);
-        return res.status(StatusCodes.OK).send();
+
+        // fetch audience metrics from google ads
+        const audience = await fetchAudience(customer);
+
+        const result = {
+            perform: perfrom,
+            audience: audience
+        }
+        return res.status(StatusCodes.OK).send(result);
     } catch (error: any) {
         console.log("error: ", error);
         // throw error;
@@ -74,69 +77,62 @@ const perfromMetrics = async (customer: any) => {
     }
 }
 
-const fetchAudience = async (customer : any) => {
+const fetchAudience = async (customer: any) => {
+    // $query = 'SELECT campaign.id, ad_group_criterion.age_range.type,ad_group.id,metrics.clicks,metrics.ctr,metrics.impressions,segments.ad_network_type,segments.device, ad_group.name FROM age_range_view';
 
     const query = `
-    SELECT
-        segments.date,
-        segments.hour,
-        ad_group_criterion.age_range.type
-        metrics.impressions,
-        metrics.clicks,
-        metrics.cost_micros
-    FROM
-        age_range_view
-    WHERE
-        segments.date DURING LAST_7_DAYS
-    ORDER BY
-        segments.date, segments.hour
-`;
+        SELECT
+            segments.date,
+            ad_group_criterion.age_range.type,
+            metrics.impressions,
+            metrics.clicks,
+            metrics.cost_micros,
+            age_range_view.resource_name
+        FROM
+            age_range_view
+        WHERE
+             segments.date DURING LAST_7_DAYS
+    `;
 
     try {
         const response = await customer.query(query);
-        console.log(response);
+        const formattedData: any[] = [];
+        let currentDate = '';
+        response.map((row: any) => {
+            const date = row.segments.date;
+            const ageRangeName = row.ad_group_criterion.age_range.type;
 
-        // // Initialize arrays
-        // const dailyData: { date: any; impressions: any[]; }[] = [];
-        // const ageRanges = ['AGE_RANGE_25_34', 'AGE_RANGE_35_44', 'AGE_RANGE_45_54', 'AGE_RANGE_55_64', 'AGE_RANGE_65_UP'];
-        // const impressionsArray = Array(ageRanges.length).fill(0).map(() => Array(24).fill(0)); // 24 hours in a day
+            const impressions = row.metrics.impressions;
 
-        // // Process the response
-        // response.forEach((row: any) => {
-        //     const date = row.segments.date;
-        //     const hour = row.segments.hour;
-        //     const ageRangeIndex = ageRanges.indexOf(row.ad_group_criterion.age_range);
-        //     const impressions = parseInt(row.metrics.impressions, 10);
+            // Check if we are still on the same date
+            if (currentDate !== date) {
+                // Push the new date entry
+                currentDate = date;
+                formattedData.push({
+                    date: currentDate,
+                    age_ranges: []
+                });
+            }
 
-        //     // Fill the daily data structure
-        //     if (!dailyData.some(d => d.date === date)) {
-        //         dailyData.push({ date, impressions: Array(24).fill(0) }); // 24 hours
-        //     }
+            // Find the last entry for the current date
+            const lastEntry = formattedData[formattedData.length - 1];
 
-        //     // Add impressions to the corresponding hour in daily data
-        //     const dailyEntry = dailyData.find(d => d.date === date);
-    
-        //     // Ensure dailyEntry is defined before trying to assign
-        //     if (dailyEntry) {
-        //         dailyEntry.impressions[hour] += impressions;
-        
-        //         // Add impressions to the impressions array for 3-hour intervals
-        //         if (ageRangeIndex !== -1) {
-        //             impressionsArray[ageRangeIndex][hour] += impressions;
-        //         }
-        //     }
-        // });
+            // Add or update the age range data
+            lastEntry.age_ranges.push({
+                age_range: ageRangeName,
+                impression: impressions
+            });
+        });
 
-        // console.log("Daily Data:", dailyData);
-        // console.log("Impressions by Age Ranges:", impressionsArray);
-        
+        // Output the formatted data
+        return formattedData;
+
     } catch (error) {
         console.error("Error fetching audience insights:", error);
     }
 }
 async function fetchKeywordPerformance(customer: any) {
-    try {
-        const query = `
+    const query = `
             SELECT
                 keyword_view.resource_name,
                 ad_group_criterion.criterion_id,
@@ -148,31 +144,10 @@ async function fetchKeywordPerformance(customer: any) {
                 ad_group_criterion.status = 'ENABLED'
         `;
 
-        const list = await customer.query(query);
-        const keywords = list.map((row : any) => {
-            return row.ad_group_criterion.keyword.text;
-        });
-        const ideasService = customer.keywordPlanIdeaService;
-        console.log(ideasService)
-        try {
-            const response = await customer.keywordPlanIdeas.generateKeywordIdeas({
-                keywordPlanNetwork: 'GOOGLE_SEARCH',
-                keywords: keywords,
-            });
-            console.log("Keyword Ideas Response:", response);
-        } catch (error) {
-            console.error("Error fetching keyword ideas:", error);
-        }
-        // response.map((idea: any) => {
-        //     const keyword = idea.text.value;
-        //     const searchVolume = idea.avgMonthlySearches.value; // Monthly search volume
-        //     const competition = idea.competition.value; // Competition level
-
-        //     console.log(`Keyword: ${keyword}, Search Volume: ${searchVolume}/month, Competition: ${competition}`);
-        // });
-    } catch (error) {
-        console.error('Error fetching keyword performance data:', error);
-    }
+    const list = await customer.query(query);
+    const keywords = list.map((row: any) => {
+        return row.ad_group_criterion.keyword.text;
+    });
 }
 
 const analytics = {

@@ -17,7 +17,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useRouter } from "../../routes/hooks/index";
 import Tooltip from "@mui/material/Tooltip";
 import UserContext from '../../utils/userContext';
-import { AppIcon } from "../component/icons";
+import { AppIcon, AppTextIcon } from "../component/icons";
 import axios from "axios";
 interface IconButtonData {
   icon: ReactElement;
@@ -99,20 +99,19 @@ export const SideBar = () => {
      
       <div className="flex flex-col m-[25px] justify-around md:w-auto w-full">
         <div className="flex flex-row justify-start items-center gap-x-[16px]">
-          <AppIcon />
+          {!isSidebar && (<AppIcon />)}
           <div className="flex flex-row justify-between letter-f18-400 w-full">
             <div
-              className="letter-f18-400"
+              className="letter-f18-400 "
               style={{ display: isSidebar ? "block" : "none" }}
             >
-              Torque &nbsp;
-              <label style={{ color: "#4152EC" }}>AI</label>
+              <AppTextIcon />
             </div>
 
             <img
               src={iconAssets.ic_close}
               alt="Close"
-              className="cursor-pointer hidden md:block"
+              className="cursor-pointer hidden md:block w-[18px] h-[18px] self-center"
               style={{transform: isSidebar ? "rotate(0deg)" : "rotate(180deg)"}}
               onClick={() => {
                 setIsSidebar((prevState) => {
@@ -137,7 +136,7 @@ export const SideBar = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-y-[16px]">
+        <div className="flex flex-col gap-y-[10px]">
           {buttonList.map((item, index) => (
             <IconButton
               key={index}

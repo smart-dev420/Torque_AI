@@ -15,16 +15,40 @@ import axios from "axios";
 export const Campaigns = () => {
   const themeContext = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [perform, setPerform] = useState<Perform>({
+    name : '',
+    impressions: 0,
+    clicks: 0,
+    ctr: 0,
+    cpa: 0,
+    conversions: 0,
+    ai_score : 0
+});
+interface Perform {
+  name : string;
+  impressions: number;
+  clicks: number;
+  ctr: number;
+  cpa: number;
+  conversions: number;
+  ai_score : number;
+}
   const access_token = localStorage.getItem('access_token');
   useEffect(()=>{
     initialze();
   }, []);
 
   const initialze = async () => {
-    await axios.post(`${process.env.REACT_APP_SERVER}/campaigns`, {
-      refresh_token : access_token
-    })
+    try{
+      await axios.post(`${process.env.REACT_APP_SERVER}/campaigns`, {
+        // refresh_token : access_token
+        refresh_token : "1//0e4mp8XEl_QkWCgYIARAAGA4SNwF-L9IrWpmarCLxLRgXhNrFp-i0BZk8m67o5feQiiPKYDAVXHYpe86ZOxckvaoZw7gai_gIUX0"
+      }).then((res) => {
+        setPerform(res.data?.perform[0]);
+      })
+    } catch (e) {
+      console.log(e);
+    }
   }
   const handleExploreClick = () => {
     setIsModalOpen(true); // Open the modal when "Explore Keywords" is clicked
@@ -56,8 +80,8 @@ export const Campaigns = () => {
               <h3>Optimize Your Latest Campaign</h3>
               <InfoOutlinedIcon sx={{ width: 15 }} />
             </div>
-            <h5>Crypto Growth Booster Q4</h5>
-            <FirstIconTable />
+            <h5>{perform.name}</h5>
+            <FirstIconTable data = {perform}/>
             <InfoAlert str="Increase ad budget by 10% during peak trading hours to capitalize on higher conversion rates." />
           </div>
 

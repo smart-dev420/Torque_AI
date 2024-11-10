@@ -9,6 +9,7 @@ import { Campaigns } from "../pages/campaigns";
 import { Creatives } from "../pages/creatives";
 import { Reports } from "../pages/reports";
 import { Register } from "../pages/login/register";
+import Settings from "../pages/settings";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -61,7 +62,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "settings",
-        element: <></>,
+        element: <Settings/>,
         errorElement: <NotFound />,
       },
       {

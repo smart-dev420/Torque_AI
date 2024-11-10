@@ -1,8 +1,12 @@
 import { FBIcon, FireIcon, GoogleIcon, LinkedinIcon } from ".";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ThemeContext } from "../../components/Theme/context";
-export const FirstIconTable: React.FC<{}> = () => {
+
+export const FirstIconTable = (data : any) => {
   const themeContext = useContext(ThemeContext);
+  useEffect(()=> {
+    console.log(data);
+  });
   return (
     <table className="text-left b5 w-full md:overflow-auto overflow-scroll block  md:table ">
       <thead>
@@ -21,11 +25,11 @@ export const FirstIconTable: React.FC<{}> = () => {
           <td>
             <GoogleIcon />
           </td>
-          <td>1,250,000</td>
-          <td>60,000</td>
-          <td>4.8%</td>
-          <td>$14.50</td>
-          <td>78/100</td>
+          <td>{data.data.impressions}</td>
+          <td>{data.data.clicks}</td>
+          <td>{(data.data.ctr * 100).toFixed(2)}%</td>
+          <td>${data.data.cpa}</td>
+          <td>30/100</td>
           <td>
             <div className="flex items-center">
               <button

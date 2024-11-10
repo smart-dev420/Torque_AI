@@ -22,7 +22,7 @@ import { KeyTable } from "./keyTable";
 import { BarChartComponent, ChartData } from "./BarChart";
 import { Divider } from "@mui/material";
 
-import perform from '../../services/perform.json';
+// import perform from '../../services/perform.json';
 import keyword from '../../services/keyword.json';
 
 import { Modal, Box, Typography, Button } from '@mui/material';
@@ -95,7 +95,30 @@ export const GoogleIcon = () => {
 export const Analaytics = () => {
     const themeContext = useContext(ThemeContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [perform, setPerform] = useState<Perform>({
+        impressions: 0,
+        clicks: 0,
+        ctr: 0,
+        cpa: 0,
+        conversions: 0
+    });
+    const [audienceResult, setAudienceResult] = useState<TopImpressionsResult>({
+        top1: { ageRange: '', impression: 0, percent: "0" },
+        top2: { ageRange: '', impression: 0, percent: "0" },
+        totalImpressions: 0,
+    });
+    const [dateValue, setDateValue] = useState([]);
+    const [maxPos, setMaxPos] = useState(0);
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const ageRangeMapping: { [key: string]: string } = {
+        "503001": "18-24",
+        "503002": "25-34",
+        "503003": "35-44",
+        "503004": "45-54",
+        "503005": "55-64",
+        "503006": "65 or more",
+        "503999": "Unknown",
+    };
     const dateData: ChartData = {
         data: [4000, 3000, 2000, 2780, 1890, 2390, 3490],
         label: ["Mon", "Tue", "Wed", "Thrs", "Fri", "Sat", "Sun"],
@@ -103,6 +126,23 @@ export const Analaytics = () => {
     const timeData: ChartData = {
         data: [2000, 3000, 2000, 2780, 1890, 2390, 3490],
         label: ["12 am", "3 am", "6 am", "12 pm", "3 pm", "6 pm", "9 pm"],
+    }
+    interface Perform {
+        impressions: number;
+        clicks: number;
+        ctr: number;
+        cpa: number;
+        conversions: number;
+    }
+    interface ImpressionData {
+        age_range: number;
+        impression: number;
+    }
+
+    interface TopImpressionsResult {
+        top1: { ageRange: string; impression: number; percent: string };
+        top2: { ageRange: string; impression: number; percent: string };
+        totalImpressions: number;
     }
 
     const handleExploreClick = () => {
@@ -120,14 +160,68 @@ export const Analaytics = () => {
 
     const initialze = async () => {
         try {
-            await axios.post(`${process.env.REACT_APP_SERVER}/analytics`, {
+            const result = await axios.post(`${process.env.REACT_APP_SERVER}/analytics`, {
                 refresh_token: access_token
-            })
+            });
+            // fetch performance metrics datas
+            setPerform(result.data?.perform[0]);
+            const impressions = getImpressionSumPerDate(result.data.audience)
+            setDateValue(impressions);
+
+            const maxImpression = Math.max(...impressions);
+            setMaxPos(impressions.indexOf(maxImpression));
+
+            // fetch audience information datas
+            const impressionSums = getImpressionSumsByAgeRange(result.data.audience);
+            console.log(result.data.audience)
+            setAudienceResult(getTopTwoImpressions(impressionSums));
         } catch (e) {
             console.log(e)
         }
     }
-
+    function getImpressionSumPerDate(data: any) {
+        return data.map((item: any) => {
+            const totalImpressions = item.age_ranges.reduce((sum: any, ageRange: { impression: any; }) => sum + ageRange.impression, 0);
+            return totalImpressions;
+        });
+    }
+    const getImpressionSumsByAgeRange = (data: { date: string; age_ranges: { age_range: number; impression: number }[] }[]) => {
+        const impressionsByAgeRange: { [key: number]: number } = {};
+    
+        data.forEach((item) => {
+            item.age_ranges.forEach((range) => {
+                impressionsByAgeRange[range.age_range] = (impressionsByAgeRange[range.age_range] || 0) + range.impression;
+            });
+        });
+    
+        return impressionsByAgeRange;
+    };
+    const getTopTwoImpressions = (impressions: { [key: number]: number }): TopImpressionsResult => {
+        const impressionsArray = Object.entries(impressions)
+            .filter(([ageRangeCode]) => ageRangeCode !== "503999") // Skip the "Unknown" age range
+            .map(([ageRangeCode, impression]) => ({
+                ageRange: ageRangeMapping[Number(ageRangeCode)] || "Unknown",
+                impression: impression,
+            }));
+    
+        // Sort the array by impressions in descending order
+        impressionsArray.sort((a, b) => b.impression - a.impression);
+    
+        const top1 = impressionsArray[0];
+        const top2 = impressionsArray[1];
+        const totalImpressions = impressionsArray.reduce((sum, item) => sum + item.impression, 0);
+    
+        const top1Percent = ((top1.impression / totalImpressions) * 100).toFixed(2);
+        const top2Percent = ((top2.impression / totalImpressions) * 100).toFixed(2);
+    
+        return {
+            top1: { ageRange: top1.ageRange, impression: top1.impression, percent: top1Percent },
+            top2: { ageRange: top2.ageRange, impression: top2.impression, percent: top2Percent },
+            totalImpressions,
+        };
+    };
+    
+    
     return (
         <div>
             {/** Title Part */}
@@ -160,19 +254,19 @@ export const Analaytics = () => {
                     </div>
                     <div className="grid grid-cols-6 gap-[8px]">
                         <div className="md:col-span-2 col-span-3">
-                            <ItemInfoList icon={<SendOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Clicks" content={perform.Clicks.toString()} />
+                            <ItemInfoList icon={<SendOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Clicks" content={perform?.clicks.toString()} />
                         </div>
                         <div className="md:col-span-2 col-span-3">
-                            <ItemInfoList icon={<ShoppingCartOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Conversions" content={perform.Conversions.toString()} />
+                            <ItemInfoList icon={<ShoppingCartOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Conversions" content={perform?.conversions.toString()} />
                         </div>
                         <div className="md:col-span-2 col-span-6">
-                            <ItemInfoList icon={<VisibilityOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Impressions" content={perform.Impressions.toString()} />
+                            <ItemInfoList icon={<VisibilityOutlinedIcon style={{ fontSize: '8px' }} />} title="Total Impressions" content={perform?.impressions.toString()} />
                         </div>
                         <div className="col-span-3">
-                            <ItemInfoList icon={<ComputerOutlinedIcon style={{ fontSize: '8px' }} />} title="Overall CTR" content={`${perform.CTR}%`} />
+                            <ItemInfoList icon={<ComputerOutlinedIcon style={{ fontSize: '8px' }} />} title="Overall CTR" content={`${(Math.floor(perform?.ctr * 10000) / 100).toString()}%`} />
                         </div>
                         <div className="col-span-3">
-                            <ItemInfoList icon={<DiscountOutlinedIcon style={{ fontSize: '8px' }} />} title="Average CPA" content={`$${perform.Cost}`} />
+                            <ItemInfoList icon={<DiscountOutlinedIcon style={{ fontSize: '8px' }} />} title="Average CPA" content={`$${perform?.cpa.toString()}`} />
                         </div>
                     </div>
                     <PerformingTable perform={perform} />
@@ -361,8 +455,8 @@ export const Analaytics = () => {
                                 <div className="font-b5-500 text-left">Your audience is most engaged with video content during morning commutes and evening hours. Capitalize on this by scheduling posts during these times.</div>
                             </div>
                             <div className="flex flex-row gap-[8px] w-full">
-                                <ItemList icon={<PeopleAltOutlinedIcon style={{ fontSize: "12px" }} />} title="Age 25-34" content="35% of total audience" />
-                                <ItemList icon={<PeopleAltOutlinedIcon style={{ fontSize: "12px" }} />} title="Age 35-44" content="28% of total audience" />
+                                <ItemList icon={<PeopleAltOutlinedIcon style={{ fontSize: "12px" }} />} title={`Age ${audienceResult?.top1.ageRange}`} content={`${audienceResult?.top1.percent}% of total audience`} />
+                                <ItemList icon={<PeopleAltOutlinedIcon style={{ fontSize: "12px" }} />} title={`Age ${audienceResult?.top2.ageRange}`} content={`${audienceResult?.top2.percent}% of total audience`} />
                             </div>
                             <ItemList icon={<LocationOnOutlinedIcon style={{ fontSize: "12px" }} />} title="Top Locations" content="New York, San Francisco, London" />
                             <InfoAlert str="Increase video content Tuesday mornings to maximize reach and engagement." />
@@ -373,13 +467,12 @@ export const Analaytics = () => {
                                 <p className="font-button-700">Top Performance</p>
                                 <div className="flex flex-row gap-[8px] items-center">
                                     <ArrowCircleUpOutlinedIcon style={{ fontSize: '16px', color: '#4152EC' }} />
-                                    <p className="font-button-700">Tuesday</p>
-                                    <ArrowCircleUpOutlinedIcon style={{ fontSize: '16px', color: '#4152EC' }} />
-                                    <p className="font-button-700">9 am</p>
+                                    <p className="font-button-700">{days[maxPos]}</p>
+                                    {/* <ArrowCircleUpOutlinedIcon style={{ fontSize: '16px', color: '#4152EC' }} />
+                                    <p className="font-button-700">9 am</p> */}
                                 </div>
                             </div>
-                            <BarChartComponent datalist={timeData} />
-                            <BarChartComponent datalist={dateData} />
+                            <BarChartComponent dateLabel={dateData.label} dateValue={dateValue} />
                         </div>
                     </div>
                     <button className="px-[12px]  rounded-[50px] font-button-700 w-[135px]"
