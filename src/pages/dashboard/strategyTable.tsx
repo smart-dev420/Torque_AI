@@ -9,7 +9,7 @@ export const StrategyTable: React.FC<{}> = () => {
           <th>Strategy</th>
           <th>Insight</th>
           <th>Key Metric</th>
-          <th>Your Perfaomance</th>
+          <th>Your Performance</th>
           <th>Industry Avg</th>
           <th>Top Performer</th>
         </tr>
