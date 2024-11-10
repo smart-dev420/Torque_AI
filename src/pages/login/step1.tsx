@@ -64,7 +64,8 @@ export const Step1 = ({ setPages }: StepProps) => {
           code: codeResponse.code,
           client_id: process.env.REACT_APP_CLIENT_ID, // Replace with your Google Client ID
           client_secret: process.env.REACT_APP_CLIENT_SECRET, // Replace with your Google Client Secret
-          redirect_uri: 'https://app.torque-ai.com', // Replace with your redirect URI
+          // redirect_uri: 'https://app.torque-ai.com', // Replace with your redirect URI
+          redirect_uri: 'http://localhost:3002', // Replace with your redirect URI
           grant_type: 'authorization_code',
         });
 

@@ -1,5 +1,5 @@
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { FBIcon, GoogleIcon } from ".";
+import { GoogleIcon } from '../component/icons';
 export const PerformingTable = ({ perform }: { perform: any }) => {
     return (
         <table className="text-left font-b4-500 md:overflow-auto overflow-scroll block md:table">

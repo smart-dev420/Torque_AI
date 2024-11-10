@@ -1,6 +1,6 @@
-import { FBIcon, FireIcon, GoogleIcon, LinkedinIcon } from ".";
 import { useContext, useEffect } from "react";
 import { ThemeContext } from "../../components/Theme/context";
+import { FireIcon, GoogleIcon } from "../component/icons";
 
 export const FirstIconTable = (data : any) => {
   const themeContext = useContext(ThemeContext);
@@ -65,7 +65,7 @@ export const SecondTable: React.FC<{}> = () => {
       <tbody>
         <tr>
           <td>
-            <LinkedinIcon />
+            <GoogleIcon />
           </td>
           <td>REIT Investment Trusts for Stable Growth</td>
           <td>Professionals aged 30-50 with an interest in real estate.</td>
@@ -85,7 +85,7 @@ export const SecondTable: React.FC<{}> = () => {
         </tr>
         <tr>
           <td>
-            <FBIcon />
+            <GoogleIcon />
           </td>
           <td>High-Risk, High-Reward Crypto Portfolios</td>
           <td>Males 25-40, engaged with financial blogs and crypto forums.</td>

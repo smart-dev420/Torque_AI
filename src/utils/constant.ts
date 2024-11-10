@@ -2,6 +2,8 @@ export const APP_VERSION = process.env.REACT_APP_VERSION;
 export const ASSET_IMAGES = process.env.REACT_APP_ASSETS_PATH + "/images";
 export const ASSET_ICONS = process.env.REACT_APP_ASSETS_PATH + "/icons";
 
+export const SERVER_URL = process.env.REACT_APP_SERVER;
+
 const LOGIN_IMAGES = ASSET_IMAGES + "/login";
 const DASHOBOARD_IMAGES = ASSET_IMAGES + "/dashboard";
 export const imageAssets = {
