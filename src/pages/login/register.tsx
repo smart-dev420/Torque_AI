@@ -1,6 +1,6 @@
 import { motion, Variants } from "framer-motion";
 import { useLocation } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ThemeContext } from "../../components/Theme/context";
 import { GoogleIcon, LinkEdinIcon } from "../component/icons";
 import { useRouter } from "../../routes/hooks/index";
@@ -8,6 +8,11 @@ import Button from "@mui/material/Button";
 
 import { imageAssets } from "../../utils/constant";
 import { ProgressBar } from "./progressbar";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, firestore } from "../../components/Firebase/firebase";
+import { doc, setDoc } from "firebase/firestore";
+import * as yup from "yup";
+import toast from "react-hot-toast";
 export const Register = () => {
   return (
     <div className="bg-[#000] w-full min-h-screen">
@@ -55,13 +60,51 @@ const pageVariant: Variants = {
   },
 };
 
+const validationSchema = yup.object().shape({
+  firstName: yup.string().required("First name is required"),
+  lastName: yup.string().required("Last name is required"),
+  email: yup.string().email("Enter a valid email").required("Email is required"),
+  password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+});
+
 const RegisterComponent = ({ setPages }: any) => {
   const location = useLocation();
   const themeContext = useContext(ThemeContext);
   const router = useRouter();
-  const handlNext = () => {
-    router.push("/");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await validationSchema.validate({ firstName, lastName, email, password }, { abortEarly: false });
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      await setDoc(doc(firestore, "users", user.uid), {
+        firstName,
+        lastName,
+        email,
+        createdAt: new Date(),
+      });
+
+      router.push("/");
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        const validationErrors: { [key: string]: string } = {};
+        error.inner.forEach(err => {
+          if (err.path) validationErrors[err.path] = err.message;
+        });
+        setErrors(validationErrors);
+      } else {
+        toast.error("Error: "+error);
+      }
+    }
   };
+
   return (
     <div>
       <motion.section
@@ -70,6 +113,7 @@ const RegisterComponent = ({ setPages }: any) => {
         animate="animate"
         exit="exit"
       >
+        <form onSubmit={onSubmit}>
         <div className="flex flex-col gap-y-4">
           <div className="pt-[40px]">
             <span className="font-h2-700 font-grey ">Get Started</span>
@@ -92,7 +136,11 @@ const RegisterComponent = ({ setPages }: any) => {
                     paddingRight: "15px",
                     borderRadius: "20px",
                   }}
+                  required
+                  placeholder="First Name"
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
+                {errors.firstName && <p className="error">{errors.firstName}</p>}
               </div>
               <div className="flex flex-col w-[100%] gap-y-2">
                 <h5 style={{ textAlign: "left" }}>Last Name</h5>
@@ -106,7 +154,11 @@ const RegisterComponent = ({ setPages }: any) => {
                     paddingRight: "15px",
                     borderRadius: "20px",
                   }}
+                  required
+                  placeholder="Last Name"
+                  onChange={(e) => setLastName(e.target.value)}
                 />
+                {errors.lastName && <p className="error">{errors.lastName}</p>}
               </div>
             </div>
           </div>
@@ -122,7 +174,11 @@ const RegisterComponent = ({ setPages }: any) => {
                 paddingRight: "15px",
                 borderRadius: "20px",
               }}
+              required
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && <p className="error">{errors.email}</p>}
           </div>
           <div className="flex flex-col w-[100%] gap-y-2">
             <h5 style={{ textAlign: "left" }}>Password</h5>
@@ -136,7 +192,11 @@ const RegisterComponent = ({ setPages }: any) => {
                 paddingRight: "15px",
                 borderRadius: "20px",
               }}
+              required
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
             />
+            {errors.password && <h6 className="error">{errors.password}</h6>}
           </div>
           <div className="flex justify-center w-full cursor-pointer">
             <Button
@@ -183,16 +243,15 @@ const RegisterComponent = ({ setPages }: any) => {
               Log In
             </a>
           </p>
-
           <div className="pt-[32px] pb-[40px]">
-            <button
+            <button type="submit"
               className="w-[114px] h-[28px] px-[12px] py-[8px] btn-white"
-              onClick={handlNext}
             >
               Let's Get Started
             </button>
           </div>
         </div>
+        </form>
       </motion.section>
     </div>
   );
