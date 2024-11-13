@@ -1,7 +1,7 @@
-import { FBIcon, LinkedinIcon } from ".";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import XIcon from '@mui/icons-material/X';
+import { FBIcon, GoogleIcon, LinkEdinIcon } from '../component/icons';
 export const CreativesTable: React.FC<{}> = () => {
     return (
         <table className="text-left b5 w-full md:overflow-auto overflow-scroll block md:table">
@@ -18,8 +18,8 @@ export const CreativesTable: React.FC<{}> = () => {
                 <tr>
                     <td>Video Ads</td>
                     <td className="flex flex-row gap-[4px] items-center">
-                        <FBIcon />
-                        <YouTubeIcon style={{color:'#FF0302'}}/>
+                        <GoogleIcon />
+                        <GoogleIcon />
                     </td>
 
                     <td>8.5%</td>
@@ -43,8 +43,8 @@ export const CreativesTable: React.FC<{}> = () => {
                 <tr>
                     <td>Infographics</td>
                     <td className="flex flex-row gap-[4px] items-center">
-                        <LinkedinIcon />
-                        <XIcon />
+                        <GoogleIcon />
+                        <GoogleIcon />
                     </td>
 
                     <td>6.8%</td>

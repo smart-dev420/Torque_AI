@@ -1,6 +1,6 @@
-import React, { ReactElement, useContext, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../components/Theme/context";
-import { imageAssets } from "../../utils/constant";
+import { imageAssets, SERVER_URL } from "../../utils/constant";
 import { useRouter } from "../../routes/hooks/index";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
@@ -16,6 +16,9 @@ import Grid from "@mui/material/Grid";
 import { SettingsTable } from "./settingTable";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/userContext";
+import { Perform } from "../interface";
+import axios from "axios";
+import { formatNumber } from "../../utils/helper";
 
 const testData: LineChartData = {
   firstData: [4000, 3000, 2000, 2780, 1890, 2390, 3490],
@@ -49,8 +52,31 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const setGoal = () => {
     setPages(3);
-    navigate('/')
-  }
+    navigate("/");
+  };
+
+  const [perform, setPerform] = useState<Perform>({
+    impressions: 0,
+    clicks: 0,
+    ctr: 0,
+    cpa: 0,
+    conversions: 0,
+  });
+  const access_token = localStorage.getItem("access_token");
+  const initialze = async () => {
+    try {
+      const result = await axios.post(`${SERVER_URL}/dashboard`, {
+        refresh_token: access_token,
+      });
+      // fetch performance metrics datas
+      setPerform(result.data?.perform[0]);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    initialze();
+  }, []);
 
   return (
     <div>
@@ -62,42 +88,39 @@ export const Dashboard = () => {
         >
           Dashboard
         </h1>
-        {
-          localStorage.getItem('goalSetting') ?
-            (
-              <></>
-            ) : (
-              <>
-                <h4
-                  className="md:w-[30%] mt-[16px] md:mt-0 md:block flex flex-row gap-[8px]"
-                  style={{ color: themeContext?.theme.titleColor }}
-                >
-                  Global Score &nbsp;
-                  <label>
-                    <label style={{ color: "#6775F0" }}>85</label>/100
-                  </label>
-                </h4>
-                <div
-                  className="flex flex-row items-center md:justify-end h4 md:gap-x-[20px] gap-x-[8px] md:w-[40%] w-full"
-                  style={{ color: themeContext?.theme.titleColor }}
-                >
-                  <label className="w-[35%]">
-                    Account Setup Progress <label style={{ color: "#6775F0" }}>3</label>
-                    /6
-                  </label>
-                  <ProgressBar step={2} />
-                  <button
-                    className="rounded-[100px] md:min-w-[150px] w-[30%] Button px-[12px]"
-                    style={{ border: `2px solid ${themeContext?.theme.color}` }}
-                    onClick={setGoal}
-                  >
-                    Continue Setup
-                  </button>
-                </div>
-              </>
-            )
-        }
-
+        {localStorage.getItem("goalSetting") ? (
+          <></>
+        ) : (
+          <>
+            <h4
+              className="md:w-[30%] mt-[16px] md:mt-0 md:block flex flex-row gap-[8px]"
+              style={{ color: themeContext?.theme.titleColor }}
+            >
+              Global Score &nbsp;
+              <label>
+                <label style={{ color: "#6775F0" }}>85</label>/100
+              </label>
+            </h4>
+            <div
+              className="flex flex-row items-center md:justify-end h4 md:gap-x-[20px] gap-x-[8px] md:w-[40%] w-full"
+              style={{ color: themeContext?.theme.titleColor }}
+            >
+              <label className="w-[35%]">
+                Account Setup Progress{" "}
+                <label style={{ color: "#6775F0" }}>3</label>
+                /6
+              </label>
+              <ProgressBar step={2} />
+              <button
+                className="rounded-[100px] md:min-w-[150px] w-[30%] Button px-[12px]"
+                style={{ border: `2px solid ${themeContext?.theme.color}` }}
+                onClick={setGoal}
+              >
+                Continue Setup
+              </button>
+            </div>
+          </>
+        )}
       </div>
 
       {/** Content Part */}
@@ -129,19 +152,19 @@ export const Dashboard = () => {
                 icon={<RemoveRedEyeOutlinedIcon style={{ height: "12px" }} />}
                 color="#41ECCD"
                 text="Impressions"
-                performance="245.5K"
+                performance={formatNumber(perform.impressions)}
               />
               <CampaignItem
                 icon={<LanguageOutlinedIcon style={{ height: "12px" }} />}
                 color="#41B9EC"
                 text="Clicks"
-                performance="189"
+                performance={formatNumber(perform.clicks)}
               />
               <CampaignItem
                 icon={<ShoppingCartOutlinedIcon style={{ height: "12px" }} />}
                 color="#6775F0"
                 text="Conversions"
-                performance="80"
+                performance={formatNumber(perform.conversions)}
               />
             </div>
             <div
@@ -195,7 +218,9 @@ export const Dashboard = () => {
                   backgroundColor: themeContext?.theme.activeButtonBackground,
                   color: themeContext?.theme.activeColor,
                 }}
-                onClick={() => { handleGoPage('strategies') }}
+                onClick={() => {
+                  handleGoPage("strategies");
+                }}
               >
                 Explore Strategies
               </button>
@@ -276,9 +301,11 @@ export const Dashboard = () => {
                 style={{
                   backgroundColor: themeContext?.theme.buttonBackground,
                   color: themeContext?.theme.color,
-                  border: `1px solid ${themeContext?.theme.activeButtonBackground}`
+                  border: `1px solid ${themeContext?.theme.activeButtonBackground}`,
                 }}
-                onClick={() => { handleGoPage('creatives') }}
+                onClick={() => {
+                  handleGoPage("creatives");
+                }}
               >
                 Explore Creatives
               </button>
@@ -287,7 +314,7 @@ export const Dashboard = () => {
                 style={{
                   backgroundColor: themeContext?.theme.activeButtonBackground,
                   color: themeContext?.theme.activeColor,
-                  border: `1px solid ${themeContext?.theme.buttonBackground}`
+                  border: `1px solid ${themeContext?.theme.buttonBackground}`,
                 }}
               >
                 Use Top Creative
@@ -320,7 +347,7 @@ export const Dashboard = () => {
                 style={{
                   backgroundColor: themeContext?.theme.buttonBackground,
                   color: themeContext?.theme.color,
-                  border: `1px solid ${themeContext?.theme.activeButtonBackground}`
+                  border: `1px solid ${themeContext?.theme.activeButtonBackground}`,
                 }}
               >
                 Manage Settings
@@ -330,7 +357,7 @@ export const Dashboard = () => {
                 style={{
                   backgroundColor: themeContext?.theme.activeButtonBackground,
                   color: themeContext?.theme.activeColor,
-                  border: `1px solid ${themeContext?.theme.buttonBackground}`
+                  border: `1px solid ${themeContext?.theme.buttonBackground}`,
                 }}
               >
                 Adopt Optimal Settings
@@ -354,9 +381,11 @@ export const ProgressBar: React.FC<{ step: number }> = ({ step }) => {
         return (
           <div
             key={index}
-            className={`h-[8px] w-full ${index <= step ? "bg-[#6775F0]" : "bg-[#141414]"
-              } ${index === 0 ? "rounded-l-lg" : ""} ${index === totalSteps - 1 ? "rounded-r-lg" : ""
-              }`}
+            className={`h-[8px] w-full ${
+              index <= step ? "bg-[#6775F0]" : "bg-[#141414]"
+            } ${index === 0 ? "rounded-l-lg" : ""} ${
+              index === totalSteps - 1 ? "rounded-r-lg" : ""
+            }`}
           />
         );
       })}

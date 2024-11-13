@@ -13,6 +13,7 @@ const apiRoute = Router();
 /**************************   POST  *************************/
 /************************************************************/
 
+apiRoute.post("/dashboard",                campagins.getMetrics);
 apiRoute.post("/campaigns",                campagins.getMetrics);
 apiRoute.post("/strategies",                campagins.getMetrics);
 apiRoute.post("/creatives",                campagins.getMetrics);

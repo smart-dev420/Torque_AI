@@ -19,7 +19,7 @@ root.render(
     <ThemeProvider>
       <UserProvider>
         <FirebaseContext.Provider value={config}>
-          <GoogleOAuthProvider clientId="582672524351-s5cqj6nct7592voecb27f7nl8rbnvu6v.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID!}>
             <App />
           </GoogleOAuthProvider>
         </FirebaseContext.Provider>
