@@ -278,3 +278,9 @@ h5, .h5,
   font-size: 10px;
   line-height: 10px;
 }
+
+.error{
+  text-align: left;
+  color: #fa3a3a;
+  font-size: 11px
+}

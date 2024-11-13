@@ -1,13 +1,16 @@
 import { motion, Variants } from "framer-motion";
 import { useLocation } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ThemeContext } from "../../components/Theme/context";
 import { GoogleIcon, LinkEdinIcon } from "../component/icons";
 import Button from "@mui/material/Button";
-import { signInWithGooglePopup } from "../../components/Firebase/firebase";
+import { auth, firestore, signInWithGooglePopup } from "../../components/Firebase/firebase";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import * as yup from "yup";
+import { collection, getDocs, query, where } from "firebase/firestore";
 const pageVariant: Variants = {
   initial: {
     x: "-60%",
@@ -39,12 +42,68 @@ interface StepProps {
   setPages: (n: number) => void;
 }
 
+const validationSchema = yup.object().shape({
+  email: yup.string().email("Enter a valid email").required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
+
 export const Step1 = ({ setPages }: StepProps) => {
   const location = useLocation();
-  const handlLogin = () => {
-    // navigate('/login/step2', { state: { id: 1, name: 'step1' } })
-    setPages(1);
-  };
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const onSubmit = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    await validationSchema.validate({ email, password }, { abortEarly: false });
+    signInWithEmailAndPassword(auth, email, password)
+    .then(async (userCredential) => {
+        const user = userCredential.user;
+        console.log("User signed in:", user);
+
+        const userCollection = collection(firestore, "users");
+        const userQuery = query(userCollection, where("email", "==", email));
+        
+        try {
+          const querySnapshot = await getDocs(userQuery);
+          if (!querySnapshot.empty) {
+            querySnapshot.forEach((doc) => {
+              const { firstName, lastName } = doc.data();
+              localStorage.setItem('firstName', firstName);
+              localStorage.setItem('lastName', lastName);
+              localStorage.setItem('userMail', email);
+              console.log("User First Name:", firstName);
+              console.log("User Last Name:", lastName);
+            });
+          } else {
+            console.log("No user found with this email");
+          }
+        } catch (error) {
+          console.error("Error retrieving user data:", error);
+        }
+        setPages(1);
+        console.log(user);
+    })
+    .catch((error) => {
+      if (error instanceof yup.ValidationError) {
+        const validationErrors: { [key: string]: string } = {};
+        error.inner.forEach(err => {
+          if (err.path) validationErrors[err.path] = err.message;
+        });
+        setErrors(validationErrors);
+      } else {
+        if (error.code === 'auth/invalid-credential') {
+          toast.error("Invalid credentials. Please try again.");
+        } else if (error.code === 'auth/user-not-found') {
+          toast.error("No user found with this email address.");
+        } else if (error.code === 'auth/wrong-password') {
+          toast.error("Incorrect password. Please try again.");
+        } else {
+          console.error("Unexpected error:", error);
+        }
+      }
+    });
+  }
 
   const SignIn = async () => {
     try {
@@ -94,6 +153,7 @@ export const Step1 = ({ setPages }: StepProps) => {
         animate="animate"
         exit="exit"
       >
+        <form onSubmit={onSubmit}>
         <div className="flex flex-col gap-y-4">
           <div className="pt-[40px]">
             <span className="font-h2-700 font-grey ">Get Started</span>
@@ -114,7 +174,11 @@ export const Step1 = ({ setPages }: StepProps) => {
                 paddingRight: "15px",
                 borderRadius: "20px",
               }}
+              required
+              placeholder="Email address"
+              onChange={(e) => setEmail(e.target.value)}  
             />
+            {errors.email && <p className="error">{errors.email}</p>}
           </div>
           <div className="flex flex-col w-[100%] gap-y-2">
             <h5 style={{ textAlign: "left" }}>Password</h5>
@@ -128,7 +192,11 @@ export const Step1 = ({ setPages }: StepProps) => {
                 paddingRight: "15px",
                 borderRadius: "20px",
               }}
+              required
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)} 
             />
+            {errors.password && <p className="error">{errors.password}</p>}
             <p
               className="B4 cursor-pointer"
               style={{
@@ -190,12 +258,13 @@ export const Step1 = ({ setPages }: StepProps) => {
           <div className="pt-[32px] pb-[40px]">
             <button
               className="w-[114px] h-[28px] px-[12px] py-[8px] btn-white"
-              onClick={handlLogin}
+              type="submit"
             >
               Log In
             </button>
           </div>
         </div>
+        </form>
       </motion.section>
     </div>
   );
