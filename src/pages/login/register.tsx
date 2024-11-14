@@ -13,6 +13,8 @@ import { auth, firestore } from "../../components/Firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import * as yup from "yup";
 import toast from "react-hot-toast";
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from "axios";
 export const Register = () => {
   return (
     <div className="bg-[#000] w-full min-h-screen">
@@ -105,6 +107,45 @@ const RegisterComponent = ({ setPages }: any) => {
     }
   };
 
+  const login = useGoogleLogin({
+    flow: 'auth-code', // Explicitly use auth-code flow
+    onSuccess: async (codeResponse) => {
+      try {
+        const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
+          code: codeResponse.code,
+          client_id: process.env.REACT_APP_CLIENT_ID, // Replace with your Google Client ID
+          client_secret: process.env.REACT_APP_CLIENT_SECRET, // Replace with your Google Client Secret
+          redirect_uri: process.env.REACT_APP_HOST, // Replace with your redirect URI
+          // redirect_uri: 'http://localhost:3000', // Replace with your redirect URI
+          grant_type: 'authorization_code',
+        });
+
+        const accessToken = tokenResponse.data.refresh_token;
+
+        localStorage.setItem('access_token',accessToken );
+        const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        
+        // Log the user's email address
+        const userEmail = userInfoResponse.data.email;
+        
+        localStorage.setItem('user_email', userEmail);
+        setPages(1);
+
+        // Now you can access the user's email address
+       
+      } catch (error) {
+        toast.error('Error retrieving user info:' + error);
+      }
+    },
+    onError: (errorResponse) => {
+      toast.error('Login Failed:' + errorResponse);
+    },
+    scope: 'https://www.googleapis.com/auth/adwords', // Google Ads API scope
+  });
   return (
     <div>
       <motion.section
@@ -207,6 +248,7 @@ const RegisterComponent = ({ setPages }: any) => {
                 border: `1px solid ${themeContext?.theme.activeButtonBackground}`,
                 textTransform: "none",
               }}
+              onClick={login}
             >
               <p
                 className="Button"

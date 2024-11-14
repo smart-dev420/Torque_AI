@@ -17,17 +17,21 @@ export const Step3 = ({ setPages }: any) => {
     const location = useLocation();
     const [socialList, setSocialList] = useState<string[]>([]);
     const [userMail, setUserMail] = useState('');
+
     const handleNext = async () => {
-        // if (userMail === '') {
-        //     login();
-        // }
-        // else {
-        //     await saveData();
-        const _saveData = { experience, socialList, userMail };
-        localStorage.setItem('initSetting', JSON.stringify(_saveData));
-        navigate('/dashboard', { state: { id: 3, name: 'step3' } })
-        setGoBack(false);
-        // }
+        const _token = localStorage.getItem('access_token');
+        if (!_token) {
+            login();
+        }
+        const userMail = localStorage.getItem('user_mail');
+        if (userMail === '') {
+            login();
+        }
+        else {
+            await saveData();
+            navigate('/dashboard', { state: { id: 3, name: 'step3' } })
+            setGoBack(false);
+        }
     };
 
     const handleBack = () => {
@@ -46,58 +50,37 @@ export const Step3 = ({ setPages }: any) => {
 
     const manageLog = () => {
         toast.success("Now, This app is running on Demo version");
-        // if (loggedGoogle) {
-        //     googleLogout();
-        //     setLoggedGoogle(false);
-        // } else {
-        //     login();
-        //     // fetchGoogleAdsData("1//0e4mp8XEl_QkWCgYIARAAGA4SNwF-L9IrWpmarCLxLRgXhNrFp-i0BZk8m67o5feQiiPKYDAVXHYpe86ZOxckvaoZw7gai_gIUX0");
-        // }
-    };
-    // async function fetchGoogleAdsData(accessToken: string) {
-    //     try {
-    //         const response = await axios.post('http://localhost:5000/api/google-ads-data', {
-    //             accessToken: accessToken, // Use the access token from your auth flow
-    //         });
 
-    //         console.log('Google Ads Data:', response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching Google Ads data:', error);
-    //     }
-    // }
+    };
+
     const login = useGoogleLogin({
         flow: 'auth-code', // Explicitly use auth-code flow
         onSuccess: async (codeResponse) => {
-            // console.log('Authorization Code:', codeResponse.code);
             try {
                 const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
                     code: codeResponse.code,
                     client_id: process.env.REACT_APP_CLIENT_ID, // Replace with your Google Client ID
                     client_secret: process.env.REACT_APP_CLIENT_SECRET, // Replace with your Google Client Secret
-                    redirect_uri: 'http://localhost:3000', // Replace with your redirect URI
+                    redirect_uri: process.env.REACT_APP_HOST, // Replace with your redirect URI
+                    // redirect_uri: 'http://localhost:3000', // Replace with your redirect URI
                     grant_type: 'authorization_code',
                 });
 
-                const accessToken = tokenResponse.data.access_token;
+                const accessToken = tokenResponse.data.refresh_token;
 
-                // Step 2: Use the access token to fetch user info
-                const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+                localStorage.setItem('access_token', accessToken);
+                const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
 
-                // Now you can access the user's email address
-                console.log(userInfoResponse)
-                const email = userInfoResponse.data.email;
-                const name = userInfoResponse.data.name;
-                setUserMail(email);
+                // Log the user's email address
+                const userEmail = userInfoResponse.data.email;
 
-                await saveData();
-                const _saveData = { experience, socialList, email, name };
-                localStorage.setItem('initSetting', JSON.stringify(_saveData));
-                navigate('/dashboard', { state: { id: 3, name: 'step3' } })
-                setGoBack(false);
+                localStorage.setItem('user_email', userEmail);
+                setPages(1);
+                // Now you can access the user's email address
 
             } catch (error) {
                 toast.error('Error retrieving user info:' + error);
