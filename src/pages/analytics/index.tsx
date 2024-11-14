@@ -65,6 +65,23 @@ export const Analaytics = () => {
         data: [2000, 3000, 2000, 2780, 1890, 2390, 3490],
         label: ["12 am", "3 am", "6 am", "12 pm", "3 pm", "6 pm", "9 pm"],
     }
+    interface Perform {
+        impressions: number;
+        clicks: number;
+        ctr: number;
+        cpa: number;
+        conversions: number;
+    }
+    interface ImpressionData {
+        age_range: number;
+        impression: number;
+    }
+
+    interface TopImpressionsResult {
+        top1: { ageRange: string; impression: number; percent: string };
+        top2: { ageRange: string; impression: number; percent: string };
+        totalImpressions: number;
+    }
 
     interface ImpressionData {
         age_range: number;
