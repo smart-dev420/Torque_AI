@@ -89,7 +89,6 @@ export const Step1 = ({ setPages }: StepProps) => {
           });
           setErrors(validationErrors);
         } else {
-          console.log(error)
           if (error.code === 'auth/invalid-credential') {
             toast.error("Invalid credentials. Please try again.");
           } else if (error.code === 'auth/user-not-found') {

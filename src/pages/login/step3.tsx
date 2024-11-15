@@ -72,7 +72,6 @@ export const Step3 = ({ setPages }: any) => {
 
                 // Log the user's email address
                 const userEmail = userInfoResponse.data.email;
-                console.log('userEmail', userEmail);
 
                 setMail(userEmail);
                 setFirst_name(userInfoResponse.data.given_name);
