@@ -38,8 +38,8 @@ export const imageAssets = {
   indus3: `${DASHOBOARD_IMAGES}/industry3.png`,
   indus4: `${DASHOBOARD_IMAGES}/industry4.png`,
   creative: `${DASHOBOARD_IMAGES}/creative.png`,
-  performer:`${ASSET_IMAGES}/creatives/perfomer.png`,
-  secondary:`${ASSET_IMAGES}/creatives/second.png`,
+  performer: `${ASSET_IMAGES}/creatives/perfomer.png`,
+  secondary: `${ASSET_IMAGES}/creatives/second.png`,
 };
 
 export const iconAssets = {
@@ -57,3 +57,30 @@ export const iconAssets = {
 export const scrollTop = () => {
   window.scrollTo(0, 0);
 };
+
+export const industryList = [
+  { value: "Retail", name: "Retail" },
+  { value: "Technology", name: "Technology" },
+  { value: "Finance", name: "Finance" },
+  { value: "Healthcare", name: "Healthcare" },
+  { value: "Real Estate", name: "Real Estate" },
+];
+
+export const roleList = [
+  { value: "CMO", name: "CMO" },
+  { value: "Marketing Manager", name: "Marketing Manager" },
+  {
+    value: "Digital Marketing Specialist",
+    name: "Digital Marketing Specialist",
+  },
+  { value: "Growth Hacker", name: "Growth Hacker" },
+  { value: "CEO", name: "CEO" },
+];
+
+export const teamList = [
+  { value: "1-10", name: "1-10" },
+  { value: "11-50", name: "11-50" },
+  { value: "51-200", name: "51-200" },
+  { value: "201-500", name: "201-500" },
+  { value: "500+", name: "500+" },
+];

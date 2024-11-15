@@ -8,32 +8,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CustomSelect, { CustomMenuItem } from '../component/customSelect';
 import UserContext from '../../utils/userContext';
 import { toast } from 'react-hot-toast';
+import { industryList, roleList, teamList } from '../../utils/constant';
 export const Step2 = ({ setPages }: any) => {
     const location = useLocation();
     const { setExperience } = useContext(UserContext);
-    const industryList = [
-        {value : 'Retail', name:'Retail'},
-        {value : 'Technology', name:'Technology'},
-        {value : 'Finance', name:'Finance'},
-        {value : 'Healthcare', name:'Healthcare'},
-        {value : 'Real Estate', name:'Real Estate'},
-    ]
-
-    const roleList = [
-        {value : 'CMO', name:'CMO'},
-        {value : 'Marketing Manager', name:'Marketing Manager'},
-        {value : 'Digital Marketing Specialist', name:'Digital Marketing Specialist'},
-        {value : 'Growth Hacker', name:'Growth Hacker'},
-        {value : 'CEO', name:'CEO'},
-    ]
-
-    const teamList = [
-        {value : '1-10', name:'1-10'},
-        {value : '11-50', name:'11-50'},
-        {value : '51-200', name:'51-200'},
-        {value : '201-500', name:'201-500'},
-        {value : '500+', name:'500+'},
-    ]
 
     const [companyName, setCompanyName] = useState('');
     const [industry, setIndustry] = useState('Retail');

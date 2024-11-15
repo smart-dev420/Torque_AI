@@ -64,8 +64,8 @@ const pageVariant: Variants = {
 };
 
 const validationSchema = yup.object().shape({
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
+  userFirstName: yup.string().required("First name is required"),
+  userLastName: yup.string().required("Last name is required"),
   email: yup.string().email("Enter a valid email").required("Email is required"),
   password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
 });
@@ -73,22 +73,23 @@ const validationSchema = yup.object().shape({
 const RegisterComponent = ({ setPages }: any) => {
   const location = useLocation();
   const themeContext = useContext(ThemeContext);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [userFirstName, setUserFirstName] = useState("");
+  const [userLastName, setUserLastName] = useState("");
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
-  const {  setMail, setFirst_name, setLast_name } = useContext(UserContext);
+  const {  setMail, setFirstName, setLastName, setUserId } = useContext(UserContext);
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await validationSchema.validate({ firstName, lastName, email, password }, { abortEarly: false });
+      await validationSchema.validate({ userFirstName, userLastName, email, password }, { abortEarly: false });
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
-      setFirst_name(firstName);
-      setLast_name(lastName);
+      
+      setFirstName(userFirstName);
+      setLastName(userLastName);
+      setUserId(user.uid);
       router.push('/');
     } catch (error) {
       if (error instanceof yup.ValidationError) {
@@ -129,8 +130,8 @@ const RegisterComponent = ({ setPages }: any) => {
         const userEmail = userInfoResponse.data.email;
         
         setMail(userEmail);
-        setFirst_name(userInfoResponse.data.given_name);
-        setLast_name(userInfoResponse.data.family_name);
+        setFirstName(userInfoResponse.data.given_name);
+        setLastName(userInfoResponse.data.family_name);
         router.push('/');
 
         // Now you can access the user's email address
@@ -177,9 +178,9 @@ const RegisterComponent = ({ setPages }: any) => {
                   }}
                   required
                   placeholder="First Name"
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => setUserFirstName(e.target.value)}
                 />
-                {errors.firstName && <p className="error">{errors.firstName}</p>}
+                {errors.userFirstName && <p className="error">{errors.userFirstName}</p>}
               </div>
               <div className="flex flex-col w-[100%] gap-y-2">
                 <h5 style={{ textAlign: "left" }}>Last Name</h5>
@@ -195,9 +196,9 @@ const RegisterComponent = ({ setPages }: any) => {
                   }}
                   required
                   placeholder="Last Name"
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => setUserLastName(e.target.value)}
                 />
-                {errors.lastName && <p className="error">{errors.lastName}</p>}
+                {errors.userLastName && <p className="error">{errors.userLastName}</p>}
               </div>
             </div>
           </div>

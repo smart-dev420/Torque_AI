@@ -5,16 +5,18 @@ import TuneIcon from "@mui/icons-material/Tune";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import BedtimeOutlinedIcon from "@mui/icons-material/BedtimeOutlined";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 import { iconAssets, imageAssets } from "../../utils/constant";
 import Badge from "@mui/material/Badge";
-import UserContext from '../../utils/userContext';
+import UserContext from "../../utils/userContext";
+import { useRouter } from "../../routes/hooks";
 
 export const Navbar = () => {
   const themeContext = useContext(ThemeContext);
   const [query, setQuery] = useState<string>("");
   const [theme, setTheme] = useState(themeContext?.theme.name);
-  const { siderbar, setSiderbar } = useContext(UserContext);
+  const { siderbar, setSiderbar, firstName, avatar } = useContext(UserContext);
+  const router = useRouter();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
@@ -23,18 +25,29 @@ export const Navbar = () => {
     themeContext?.toggleTheme();
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
-  const initSetting = localStorage.getItem('initSetting');
+  const initSetting = localStorage.getItem("initSetting");
   let names;
   if (initSetting) {
     const { name } = JSON.parse(initSetting);
     names = name;
   }
+  const handleGoToSettings = () => {
+    router.push(`settings`);
+  };
   return (
-    <div className="flex justify-between flex-row top-0 z-[50] sticky md:relative p-4"  style={{ backgroundColor: themeContext?.theme.background}}>
+    <div
+      className="flex justify-between flex-row top-0 z-[50] sticky md:relative p-4"
+      style={{ backgroundColor: themeContext?.theme.background }}
+    >
       <div className="flex flex-row item-center gap-x-[16px]">
         <div className="block md:hidden">
-          <button className="Button " onClick={()=>setSiderbar(true)}>
-            <MenuIcon style={{ color: themeContext?.theme.titleColor, fontSize: "40px" }} />
+          <button className="Button " onClick={() => setSiderbar(true)}>
+            <MenuIcon
+              style={{
+                color: themeContext?.theme.titleColor,
+                fontSize: "40px",
+              }}
+            />
           </button>
         </div>
         <div
@@ -76,10 +89,15 @@ export const Navbar = () => {
       </div>
 
       <div className="flex flex-row justify-center items-center gap-x-[16px]">
-        <img src={imageAssets.profile} alt="Profile" />
+        <img
+          className="cursor-pointer"
+          src={avatar == "" ? imageAssets.profile : avatar}
+          alt="Profile"
+          onClick={handleGoToSettings}
+        />
         <div className="flex flex-col">
           <label>Welcome</label>
-          <label>Chris</label>
+          <label>{firstName}</label>
           {/* <label>{names}</label> */}
         </div>
         <div
