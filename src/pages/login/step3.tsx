@@ -12,7 +12,7 @@ import { firestore } from '../../components/Firebase/firebase';
 import { useRouter } from "../../routes/hooks/index";
 export const Step3 = ({ setPages }: any) => {
     const navigate = useNavigate();
-    const { setSocials, experience, mail, setMail, first_name, setFirst_name, last_name, setLast_name } = useContext(UserContext);
+    const { setSocials, experience, mail, setMail, firstName, setFirstName, lastName, setLastName, userId, avatar } = useContext(UserContext);
     const [goback, setGoBack] = useState<boolean>(false);
     const location = useLocation();
     const [socialList, setSocialList] = useState<string[]>([]);
@@ -74,8 +74,8 @@ export const Step3 = ({ setPages }: any) => {
                 const userEmail = userInfoResponse.data.email;
 
                 setMail(userEmail);
-                setFirst_name(userInfoResponse.data.given_name);
-                setLast_name(userInfoResponse.data.family_name);
+                setFirstName(userInfoResponse.data.given_name);
+                setLastName(userInfoResponse.data.family_name);
                 await saveData();
 
                 router.push('/dashboard');
@@ -105,8 +105,10 @@ export const Step3 = ({ setPages }: any) => {
                     experience,
                     socialList,
                     mail, 
-                    first_name,
-                    last_name,
+                    firstName,
+                    lastName,
+                    userId,
+                    avatar,
                     created_at: new Date(),
                     updated_at: new Date(),
                 });
