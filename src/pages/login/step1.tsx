@@ -1,16 +1,16 @@
 import { motion, Variants } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ThemeContext } from "../../components/Theme/context";
 import { GoogleIcon, LinkEdinIcon } from "../component/icons";
 import Button from "@mui/material/Button";
-import { auth, firestore, signInWithGooglePopup } from "../../components/Firebase/firebase";
-import { useGoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
+import { auth } from "../../components/Firebase/firebase";
 import { toast } from 'react-hot-toast';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import * as yup from "yup";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { useRouter } from "../../routes/hooks/index";
+import { collection, getDocs, query, where, setDoc, addDoc } from "firebase/firestore";
+import { firestore } from '../../components/Firebase/firebase';
 const pageVariant: Variants = {
   initial: {
     x: "-60%",
@@ -52,37 +52,34 @@ export const Step1 = ({ setPages }: StepProps) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
+  const navigate = useNavigate();
+  const router = useRouter();
   const onSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     await validationSchema.validate({ email, password }, { abortEarly: false });
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
-        console.log("User signed in:", user);
+        const _token = localStorage.getItem('access_token');
+        if (_token)
+          router.push('/dashboard');
+        else
+          setPages(1);
+        // const userCollection = collection(firestore, "users");
+        // const userQuery = query(userCollection, where("email", "==", email));
 
-        const userCollection = collection(firestore, "users");
-        const userQuery = query(userCollection, where("email", "==", email));
-
-        try {
-          const querySnapshot = await getDocs(userQuery);
-          if (!querySnapshot.empty) {
-            querySnapshot.forEach((doc) => {
-              const { firstName, lastName } = doc.data();
-              localStorage.setItem('firstName', firstName);
-              localStorage.setItem('lastName', lastName);
-              localStorage.setItem('userMail', email);
-              console.log("User First Name:", firstName);
-              console.log("User Last Name:", lastName);
-            });
-          } else {
-            console.log("No user found with this email");
-          }
-        } catch (error) {
-          console.error("Error retrieving user data:", error);
-        }
-        setPages(1);
-        console.log(user);
+        // try {
+        //   const querySnapshot = await getDocs(userQuery);
+        //   if (!querySnapshot.empty) {
+        //     querySnapshot.forEach((doc) => {
+        //       setPages(1);
+        //     });
+        //   } else {
+        //     console.log("No user found with this email");
+        //   }
+        // } catch (error) {
+        //   console.error("Error retrieving user data:", error);
+        // }
       })
       .catch((error) => {
         if (error instanceof yup.ValidationError) {
@@ -92,6 +89,7 @@ export const Step1 = ({ setPages }: StepProps) => {
           });
           setErrors(validationErrors);
         } else {
+          console.log(error)
           if (error.code === 'auth/invalid-credential') {
             toast.error("Invalid credentials. Please try again.");
           } else if (error.code === 'auth/user-not-found') {
@@ -107,53 +105,24 @@ export const Step1 = ({ setPages }: StepProps) => {
 
   const SignIn = async () => {
     try {
-      // const response = await signInWithGooglePopup();
-      // console.log("Access Token:", response);
-      login();
+      const _token = localStorage.getItem('access_token');
+      if (_token) {
+        const q = query(collection(firestore, "users"), where("access_token", "==", _token)); // Replace selectedUserId with your actual user ID
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+          setPages(1);
+        } else{
+          navigate('/dashboard', { state: { id: 3, name: 'step3' } })
+        }
+      } else {
+        router.push('/register');
+      }
     } catch (error) {
       console.log('error: ', error);
     }
   }
 
-  const login = useGoogleLogin({
-    flow: 'auth-code', // Explicitly use auth-code flow
-    onSuccess: async (codeResponse) => {
-      try {
-        const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
-          code: codeResponse.code,
-          client_id: process.env.REACT_APP_CLIENT_ID, // Replace with your Google Client ID
-          client_secret: process.env.REACT_APP_CLIENT_SECRET, // Replace with your Google Client Secret
-          redirect_uri: process.env.REACT_APP_HOST, // Replace with your redirect URI
-          // redirect_uri: 'http://localhost:3000', // Replace with your redirect URI
-          grant_type: 'authorization_code',
-        });
-
-        const accessToken = tokenResponse.data.refresh_token;
-
-        localStorage.setItem('access_token', accessToken);
-        
-        const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
-          headers: {
-            Authorization: `Bearer ${tokenResponse.data.access_token}`,
-          },
-        });
-        
-        // Log the user's email address
-        const userEmail = userInfoResponse.data.email;
-        
-        localStorage.setItem('user_email', userEmail);
-        setPages(1);
-        // Now you can access the user's email address
-
-      } catch (error) {
-        toast.error('Error retrieving user info:' + error);
-      }
-    },
-    onError: (errorResponse) => {
-      toast.error('Login Failed:' + errorResponse);
-    },
-    scope: 'https://www.googleapis.com/auth/adwords', // Google Ads API scope
-  });
   const themeContext = useContext(ThemeContext);
   return (
     <div>

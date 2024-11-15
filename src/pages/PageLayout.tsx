@@ -8,8 +8,7 @@ export const PageLayout: React.FC<{
 }> = ({ children }) => {
   const router = useRouter();
   useEffect(() => {
-    console.log(localStorage.getItem("initSetting"));
-    if (localStorage.getItem("initSetting")) {
+    if (localStorage.getItem("access_token")) {
       router.push("/dashboard");
     } else {
       router.push("/");

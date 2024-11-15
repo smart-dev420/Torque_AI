@@ -15,6 +15,7 @@ import * as yup from "yup";
 import toast from "react-hot-toast";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
+import UserContext from "../../utils/userContext";
 export const Register = () => {
   return (
     <div className="bg-[#000] w-full min-h-screen">
@@ -72,13 +73,13 @@ const validationSchema = yup.object().shape({
 const RegisterComponent = ({ setPages }: any) => {
   const location = useLocation();
   const themeContext = useContext(ThemeContext);
-  const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  
+  const router = useRouter();
+  const {  setMail, setFirst_name, setLast_name } = useContext(UserContext);
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -86,14 +87,9 @@ const RegisterComponent = ({ setPages }: any) => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      await setDoc(doc(firestore, "users", user.uid), {
-        firstName,
-        lastName,
-        email,
-        createdAt: new Date(),
-      });
-
-      router.push("/");
+      setFirst_name(firstName);
+      setLast_name(lastName);
+      router.push('/');
     } catch (error) {
       if (error instanceof yup.ValidationError) {
         const validationErrors: { [key: string]: string } = {};
@@ -125,15 +121,17 @@ const RegisterComponent = ({ setPages }: any) => {
         localStorage.setItem('access_token',accessToken );
         const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${tokenResponse.data.access_token}`,
           },
         });
         
         // Log the user's email address
         const userEmail = userInfoResponse.data.email;
         
-        localStorage.setItem('user_email', userEmail);
-        setPages(1);
+        setMail(userEmail);
+        setFirst_name(userInfoResponse.data.given_name);
+        setLast_name(userInfoResponse.data.family_name);
+        router.push('/');
 
         // Now you can access the user's email address
        
