@@ -9,16 +9,11 @@ export const UserProvider = ({ children }) => {
   const [socials, setSocials] = useState({});
   const [pages, setPages] = useState(0);
   const [siderbar, setSiderbar] = useState(false);
-  useEffect (()=>{
-    const initSetting = localStorage.getItem('initSetting');
-    if (initSetting){
-      const { experience, socials, userEmail, name } = JSON.parse(initSetting);
-      setExperience(experience);
-      setSocials(socials);
-    }
-  }, []);
+  const [mail , setMail] = useState('');
+  const [first_name , setFirst_name] = useState('');
+  const [last_name , setLast_name] = useState('');
   return (
-    <UserContext.Provider value={{ experience, setExperience , socials, setSocials, goals, setGoals, competitors, setCompetitors , customSettings, setCustomSettings, pages, setPages , siderbar, setSiderbar }}>
+    <UserContext.Provider value={{ experience, setExperience , socials, setSocials, goals, setGoals, competitors, setCompetitors , customSettings, setCustomSettings, pages, setPages , siderbar, setSiderbar, mail, setMail ,first_name , setFirst_name, last_name, setLast_name }}>
       {children}
     </UserContext.Provider>
   );

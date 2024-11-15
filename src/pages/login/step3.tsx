@@ -9,27 +9,22 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { collection, getDocs, query, where, setDoc, addDoc } from "firebase/firestore";
 import { firestore } from '../../components/Firebase/firebase';
+import { useRouter } from "../../routes/hooks/index";
 export const Step3 = ({ setPages }: any) => {
     const navigate = useNavigate();
-    const { setSocials, experience } = useContext(UserContext);
-    const [loggedGoogle, setLoggedGoogle] = useState(false);
+    const { setSocials, experience, mail, setMail, first_name, setFirst_name, last_name, setLast_name } = useContext(UserContext);
     const [goback, setGoBack] = useState<boolean>(false);
     const location = useLocation();
     const [socialList, setSocialList] = useState<string[]>([]);
-    const [userMail, setUserMail] = useState('');
-
+    const router = useRouter();
     const handleNext = async () => {
         const _token = localStorage.getItem('access_token');
         if (!_token) {
             login();
         }
-        const userMail = localStorage.getItem('user_mail');
-        if (userMail === '') {
-            login();
-        }
         else {
             await saveData();
-            navigate('/dashboard', { state: { id: 3, name: 'step3' } })
+            router.push('/dashboard');
             setGoBack(false);
         }
     };
@@ -71,15 +66,19 @@ export const Step3 = ({ setPages }: any) => {
                 localStorage.setItem('access_token', accessToken);
                 const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
                     headers: {
-                        Authorization: `Bearer ${accessToken}`,
+                        Authorization: `Bearer ${tokenResponse.data.access_token}`,
                     },
                 });
 
                 // Log the user's email address
                 const userEmail = userInfoResponse.data.email;
 
-                localStorage.setItem('user_email', userEmail);
-                setPages(1);
+                setMail(userEmail);
+                setFirst_name(userInfoResponse.data.given_name);
+                setLast_name(userInfoResponse.data.family_name);
+                await saveData();
+
+                router.push('/dashboard');
                 // Now you can access the user's email address
 
             } catch (error) {
@@ -96,16 +95,20 @@ export const Step3 = ({ setPages }: any) => {
         setSocials(socialList);
         try {
             // Query to check if an experience document for the selected user exists
-            const q = query(collection(firestore, "initSetting"), where("userMail", "==", userMail)); // Replace selectedUserId with your actual user ID
+            const q = query(collection(firestore, "users"), where("userMail", "==", mail)); // Replace selectedUserId with your actual user ID
 
             const querySnapshot = await getDocs(q);
 
             if (querySnapshot.empty) {
                 // If no document exists, create a new one
-                const docRef = await addDoc(collection(firestore, "initSetting"), {
+                const docRef = await addDoc(collection(firestore, "users"), {
                     experience,
                     socialList,
-                    userMail, // Make sure to include userId to associate the experience
+                    mail, 
+                    first_name,
+                    last_name,
+                    created_at: new Date(),
+                    updated_at: new Date(),
                 });
 
                 console.log("New document created with ID: ", docRef.id);
